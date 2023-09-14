@@ -1,3 +1,4 @@
+import { Dispatch } from '@reduxjs/toolkit'
 import { ConfigProvider, DatePicker, Input, Select } from 'antd'
 import enPicker from 'antd/locale/en_US'
 import ruPicker from 'antd/locale/ru_RU'
@@ -7,9 +8,7 @@ import 'dayjs/locale/en'
 import 'dayjs/locale/ru'
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 
-import { IUserData } from '../../../../api/types'
 import { RootState, useAppSelector } from '../../../../store'
 import { addCountries } from '../../../../store/reducers/FormReducers/CountriesEducationReducer'
 import {
@@ -24,10 +23,10 @@ import { useGetCountriesQuery } from '../../../../store/slice/countrySlice'
 
 interface IInputProps {
 	IsEmpty: boolean
+	dispatch: Dispatch
 }
 
-export const Inputs: FC<IInputProps> = ({ IsEmpty }) => {
-	const dispatch = useDispatch()
+export const Inputs: FC<IInputProps> = ({ IsEmpty, dispatch }) => {
 	const info = useAppSelector(state => state.Form)
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const { t, i18n } = useTranslation()
@@ -38,15 +37,6 @@ export const Inputs: FC<IInputProps> = ({ IsEmpty }) => {
 	const countryStorage = useAppSelector(
 		(state: RootState) => state.CountriesEducation.countries
 	)
-
-	const userData: IUserData = JSON.parse(localStorage.getItem('userInfo') || '')
-
-	const InitDefaultValues = (infoUser: IUserData) => {
-		infoUser.birthday !== '' && dispatch(birthDay(infoUser.birthday))
-		infoUser.firstname !== '' && dispatch(name(infoUser.firstname))
-		infoUser.lastname !== '' && dispatch(surName(infoUser.lastname))
-		infoUser.middlename !== '' && dispatch(patronymic(infoUser.middlename))
-	}
 
 	useEffect(() => {
 		if (countryStorage) {

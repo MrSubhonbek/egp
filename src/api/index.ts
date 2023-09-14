@@ -58,6 +58,9 @@ export const education = (params: IEducationRequest) =>
 export const role = (params: IRole) =>
 	axiosInstance.post(endpoints.USER.INFO.ROLE, params)
 
+export const getRole = (): AxiosPromise<IRole> =>
+	axiosInstance.get(endpoints.USER.INFO.ROLE)
+
 export const document = (params: IDocumentRequest) =>
 	axiosInstance.post(endpoints.USER.INFO.DOCUMENT, params)
 
@@ -117,3 +120,8 @@ export const postDocument = (params: IDocument) =>
 
 export const getDocument = (): AxiosPromise<IDocumentAbUs> =>
 	axiosInstance.get(endpoints.USER.INFO.DOCUMENT)
+
+export const getAdmissionLink = (): AxiosPromise<{
+	link: string
+	session: string
+}> => axiosInstance.get(endpoints.USER.ADMISSION)

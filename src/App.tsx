@@ -1,6 +1,7 @@
 import { ConfigProvider } from 'antd'
 import { useEffect, useState } from 'react'
 import { Cookies } from 'react-cookie'
+import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
 import { ApproveEmail } from './components/approve/ApproveEmail'
@@ -21,6 +22,7 @@ import { refreshToken } from './store/creators/MainCreators'
 const App = () => {
 	const cookies = new Cookies()
 	const [email, changeEmail] = useState('')
+	const { t, i18n } = useTranslation()
 
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -29,33 +31,18 @@ const App = () => {
 	const dataApi = async () => {
 		const res = await refreshToken(dispatch)
 		if (res === 200) {
-			const isRegistrationForms = [
-				'/infoUser',
+			const isForm = [
 				'/form',
 				'/parent',
 				'/work',
 				'/documents',
 				'/education'
-			].some(
-				el =>
-					el === currentUrl.pathname ||
-					currentUrl.pathname.includes('/api/register/approve')
-			)
-			if (isRegistrationForms) {
-				navigate('/infoUser')
+			].some(el => el === currentUrl.pathname)
+			if (isForm || currentUrl.pathname.includes('/api/register/approve')) {
+				navigate('/form')
 			} else {
-				if (
-					[
-						'/',
-						'/login',
-						'/registration',
-						'/api/register/approve',
-						'/registration/checkingEmail'
-					].some(el => el === currentUrl.pathname)
-				) {
+				if (!currentUrl.pathname.includes('/services' || '/user')) {
 					navigate('/user')
-				} else {
-					navigate(currentUrl.pathname)
 				}
 			}
 		}
@@ -64,6 +51,9 @@ const App = () => {
 		}
 	}
 	useEffect(() => {
+		if (i18n.language === 'ru') {
+			i18n.changeLanguage('en')
+		}
 		if (
 			localStorage.getItem('access') !== null ||
 			localStorage.getItem('userInfo') !== null ||
@@ -71,11 +61,17 @@ const App = () => {
 		) {
 			dataApi()
 		} else {
+			const IsBadPage = [
+				'/form',
+				'/parent',
+				'/work',
+				'/documents',
+				'/education'
+			].some(el => el === currentUrl.pathname)
 			if (
-				['/', '/login', '/registration'].some(el => el === currentUrl.pathname)
+				IsBadPage ||
+				['/services', '/user'].some(el => el === currentUrl.pathname)
 			) {
-				navigate(currentUrl.pathname)
-			} else {
 				navigate('/')
 			}
 		}
@@ -99,7 +95,7 @@ const App = () => {
 					/>
 					<Route path="/user/*" element={<User />} />
 					<Route path="/api/register/approve" element={<ApproveEmail />} />
-					<Route path="/infoUser" element={<InfoUser />} />
+					{/* <Route path="/infoUser" element={<InfoUser />} /> */}
 					<Route path="/form" element={<FormModal />} />
 					<Route path="/education" element={<EducationForm />} />
 					<Route path="/documents" element={<DocumentForm />} />

@@ -4,7 +4,7 @@ import { RootState } from '../..'
 import { IRole, TypeRole } from '../../../api/types'
 
 const initialState: IRole = {
-	role: 'GUEST'
+	role: 'ABIT'
 }
 
 export const InfoUserReducer = createSlice({

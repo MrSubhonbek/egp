@@ -2,11 +2,12 @@ import { Button, Divider, Drawer, Select } from 'antd'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import { IUserData } from '../../api/types'
 import {
 	EyeSvg,
 	LogoIasSvg,
@@ -21,8 +22,10 @@ import {
 } from '../../assets/svg'
 import { DocumentSvg } from '../../assets/svg/DocumentSvg'
 import PersonalizationSvg from '../../assets/svg/PersonalizationSvg'
-import { useAppSelector } from '../../store'
+import { RootState, useAppSelector } from '../../store'
+import { GetRole } from '../../store/creators/MainCreators'
 import { logout } from '../../store/creators/SomeCreators'
+import { putRole } from '../../store/reducers/FormReducers/InfoUserReducer'
 import { ModalNav } from '../service/modalMenu/ModalNav'
 
 type TypeHeaderProps = {
@@ -35,8 +38,22 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 	const navigate = useNavigate()
 	const [open, setOpen] = useState(false)
 	const { t, i18n } = useTranslation()
+	//	const role = useAppSelector((state: RootState) => state.InfoUser.role)
 
-	const user = useAppSelector(state => state.Profile.profileData.CurrentData)
+	// const getRole = async () => {
+	// 	const response = await GetRole(dispatch)
+	// 	if (response === null) {
+	// 		await logout(dispatch)
+	// 		navigate('/')
+	// 	} else {
+	// 		dispatch(putRole(response.role))
+	// 	}
+	// }
+
+	var user: IUserData | string = ''
+	if (localStorage.getItem('userInfo')) {
+		user = JSON.parse(localStorage.getItem('userInfo') || '')
+	}
 	const showDrawer = () => {
 		setOpen(!open)
 	}
@@ -46,25 +63,6 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		navigate('/')
 	}
 
-	const getRole = (role: String | undefined) => {
-		switch (role) {
-			case 'ABIT':
-				return t('ABIT')
-			case 'STUD':
-				return t('STUD')
-			case 'SCHOOL':
-				return t('SCHOOL')
-			case 'SEEKER':
-				return t('SEEKER')
-			case undefined:
-				return t('ABIT')
-			case 'GUEST':
-				return t('GUEST')
-			case 'ATTEND':
-				return t('ATTEND')
-		}
-	}
-
 	const onClose = () => {
 		setOpen(false)
 	}
@@ -72,7 +70,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		{
 			label: (
 				<div className="p-2 text-sm text-[#1F5CB8] font-bold cursor-default">
-					{user?.email}
+					{typeof user === 'string' ? '' : user.email}
 				</div>
 			),
 			key: '0'
@@ -111,13 +109,10 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 			key: '6'
 		}
 	]
-	const changeLanguage = (language: string) => {
-		i18n.changeLanguage(language)
-	}
 	return (
 		<header
 			className={clsx(
-				' z-[1001]  h-[80px] fixed flex items-center justify-center w-full',
+				' z-10  h-[80px] fixed flex items-center justify-center w-full',
 				type === 'main' ? 'bg-white' : 'bg-[#65A1FA]'
 			)}
 		>
@@ -150,13 +145,15 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 									className={clsx('h-full', type === 'service' && 'text-white')}
 								>
 									<div className="font-bold text-sm truncate max-w-[120px]">
-										{`${user?.lastname} ${user?.firstname.charAt(0)}. ${
-											user?.middlename === ''
-												? ''
-												: user?.middlename.charAt(0) + '.'
-										}`}
+										{typeof user === 'string'
+											? ''
+											: `${user?.lastname} ${user?.firstname.charAt(0)}. ${
+													user?.middlename === ''
+														? ''
+														: user?.middlename.charAt(0) + '.'
+											  }`}
 									</div>
-									<div className="text-sm">{getRole(user?.roles[0].type)}</div>
+									<div className="text-sm">{t('ABIT')}</div>
 								</div>
 							</Space>
 						</Dropdown>

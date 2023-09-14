@@ -25,8 +25,11 @@ export const Apply = () => {
 			}}
 		>
 			<div className="max-w-[53vw] max-2xl:max-w-[40vw] max-xl:max-w-full ">
-				<div className="text-4xl  text-white w-fit font-extrabold  mt-32 ">
+				<div className="text-4xl  text-white w-fit font-extrabold  mt-32 flex flex-col">
 					Admission to university
+					<Button className="w-[203px] font-bold h-[62px] text-2xl  hover:border-white hover:border  mt-6">
+						Apply
+					</Button>
 				</div>
 			</div>
 			<div className="max-xl:hidden">

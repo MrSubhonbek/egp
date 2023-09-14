@@ -18,6 +18,7 @@ import {
 	getForm,
 	getJob,
 	getParent,
+	getRole,
 	job,
 	login,
 	parent,
@@ -172,6 +173,19 @@ export const setRole = async (
 		}
 	}
 	return 403
+}
+
+export const GetRole = async (dispatch: Dispatch): Promise<IRole | null> => {
+	try {
+		await refreshToken(dispatch)
+		const response = await getRole()
+		return response.data
+	} catch (e) {
+		if (request.isAxiosError(e) && e.response) {
+			console.log(e.response?.data as IError)
+		}
+	}
+	return null
 }
 
 export const setForm = async (

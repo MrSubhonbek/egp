@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '../../store'
-import { approveEmail } from '../../store/creators/MainCreators'
+import { approveEmail, setRole } from '../../store/creators/MainCreators'
 
 import { CardForm } from './cardForm'
 
@@ -23,7 +23,12 @@ export const ApproveEmail = () => {
 				},
 				dispatch
 			)
-			if (response === 200) navigate('/user')
+			if (response === 200) {
+				await setRole({ role: 'ABIT' }, dispatch)
+				navigate('/form')
+			} else {
+				navigate('/')
+			}
 		} else {
 			navigate('/')
 		}
@@ -39,7 +44,7 @@ export const ApproveEmail = () => {
 			localStorage.getItem('userInfo') !== null ||
 			cookies.get('refresh') !== undefined
 		) {
-			navigate('/infoUser')
+			navigate('/form')
 		}
 	}
 

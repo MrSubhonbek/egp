@@ -1,9 +1,11 @@
 import { Button } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import img from '../../assets/images/image15.png'
 
 export const AboutUniversity = () => {
+	const navigate = useNavigate()
 	const { t } = useTranslation()
 	return (
 		<div className="flex overflow-hidden">
@@ -18,7 +20,12 @@ export const AboutUniversity = () => {
 					</div>
 				</div>
 				<div className="text-start absolute bottom-[40px]">
-					<Button className="rounded-full border-black  w-[200px] h-[50px] text-base font-semibold mt-[40px]">
+					<Button
+						className="rounded-full border-black  w-[200px] h-[50px] text-base font-semibold mt-[40px]"
+						onClick={() => {
+							navigate('/services/aboutUniversity')
+						}}
+					>
 						Watch
 					</Button>
 				</div>

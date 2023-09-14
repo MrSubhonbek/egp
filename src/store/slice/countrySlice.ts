@@ -6,7 +6,7 @@ import { ICountryRequest } from './../../api/types'
 
 export const countriesAPi = createApi({
 	reducerPath: 'countriesAPi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.63.96:8080/api' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'https://egp.kpfu.ru/user-api' }),
 	endpoints: build => ({
 		getCountries: build.query<ICountryRequest[], string>({
 			query: language => ({

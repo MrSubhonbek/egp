@@ -6,7 +6,7 @@ import { IEducationLevelRequest } from './../../api/types'
 
 export const educationLevelAPi = createApi({
 	reducerPath: 'educationLevelAPi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.63.96:8080/api' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'https://egp.kpfu.ru/user-api' }),
 	endpoints: build => ({
 		getEducationLevel: build.query<IEducationLevelRequest[], string>({
 			query: language => ({

@@ -21,7 +21,7 @@ export const ImagesLayout: FC<PropsWithChildren<{ first?: boolean }>> = ({
 			<div className="flex items-center  justify-between py-5 mx-20">
 				<LogoIasSvg />
 				<div className="flex gap-4 items-center">
-					<Select
+					{/* <Select
 						defaultValue={i18n.language}
 						style={{ width: 100 }}
 						bordered={false}
@@ -30,7 +30,7 @@ export const ImagesLayout: FC<PropsWithChildren<{ first?: boolean }>> = ({
 							{ value: 'ru', label: 'Рус' },
 							{ value: 'en', label: 'Eng' }
 						]}
-					/>
+					/> */}
 					<Popover
 						placement="left"
 						className="h-fit"

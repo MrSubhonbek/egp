@@ -20,7 +20,8 @@ const endpoints = {
 		},
 		COUNTRIES: '/country',
 		EDUCATION_LEVEL: '/education/levels',
-		DOCUMENTS: '/document'
+		DOCUMENTS: '/document',
+		ADMISSION: '/admission-link'
 	}
 }
 
