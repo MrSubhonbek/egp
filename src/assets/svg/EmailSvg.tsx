@@ -3,7 +3,7 @@ import React from 'react'
 export const EmailSvg = () => {
 	return (
 		<svg
-			className="min-[2559px]:w-10 min-[2559px]:h-10"
+			className="min-[2559px]:w-[1.5rem] w-[1.5rem] h-[1.5rem] min-[2559px]:h-[1.5rem]"
 			width="21"
 			height="18"
 			viewBox="0 0 21 18"

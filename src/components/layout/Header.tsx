@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, Select } from 'antd'
+import { Divider, Drawer } from 'antd'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
 import clsx from 'clsx'
@@ -7,21 +7,13 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { IUserData } from '../../api/types'
+import { IUserData, TypeRole } from '../../api/types'
 import {
-	EyeSvg,
 	LogoIasSvg,
 	LogoutSvg,
-	MapSvg,
-	MenuSvg,
-	MessageSvg,
 	PersonCardSvg,
-	PersonSvg,
-	SearchSvg,
-	SettingSvg
+	PersonSvg
 } from '../../assets/svg'
-import { DocumentSvg } from '../../assets/svg/DocumentSvg'
-import PersonalizationSvg from '../../assets/svg/PersonalizationSvg'
 import { RootState, useAppSelector } from '../../store'
 import { GetRole } from '../../store/creators/MainCreators'
 import { logout } from '../../store/creators/SomeCreators'
@@ -38,17 +30,31 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 	const navigate = useNavigate()
 	const [open, setOpen] = useState(false)
 	const { t, i18n } = useTranslation()
-	//	const role = useAppSelector((state: RootState) => state.InfoUser.role)
+	const role = useAppSelector((state: RootState) => state.InfoUser.role)
 
-	// const getRole = async () => {
-	// 	const response = await GetRole(dispatch)
-	// 	if (response === null) {
-	// 		await logout(dispatch)
-	// 		navigate('/')
-	// 	} else {
-	// 		dispatch(putRole(response.role))
-	// 	}
-	// }
+	const getRole = async () => {
+		const response = await GetRole(dispatch)
+		if (response === null) {
+			await logout(dispatch)
+			navigate('/')
+		} else {
+			console.log(response)
+			dispatch(putRole(response[0].role))
+		}
+	}
+
+	const roleConverter = (role: TypeRole | null) => {
+		if (role === 'ABIT') return 'enrollee'
+		if (role === 'ATTEND') return 'attend'
+		if (role === 'GUEST' || role === null) return 'guest'
+		if (role === 'SCHOOL') return 'schoolboy'
+		if (role === 'SEEKER') return 'seeker'
+		if (role === 'STUD') return 'student'
+	}
+
+	useEffect(() => {
+		getRole()
+	}, [])
 
 	var user: IUserData | string = ''
 	if (localStorage.getItem('userInfo')) {
@@ -87,7 +93,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 					className="flex items-center gap-[15px] px-[4px] py-[5px]"
 				>
 					<PersonCardSvg />
-					{t('AboutMe')}
+					About me
 				</div>
 			),
 			key: '1'
@@ -99,7 +105,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 					onClick={() => exit()}
 				>
 					<LogoutSvg />
-					{t('logout')}
+					Log out
 				</div>
 			),
 			key: '5'
@@ -112,7 +118,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 	return (
 		<header
 			className={clsx(
-				' z-10  h-[80px] fixed flex items-center justify-center w-full',
+				' z-20  h-[80px] fixed flex items-center justify-center w-full',
 				type === 'main' ? 'bg-white' : 'bg-[#65A1FA]'
 			)}
 		>
@@ -153,7 +159,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 														: user?.middlename.charAt(0) + '.'
 											  }`}
 									</div>
-									<div className="text-sm">{t('ABIT')}</div>
+									<div className="text-sm">{roleConverter(role)}</div>
 								</div>
 							</Space>
 						</Dropdown>

@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom'
 import { IEducationError, IEducationState } from '../../../api/types'
 import { RootState, useAppSelector } from '../../../store'
 import {
+	GetRole,
 	addEducationItemRequest,
 	deleteEducationItemRequest,
 	getEducationItemRequest,
@@ -40,6 +41,7 @@ import {
 	nameOfInstitute,
 	specialization
 } from '../../../store/reducers/FormReducers/EducationReducer'
+import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 import { useGetEducationLevelQuery } from '../../../store/slice/educationLevelSlice'
 
@@ -67,9 +69,7 @@ export const Education = () => {
 	const { t, i18n } = useTranslation()
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const educationData = useAppSelector(state => state.Education)
-	const role = useAppSelector(
-		state => state.Profile.profileData.CurrentData?.roles
-	)
+	const role = useAppSelector(state => state.InfoUser?.role)
 
 	const { data: educationLevel } = useGetEducationLevelQuery(i18n.language, {
 		skip: SkipCountriesQuery
@@ -88,6 +88,17 @@ export const Education = () => {
 		const response = await getEducationItemRequest(dispatch)
 		if (response !== null) {
 			dispatch(allData(response))
+		}
+	}
+
+	const getRole = async () => {
+		if (!role) {
+			const response = await GetRole(dispatch)
+			if (response) {
+				putRole(response[0].role)
+			} else {
+				navigate('/')
+			}
 		}
 	}
 
@@ -174,18 +185,15 @@ export const Education = () => {
 
 				dispatch
 			)
-			if (status === 200) {
-				setUpdate(true)
-			} else {
-				console.log('403')
-			}
+			if (status === 200) setUpdate(true)
+			else navigate('/')
 		}
 	}
 
 	const handleDeleteEducation = async (id: string) => {
 		const response = await deleteEducationItemRequest(id, dispatch)
 		if (response === 200) setUpdate(true)
-		else console.log('403')
+		else navigate('/')
 	}
 
 	const handleAddEducation = async () => {
@@ -196,11 +204,11 @@ export const Education = () => {
 			graduateYear: null,
 			specialization: null,
 			educationLevelId: 1,
-			countryId: 1
+			countryId: 184
 		}
 		const response = await addEducationItemRequest(item, dispatch)
 		if (response === 200) setUpdate(true)
-		else console.log('403')
+		else navigate('/')
 	}
 
 	useEffect(() => {
@@ -216,11 +224,12 @@ export const Education = () => {
 	useEffect(() => {
 		if (updateItems) {
 			getData()
+			getRole()
 			setUpdate(false)
 		}
 	}, [updateItems])
-	if (!role) return <></>
-	const isStudent = role[0].type === 'STUD'
+
+	const isStudent = role === 'STUD'
 	return (
 		<div className="m-14 radio  min-w-[624px] w-full">
 			<Space direction="vertical" size={20} className="w-full">
@@ -322,6 +331,7 @@ export const Education = () => {
 								<Input
 									disabled={isStudent}
 									maxLength={200}
+									placeholder="University of California at Berkeley, Department of All the smartest"
 									size="large"
 									className={clsx(
 										'shadow ',

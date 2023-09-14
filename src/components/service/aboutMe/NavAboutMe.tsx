@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { TypeRole } from '../../../api/types'
 import { AboutMeSvg } from '../../../assets/svg/AboutMeSvg'
 import { AddressSvg } from '../../../assets/svg/AddressSvg'
 import { EducationSvg } from '../../../assets/svg/EducationSvg'
@@ -23,13 +24,19 @@ export const NavAboutMe = () => {
 	const user = useAppSelector(state => state.Profile.profileData.CurrentData)
 	const { pathname } = useLocation()
 	const navigate = useNavigate()
-	const role = useAppSelector(
-		state => state.Profile.profileData.CurrentData?.roles
-	)
+	const role = useAppSelector(state => state.InfoUser.role)
 	const handleNavigate = (url: string) => {
 		navigate(url)
 	}
 	const { t } = useTranslation()
+	const roleConverter = (role: TypeRole | null) => {
+		if (role === 'ABIT') return 'enrollee'
+		if (role === 'ATTEND') return 'attend'
+		if (role === 'GUEST' || role === null) return 'guest'
+		if (role === 'SCHOOL') return 'schoolboy'
+		if (role === 'SEEKER') return 'seeker'
+		if (role === 'STUD') return 'student'
+	}
 	const navList = [
 		{
 			id: '/services/aboutMe/aboutMe',
@@ -62,8 +69,7 @@ export const NavAboutMe = () => {
 			name: t('Parents')
 		}
 	]
-	if (!role) return <></>
-	const isStudent = role[0].type === 'STUD'
+	const isStudent = role === 'STUD'
 	const handleList = navList.map(({ icon, name, id }, index) => {
 		if (isStudent && id === '/services/aboutMe/work') return
 		return (
@@ -98,7 +104,7 @@ export const NavAboutMe = () => {
 				{pathname === navList[4].id && <Work />}
 				{pathname === navList[5].id && <Parent />}
 				<div className="p-14 w-full justify-center">
-					<div className="h-[630px] bg-white fixed w-full max-w-md rounded-[20px] shadow flex flex-col items-center justify-center">
+					<div className="h-3/4 bg-white fixed w-full max-w-md rounded-[20px] shadow flex flex-col items-center justify-center">
 						<div>
 							<Avatar
 								size={120}
@@ -109,7 +115,7 @@ export const NavAboutMe = () => {
 								type="primary"
 								size="large"
 								shape="circle"
-								className="left-[255px] bottom-[360px] absolute border-4 flex items-center justify-center text-2xl border-solid border-white"
+								className="left-[255px] bottom-[60%] absolute border-4 flex items-center justify-center text-2xl border-solid border-white"
 								icon={<CloudUploadOutlined />}
 							/>
 						</div>
@@ -117,7 +123,7 @@ export const NavAboutMe = () => {
 							{user?.firstname} {user?.lastname} {user?.middlename}
 						</Typography.Text>
 						<Typography.Text className="px-5 mt-5 py-[5px] bg-sky-100 rounded-full opacity-60 text-center text-black text-base font-normal leading-tight">
-							{user?.roles[0].type}
+							{roleConverter(role)}
 						</Typography.Text>
 						<div className="w-[250px] mt-5">
 							<Typography.Text>{t('FilledOn')} 69.9%</Typography.Text>

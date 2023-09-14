@@ -160,12 +160,8 @@ export const Work = () => {
 				{ portfolioLink: data },
 				dispatch
 			)
-			if (response === 403) {
-				console.log('403')
-				//navigate("/")
-			} else {
-				setUpdate(true)
-			}
+			if (response === 403) navigate('/')
+			else setUpdate(true)
 		}
 	}
 
@@ -180,31 +176,19 @@ export const Work = () => {
 			},
 			dispatch
 		)
-		if (response === 403) {
-			console.log('403')
-			//navigate("/")
-		} else {
-			setUpdate(true)
-		}
+		if (response === 403) navigate('/')
+		else setUpdate(true)
 	}
 	const handleDeleteWork = async (id: string) => {
 		const response = await deleteJobItemRequest(id, dispatch)
-		if (response === 403) {
-			console.log('403')
-			//navigate("/")
-		} else {
-			setUpdate(true)
-		}
+		if (response === 403) navigate('/')
+		else setUpdate(true)
 	}
 	const handleUpdateWork = async (id: string, item: workItem) => {
 		if (!checkWorkItem(id, item)) {
 			const response = await updateJobItemRequest(id, item, dispatch)
-			if (response === 403) {
-				console.log('403')
-				//navigate("/")
-			} else {
-				setUpdate(true)
-			}
+			if (response === 403) navigate('/')
+			else setUpdate(true)
 		}
 	}
 	return (
@@ -257,6 +241,7 @@ export const Work = () => {
 										IsError.item.name &&
 										'border-rose-500'
 								)}
+								placeholder="University of California at Berkeley"
 								onChange={e =>
 									dispatch(name({ id: item.id, name: e.target.value }))
 								}
@@ -274,9 +259,7 @@ export const Work = () => {
 							<Typography.Text>{t('periodOperation')}</Typography.Text>
 							<div className="w-[624px] grid grid-cols-2 gap-x-4 max-sm:grid-cols-1">
 								<div>
-									<ConfigProvider
-										locale={i18n.language === 'ru' ? ruPicker : enPicker}
-									>
+									<ConfigProvider locale={enPicker}>
 										<DatePicker
 											className={clsx(
 												'shadow w-full',
@@ -294,7 +277,7 @@ export const Work = () => {
 												)
 											}
 											size="large"
-											placeholder={t('Start')}
+											placeholder="Start"
 											format={'DD.MM.YYYY'}
 											value={
 												workData.items.filter(el => el.id === item.id)[0]
@@ -320,7 +303,7 @@ export const Work = () => {
 										)}
 								</div>
 								<div>
-									<ConfigProvider locale={ruPicker}>
+									<ConfigProvider locale={enPicker}>
 										<DatePicker
 											className={clsx('shadow w-full')}
 											onChange={e =>
@@ -332,7 +315,7 @@ export const Work = () => {
 												)
 											}
 											size="large"
-											placeholder={t('Start')}
+											placeholder="End"
 											format={'DD.MM.YYYY'}
 											value={
 												workData.items.filter(el => el.id === item.id)[0]
@@ -414,6 +397,7 @@ export const Work = () => {
 										})
 									)
 								}
+								placeholder="Enter the text"
 								value={
 									workData.items.filter(el => el.id === item.id)[0]
 										.additionalInfo

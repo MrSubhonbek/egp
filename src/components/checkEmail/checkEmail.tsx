@@ -22,15 +22,15 @@ export const CheckEmail: FC<ICheckEmailProps> = ({ email }) => {
 			buttonEffect={buttonEffect}
 			closeEffect={closeEffect}
 			withDots={true}
-			mainTittle="Проверьте почту"
+			mainTittle="Check your email"
 			secondTittle={
 				<span>
-					На почту <span className="font-bold">{email}</span> выслано
-					приветственное письмо. Для завершения регистрации Вам необходимо
-					перейти по ссылке, указанной в письме
+					Sent to the post office <span className="font-bold">{email}</span>{' '}
+					&nbsp; welcome letter. To complete the registration, you need to
+					follow the link provided in the letter
 				</span>
 			}
-			buttonText="Выслать повторно"
+			buttonText="Resend"
 			buttonBgBlue={true}
 		/>
 	)

@@ -4,9 +4,11 @@ import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { RootState, useAppSelector } from '../../../store'
 import {
+	GetRole,
 	getAbUsAddress,
 	putAbUsAddress
 } from '../../../store/creators/MainCreators'
@@ -20,6 +22,7 @@ import {
 	street
 } from '../../../store/reducers/FormReducers/AddressReducer'
 import { addCountries } from '../../../store/reducers/FormReducers/CountriesEducationReducer'
+import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
 export const Address = () => {
@@ -27,9 +30,7 @@ export const Address = () => {
 	const [value, setValue] = useState(0)
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const [IsError, setError] = useState<boolean>(false)
-	const role = useAppSelector(
-		state => state.Profile.profileData.CurrentData?.roles
-	)
+	const role = useAppSelector(state => state.InfoUser?.role)
 	const registrationAddressData = useAppSelector(
 		(state: RootState) => state.Address.registrationAddress
 	)
@@ -39,13 +40,36 @@ export const Address = () => {
 	const countryStorage = useAppSelector(
 		(state: RootState) => state.CountriesEducation.countries
 	)
+	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
 	const { data: countries } = useGetCountriesQuery(i18n.language, {
 		skip: SkipCountriesQuery
 	})
 
+	const getRole = async () => {
+		if (!role) {
+			const response = await GetRole(dispatch)
+			if (response) {
+				putRole(response[0].role)
+			} else {
+				navigate('/')
+			}
+		}
+	}
+
+	const getData = async () => {
+		const response = await getAbUsAddress(dispatch)
+		if (response !== null) {
+			if (response.residenceAddress) {
+				setValue(1)
+			}
+			dispatch(allData(response))
+		}
+	}
+
 	useEffect(() => {
+		getRole()
 		getData()
 	}, [])
 
@@ -66,7 +90,7 @@ export const Address = () => {
 				allData({
 					registrationAddress: registrationAddressData,
 					residenceAddress: {
-						countryId: 1,
+						countryId: 184,
 						city: null,
 						street: null,
 						house: null,
@@ -85,18 +109,7 @@ export const Address = () => {
 		setValue(e.target.value)
 	}
 
-	const getData = async () => {
-		const response = await getAbUsAddress(dispatch)
-		if (response !== null) {
-			if (response.residenceAddress) {
-				setValue(1)
-			}
-			dispatch(allData(response))
-		}
-	}
-
 	const setChanges = async () => {
-		/*
 		const IsBadStringRegistration = [
 			registrationAddressData.city,
 			registrationAddressData.street
@@ -109,7 +122,7 @@ export const Address = () => {
 		const IsBadNumberRegistration = [
 			registrationAddressData.apartment,
 			registrationAddressData.house
-		].some(el => !el || (el && !/^[0-9]+$/u.test(el)))
+		].some(el => el && !/^[0-9]+$/u.test(el))
 		const IsBadNumberResidence = !residenceAddressData
 			? false
 			: [residenceAddressData.apartment, residenceAddressData.house].some(
@@ -117,7 +130,7 @@ export const Address = () => {
 			  )
 
 		const IsBadIndexRegistration = [registrationAddressData.index].some(
-			el => !el || (el && !/^[0-9]{5,6}$/.test(el))
+			el => el && !/^[0-9]{5,6}$/.test(el)
 		)
 
 		const IsBadIndexResidence = !residenceAddressData
@@ -134,28 +147,25 @@ export const Address = () => {
 		) {
 			setError(true)
 		} else {
-		}
-			*/
-		const status = await putAbUsAddress(
-			{
-				registrationAddress: registrationAddressData,
-				residenceAddress:
-					value === 0
-						? registrationAddressData
-						: !residenceAddressData
-						? null
-						: residenceAddressData
-			},
-			dispatch
-		)
-		if (status === 403) {
-			setError(true)
-		} else {
-			setError(false)
+			const status = await putAbUsAddress(
+				{
+					registrationAddress: registrationAddressData,
+					residenceAddress:
+						value === 0
+							? registrationAddressData
+							: !residenceAddressData
+							? null
+							: residenceAddressData
+				},
+				dispatch
+			)
+			if (status === 400) setError(true)
+			if (status === 200) setError(false)
+			if (status === 403) navigate('/')
 		}
 	}
-	if (!role) return <></>
-	const isStudent = role[0].type === 'STUD'
+
+	const isStudent = role === 'STUD'
 
 	return (
 		<div className="m-14 radio">
@@ -178,13 +188,17 @@ export const Address = () => {
 				</Typography.Text>
 
 				<Space direction="vertical" size={'small'}>
-					<Typography.Text>{t('Country')}</Typography.Text>
+					<Typography.Text>Country</Typography.Text>
 					<Select
 						disabled={isStudent}
 						placeholder={t('citizen')}
 						size="large"
 						className="w-[624px] shadow rounded-lg"
-						value={registrationAddressData.countryId}
+						value={
+							registrationAddressData.countryId
+								? registrationAddressData.countryId
+								: 184
+						}
 						onChange={e =>
 							dispatch(country({ target: 'registrationAddress', country: e }))
 						}
@@ -203,14 +217,15 @@ export const Address = () => {
 					<Typography.Text>{t('City')}</Typography.Text>
 					<Input
 						disabled={isStudent}
-						placeholder={t('Kazan')}
+						placeholder="Kazan"
 						size="large"
 						maxLength={200}
 						className={clsx(
 							'w-[624px] shadow',
 							IsError &&
-								registrationAddressData.city &&
-								!/^[\p{L}]+$/u.test(registrationAddressData.city) &&
+								(!registrationAddressData.city ||
+									(registrationAddressData.city &&
+										!/^[\p{L}]+$/u.test(registrationAddressData.city))) &&
 								'border-rose-500'
 						)}
 						value={
@@ -223,8 +238,9 @@ export const Address = () => {
 						}
 					/>
 					{IsError &&
-						registrationAddressData.city &&
-						!/^[\p{L}]+$/u.test(registrationAddressData.city) && (
+						(!registrationAddressData.city ||
+							(registrationAddressData.city &&
+								!/^[\p{L}]+$/u.test(registrationAddressData.city))) && (
 							<div className="text-sm text-rose-500">{t('BadSymbols')}</div>
 						)}
 				</Space>
@@ -234,12 +250,14 @@ export const Address = () => {
 					<Input
 						disabled={isStudent}
 						maxLength={200}
+						placeholder="Arbuzov"
 						size="large"
 						className={clsx(
 							'w-[624px] shadow',
 							IsError &&
-								registrationAddressData.street &&
-								!/^[\p{L}]+$/u.test(registrationAddressData.street) &&
+								(!registrationAddressData.street ||
+									(registrationAddressData.street &&
+										!/^[\p{L}]+$/u.test(registrationAddressData.street))) &&
 								'border-rose-500'
 						)}
 						value={
@@ -257,14 +275,15 @@ export const Address = () => {
 						}
 					/>
 					{IsError &&
-						registrationAddressData.street &&
-						!/^[\p{L}]+$/u.test(registrationAddressData.street) && (
+						(!registrationAddressData.street ||
+							(registrationAddressData.street &&
+								!/^[\p{L}]+$/u.test(registrationAddressData.street))) && (
 							<div className="text-sm text-rose-500">{t('BadSymbols')}</div>
 						)}
 				</Space>
 
 				<Space direction="vertical" size={'small'}>
-					<Typography.Text>{t('House')}</Typography.Text>
+					<Typography.Text>House</Typography.Text>
 					<Input
 						disabled={isStudent}
 						placeholder="39"
@@ -383,13 +402,17 @@ export const Address = () => {
 							{t('AddressStay')}
 						</Typography.Text>
 						<Space direction="vertical" size={'small'}>
-							<Typography.Text>{t('Country')}</Typography.Text>
+							<Typography.Text>Country</Typography.Text>
 							<Select
 								disabled={isStudent}
 								size="large"
 								className="w-[624px] shadow rounded-lg"
 								value={
-									!residenceAddressData ? '' : residenceAddressData.countryId
+									!residenceAddressData
+										? 184
+										: !residenceAddressData.countryId
+										? 184
+										: residenceAddressData.countryId
 								}
 								onChange={e =>
 									dispatch(
@@ -414,14 +437,16 @@ export const Address = () => {
 							<Typography.Text>{t('City')}</Typography.Text>
 							<Input
 								disabled={isStudent}
+								placeholder="Kazan"
 								maxLength={200}
 								size="large"
 								className={clsx(
 									'w-[624px] shadow',
 									IsError &&
 										residenceAddressData &&
-										residenceAddressData.city &&
-										!/^[\p{L}]+$/u.test(residenceAddressData.city) &&
+										(!residenceAddressData.city ||
+											(residenceAddressData.city &&
+												!/^[\p{L}]+$/u.test(residenceAddressData.city))) &&
 										'border-rose-500'
 								)}
 								value={
@@ -439,8 +464,9 @@ export const Address = () => {
 							/>
 							{IsError &&
 								residenceAddressData &&
-								residenceAddressData.city &&
-								!/^[\p{L}]+$/u.test(residenceAddressData.city) && (
+								(!residenceAddressData.city ||
+									(residenceAddressData.city &&
+										!/^[\p{L}]+$/u.test(residenceAddressData.city))) && (
 									<div className="text-sm text-rose-500">{t('BadSymbols')}</div>
 								)}
 						</Space>
@@ -448,15 +474,16 @@ export const Address = () => {
 							<Typography.Text>{t('Street')}</Typography.Text>
 							<Input
 								disabled={isStudent}
-								placeholder="Арбузова"
+								placeholder="Arbuzov"
 								maxLength={200}
 								size="large"
 								className={clsx(
 									'w-[624px] shadow',
 									IsError &&
 										residenceAddressData &&
-										residenceAddressData.street &&
-										!/^[\p{L}]+$/u.test(residenceAddressData.street) &&
+										(!residenceAddressData.street ||
+											(residenceAddressData.street &&
+												!/^[\p{L}]+$/u.test(residenceAddressData.street))) &&
 										'border-rose-500'
 								)}
 								value={
@@ -477,8 +504,9 @@ export const Address = () => {
 							/>
 							{IsError &&
 								residenceAddressData &&
-								residenceAddressData.street &&
-								!/^[\p{L}]+$/u.test(residenceAddressData.street) && (
+								(!residenceAddressData.street ||
+									(residenceAddressData.street &&
+										!/^[\p{L}]+$/u.test(residenceAddressData.street))) && (
 									<div className="text-sm text-rose-500">{t('BadSymbols')}</div>
 								)}
 						</Space>

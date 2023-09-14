@@ -23,13 +23,13 @@ export const ApproveEmail = () => {
 				},
 				dispatch
 			)
+
 			if (response === 200) {
 				await setRole({ role: 'ABIT' }, dispatch)
-				navigate('/form')
-			} else {
-				navigate('/')
+				navigate('/api/register/approve')
 			}
-		} else {
+		}
+		if (!localStorage.getItem('access')) {
 			navigate('/')
 		}
 	}
@@ -56,16 +56,15 @@ export const ApproveEmail = () => {
 			buttonEffect={buttonEffect}
 			closeEffect={closeEffect}
 			withDots={false}
-			mainTittle="Добро пожаловать"
+			mainTittle="Welcome"
 			secondTittle={
 				<span>
-					"Здесь нужен интересный приветственный текст о том, что может делать
-					пользователь. Не следует, однако, забывать, что высокотехнологичная
-					концепция общественного уклада не даёт нам иного выбора, кроме
-					определения новых предложений."
+					Here we need an interesting welcome text about what he can do user.
+					However, we should not forget that high-tech the concept of social
+					order does not give us any other choice but definitions of new offers.
 				</span>
 			}
-			buttonText="Начнём"
+			buttonText="Start"
 			buttonBgBlue={false}
 		/>
 	)

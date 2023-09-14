@@ -4,14 +4,14 @@ import { RootState } from '../..'
 import { IRole, TypeRole } from '../../../api/types'
 
 const initialState: IRole = {
-	role: 'ABIT'
+	role: null
 }
 
 export const InfoUserReducer = createSlice({
 	name: 'InfoUser',
 	initialState,
 	reducers: {
-		putRole: (state, action: PayloadAction<TypeRole>) => {
+		putRole: (state, action: PayloadAction<TypeRole | null>) => {
 			state.role = action.payload
 		}
 	}

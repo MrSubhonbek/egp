@@ -9,7 +9,7 @@ const generalState = {
 	educationLevelId: 1,
 	documentNumber: '',
 	documentSeries: '',
-	countryId: 1,
+	countryId: 184,
 	graduateYear: '',
 	specialization: ''
 }

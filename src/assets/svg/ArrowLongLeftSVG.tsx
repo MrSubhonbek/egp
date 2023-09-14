@@ -7,8 +7,8 @@ export const ArrowLongLeftSVG = () => {
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<path d="M1 6.00001L20.5 6" stroke="black" stroke-linecap="round" />
-			<path d="M6.5 11.5L1 6L6.5 0.5" stroke="black" stroke-linecap="round" />
+			<path d="M1 6.00001L20.5 6" stroke="black" strokeLinecap="round" />
+			<path d="M6.5 11.5L1 6L6.5 0.5" stroke="black" strokeLinecap="round" />
 		</svg>
 	)
 }

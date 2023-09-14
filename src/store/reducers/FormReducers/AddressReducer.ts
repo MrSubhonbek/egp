@@ -4,7 +4,7 @@ import { RootState } from '../..'
 import { IAddress, addressItem } from '../../../api/types'
 
 const initAddressItem: addressItem = {
-	countryId: 1,
+	countryId: 184,
 	city: null,
 	street: null,
 	house: null,

@@ -9,7 +9,6 @@ import { CheckEmail } from './components/checkEmail/checkEmail'
 import { FormModal } from './components/formUser/AboutUserForm/UserForm'
 import { DocumentForm } from './components/formUser/DocumentForm/DocumentForm'
 import { EducationForm } from './components/formUser/EducationForm/EducationForm'
-import { InfoUser } from './components/formUser/InfoUser'
 import { ParentForm } from './components/formUser/ParentForm/ParentForm'
 import { WorkForm } from './components/formUser/WorkForm/WorkForm'
 import { Login } from './components/login/Login'
@@ -31,18 +30,22 @@ const App = () => {
 	const dataApi = async () => {
 		const res = await refreshToken(dispatch)
 		if (res === 200) {
-			const isForm = [
-				'/form',
-				'/parent',
-				'/work',
-				'/documents',
-				'/education'
-			].some(el => el === currentUrl.pathname)
-			if (isForm || currentUrl.pathname.includes('/api/register/approve')) {
-				navigate('/form')
+			if (currentUrl.pathname.includes('/api/register/approve')) {
+				navigate(currentUrl.pathname)
 			} else {
-				if (!currentUrl.pathname.includes('/services' || '/user')) {
-					navigate('/user')
+				const isForm = [
+					'/form',
+					'/parent',
+					'/work',
+					'/documents',
+					'/education'
+				].some(el => el === currentUrl.pathname)
+				if (isForm) {
+					navigate('/form')
+				} else {
+					if (!currentUrl.pathname.includes('/services' || '/user')) {
+						navigate('/user')
+					}
 				}
 			}
 		}
@@ -95,7 +98,6 @@ const App = () => {
 					/>
 					<Route path="/user/*" element={<User />} />
 					<Route path="/api/register/approve" element={<ApproveEmail />} />
-					{/* <Route path="/infoUser" element={<InfoUser />} /> */}
 					<Route path="/form" element={<FormModal />} />
 					<Route path="/education" element={<EducationForm />} />
 					<Route path="/documents" element={<DocumentForm />} />

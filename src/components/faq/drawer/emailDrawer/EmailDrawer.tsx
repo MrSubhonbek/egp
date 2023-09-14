@@ -76,20 +76,20 @@ export const EmailDrawer: FC<IEmailDrawerProps> = ({
 						}
 					]}
 				>
-					<Input.TextArea rows={4} placeholder="Текст" />
+					<Input.TextArea rows={4} placeholder="Text" />
 				</Form.Item>
 
 				<Upload {...props}>
 					<Button type="text" className={styles.upload} icon={<UploadSvg />}>
-						Прикрепить файл
+						Attach a file
 					</Button>
 				</Upload>
 				<Form.Item>
 					<Button className={styles.send} type="primary" htmlType="submit">
-						Отправить письмо
+						Send an email
 					</Button>
 					<Text className={styles.text}>
-						Отправляя письмо, вы соглашаетесь на обработку персональных данных
+						By sending an email, you agree to the processing of personal data
 					</Text>
 				</Form.Item>
 			</Form>

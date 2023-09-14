@@ -51,25 +51,25 @@ export const DrawerEmail: FC<IDrawerPros> = ({
 					ghost
 				>
 					<Panel
-						header="Как подключиться к Wi-Fi КФУ?"
-						className="hover:bg-black hover:bg-opacity-5 rounded-md "
+						header="How to connect to the KFU Wi-Fi?"
+						className="hover:bg-black hover:bg-opacity-5 rounded-md text-base"
 						key="1"
 					>
-						<p>{text}</p>
+						<p className="text-base">{text}</p>
 					</Panel>
 					<Panel
-						header="Как получить учетные данные?"
-						className="hover:bg-black hover:bg-opacity-5 rounded-md my-[1vh]"
+						header="How do I get credentials?"
+						className="hover:bg-black hover:bg-opacity-5 rounded-md my-[1vh] text-base"
 						key="2"
 					>
-						<p>{text}</p>
+						<p className="text-base">{text}</p>
 					</Panel>
 					<Panel
-						className="hover:bg-black hover:bg-opacity-5 rounded-md "
-						header="Ответы на частые вопросы"
+						className="hover:bg-black hover:bg-opacity-5 rounded-md text-base"
+						header="Answers to frequently asked questions"
 						key="3"
 					>
-						<p>{text}</p>
+						<p className="text-base">{text}</p>
 					</Panel>
 				</Collapse>
 				<Divider />
@@ -79,11 +79,11 @@ export const DrawerEmail: FC<IDrawerPros> = ({
 					type="text"
 				>
 					<Link
-						className="text-[1.5vh]"
+						className="text-[1.5vh] text-base"
 						href="mailto:deshelp@kpfu.ru"
 						style={{ color: '#000' }}
 					>
-						Написать письмо
+						Write a letter
 					</Link>
 				</Button>
 				<Button
@@ -93,10 +93,10 @@ export const DrawerEmail: FC<IDrawerPros> = ({
 				>
 					<Link
 						href="tel:+7 (843) 206-50-84"
-						className="text-[1.5vh]"
+						className="text-[1.5vh] text-base"
 						style={{ color: '#000' }}
 					>
-						Позвонить
+						To call
 					</Link>
 				</Button>
 				<Divider />
@@ -105,7 +105,7 @@ export const DrawerEmail: FC<IDrawerPros> = ({
 						href="mailto:deshelp@kpfu.ru"
 						strong
 						style={{ color: '#808080' }}
-						className=" cursor-pointer text-[1.5vh]"
+						className=" cursor-pointer text-[1.5vh] text-sm"
 					>
 						deshelp@kpfu.ru
 					</Link>
@@ -117,7 +117,7 @@ export const DrawerEmail: FC<IDrawerPros> = ({
 						href="tel:+7 (843) 206-50-84"
 						style={{ color: '#808080' }}
 						strong
-						className="cursor-pointer text-[1.5vh]"
+						className="cursor-pointer text-[1.5vh] text-sm"
 					>
 						+7 (843) 206-50-84
 					</Link>

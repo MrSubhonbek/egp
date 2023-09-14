@@ -24,6 +24,7 @@ export const AuthRegReducer = createSlice({
 	reducers: {
 		loginSuccess: (state, action: PayloadAction<IloginSuccess>) => {
 			localStorage.setItem('access', action.payload.accessToken)
+			cookies.remove('refresh')
 			cookies.set('refresh', action.payload.refreshToken)
 			state.authData.accessToken = action.payload.accessToken
 			state.authData.error = null

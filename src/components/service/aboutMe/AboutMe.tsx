@@ -11,12 +11,18 @@ import {
 import ruPicker from 'antd/locale/ru_RU'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { RootState, useAppSelector } from '../../../store'
-import { getAbUsForm, putAbUsForm } from '../../../store/creators/MainCreators'
+import {
+	GetRole,
+	getAbUsForm,
+	putAbUsForm
+} from '../../../store/creators/MainCreators'
+import { logout } from '../../../store/creators/SomeCreators'
 import { addCountries } from '../../../store/reducers/FormReducers/CountriesEducationReducer'
 import {
 	allData,
@@ -28,22 +34,38 @@ import {
 	phone,
 	surName
 } from '../../../store/reducers/FormReducers/FormReducer'
+import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
 export const AboutMe = () => {
 	const { t, i18n } = useTranslation()
+
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const [IsError, setError] = useState<boolean>(false)
 	const formData = useAppSelector(state => state.Form)
-	const role = useAppSelector(
-		state => state.Profile.profileData.CurrentData?.roles
-	)
-
+	const role = useAppSelector(state => state.InfoUser?.role)
+	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	const user = JSON.parse(localStorage.getItem('userInfo') || '')
 	const countryStorage = useAppSelector(
 		(state: RootState) => state.CountriesEducation.countries
 	)
+	var email = useRef<string>('')
+
+	const exit = async () => {
+		await logout(dispatch)
+		navigate('/')
+	}
+
+	const getRole = async () => {
+		if (!role) {
+			const response = await GetRole(dispatch)
+			if (response) {
+				putRole(response[0].role)
+			} else {
+				navigate('/')
+			}
+		}
+	}
 
 	const getData = async () => {
 		const response = await getAbUsForm(dispatch)
@@ -53,19 +75,15 @@ export const AboutMe = () => {
 	}
 
 	const setChanges = async () => {
-		const IsCorrectNS = [formData.name, formData.surName].some(el =>
-			/^\p{L}+$/u.test(el)
-		)
-
 		const IsCorrectPatronymic =
 			/^\p{L}+$/u.test(formData.patronymic) || formData.patronymic === ''
 
-		const IsCorrectPhone = /^\+[0-9][0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}$/.test(
-			formData.phone
-		)
+		const IsCorrectPhone =
+			/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(formData.phone)
 
 		if (
-			!IsCorrectNS ||
+			!/^\p{L}+$/u.test(formData.name) ||
+			!/^\p{L}+$/u.test(formData.surName) ||
 			!IsCorrectPatronymic ||
 			!IsCorrectPhone ||
 			formData.birthDay === ''
@@ -73,11 +91,9 @@ export const AboutMe = () => {
 			setError(true)
 		} else {
 			const status = await putAbUsForm(formData, dispatch)
-			if (status === 403) {
-				setError(true)
-			} else {
-				setError(false)
-			}
+			if (status === 400) setError(true)
+			if (status === 403) navigate('/')
+			if (status === 200) setError(false)
 		}
 	}
 
@@ -86,6 +102,15 @@ export const AboutMe = () => {
 	})
 
 	useEffect(() => {
+		if (localStorage.getItem('userInfo') || email.current === '') {
+			const personalData = JSON.parse(localStorage.getItem('userInfo') || '')
+			if (typeof personalData !== 'string') {
+				email.current = personalData.email
+			}
+		} else {
+			exit()
+		}
+		getRole()
 		getData()
 	}, [])
 
@@ -100,7 +125,7 @@ export const AboutMe = () => {
 		}
 	}, [countries])
 	if (!role) return <></>
-	const isStudent = role[0].type === 'STUD'
+	const isStudent = role === 'STUD'
 	return (
 		<div className="m-14 radio">
 			<Space direction="vertical" size={20}>
@@ -186,14 +211,14 @@ export const AboutMe = () => {
 							size="large"
 							className={clsx(
 								'w-[624px] shadow ',
-								IsError && formData.birthDay === '' && 'border-rose-500'
+								IsError && !formData.birthDay && 'border-rose-500'
 							)}
 							format={'DD.MM.YYYY'}
 							onChange={e =>
 								dispatch(birthDay(e == null ? '' : e?.format('YYYY-MM-DD')))
 							}
 							value={
-								formData.birthDay === ''
+								!formData.birthDay
 									? null
 									: dayjs(
 											formData.birthDay.split('-').reverse().join('.'),
@@ -202,7 +227,7 @@ export const AboutMe = () => {
 							}
 						/>
 					</ConfigProvider>
-					{IsError && formData.birthDay === '' && (
+					{IsError && !formData.birthDay && (
 						<div className="text-sm text-rose-500">{t('DateError')}</div>
 					)}
 				</Space>
@@ -234,7 +259,7 @@ export const AboutMe = () => {
 						className={clsx(
 							'w-[624px] shadow ',
 							IsError &&
-								!/^\+[0-9][0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}$/.test(
+								!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
 									formData.phone
 								) &&
 								'border-rose-500'
@@ -243,18 +268,18 @@ export const AboutMe = () => {
 						value={formData.phone}
 					/>
 					{IsError &&
-						!/^\+[0-9][0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}$/.test(
+						!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
 							formData.phone
 						) && <div className="text-sm text-rose-500">{t('BadPhone')}</div>}
 				</Space>
 				<Space direction="vertical" size={'small'}>
 					<Typography.Text>{t('email')}</Typography.Text>
 					<Input
-						disabled={isStudent}
+						disabled={true}
 						placeholder={t('email')}
 						size="large"
 						className="w-[624px] shadow "
-						value={user !== '' ? user.email : ''}
+						value={email.current}
 					/>
 				</Space>
 				<Space

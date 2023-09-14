@@ -23,12 +23,14 @@ import { useNavigate } from 'react-router-dom'
 import { IParentError, IParentState } from '../../../api/types'
 import { RootState, useAppSelector } from '../../../store'
 import {
+	GetRole,
 	deleteParentItemRequest,
 	getParentItemRequest,
 	postParentItemRequest,
 	putParentItemRequest
 } from '../../../store/creators/MainCreators'
 import { addDocuments } from '../../../store/reducers/FormReducers/CountriesEducationReducer'
+import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
 import {
 	FIO,
 	allData,
@@ -72,24 +74,20 @@ export const Parent = () => {
 	dayjs.locale(i18n.language)
 	const [IsError, setError] = useState<IParentError | null>(null)
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
-	const role = useAppSelector(
-		state => state.Profile.profileData.CurrentData?.roles
-	)
+	const role = useAppSelector(state => state.InfoUser?.role)
 	const [updateItems, setUpdate] = useState<boolean>(true)
 	const parentData = useAppSelector(state => state.Parent)
 	const documentStorage = useAppSelector(
 		(state: RootState) => state.CountriesEducation.documents
 	)
-
 	const { data: documents } = useGetDocumentsQuery(i18n.language, {
 		skip: SkipCountriesQuery
 	})
-	console.log(parentData)
 
 	useEffect(() => {
 		if (updateItems) {
 			getData()
-
+			getRole()
 			setUpdate(false)
 		}
 	}, [updateItems])
@@ -146,6 +144,17 @@ export const Parent = () => {
 		} else console.log('403')
 	}
 
+	const getRole = async () => {
+		if (!role) {
+			const response = await GetRole(dispatch)
+			if (response) {
+				putRole(response[0].role)
+			} else {
+				navigate('/')
+			}
+		}
+	}
+
 	const handleAddParent = async () => {
 		const response = await postParentItemRequest(
 			{
@@ -156,7 +165,7 @@ export const Parent = () => {
 				divisionCode: null,
 				eMail: null,
 				issuedBy: null,
-				documentTypeId: 1,
+				documentTypeId: 184,
 				phone: null,
 				passportSeries: null,
 				passportNumber: null,
@@ -168,13 +177,13 @@ export const Parent = () => {
 			dispatch
 		)
 		if (response === 200) setUpdate(true)
-		else console.log('403')
+		else navigate('/')
 	}
 
 	const handleDeleteParent = async (id: number) => {
 		const response = await deleteParentItemRequest(id.toString(), dispatch)
 		if (response === 200) setUpdate(true)
-		else console.log('403')
+		else navigate('/')
 	}
 
 	const handleUpdateParent = async (item: IParentState) => {
@@ -202,11 +211,10 @@ export const Parent = () => {
 			dispatch
 		)
 		if (response === 200) setUpdate(true)
-		else console.log('403')
+		else navigate('/')
 	}
-	if (!role) return <></>
-	const isStudent = role[0].type === 'STUD'
-	console.log(parentData)
+
+	const isStudent = role === 'STUD'
 
 	return (
 		<div className="m-14 radio">

@@ -46,11 +46,7 @@ export const Buttons = ({
 		}
 		const response = await setForm(data, dispatch)
 		if (response === 200) return true
-		else {
-			if (response === 403) {
-				navigate('/')
-			}
-		}
+		else navigate('/')
 	}
 	const handleSkip = () => {
 		navigate('/user')
@@ -59,6 +55,7 @@ export const Buttons = ({
 		<div className="w-full flex flex-col items-center">
 			<div className="w-full flex justify-center items-center gap-8 mt-[60px]">
 				<Button
+					disabled={true}
 					onClick={handleCancel}
 					type="default"
 					className="w-[200px] font-bold h-[50px] rounded-full border-[#3073D7] text-[#3073D7]"

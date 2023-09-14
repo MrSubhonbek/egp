@@ -13,6 +13,7 @@ import {
 	education,
 	form,
 	getAddress,
+	getAdmissionLink,
 	getDocument,
 	getEducation,
 	getForm,
@@ -175,7 +176,7 @@ export const setRole = async (
 	return 403
 }
 
-export const GetRole = async (dispatch: Dispatch): Promise<IRole | null> => {
+export const GetRole = async (dispatch: Dispatch): Promise<IRole[] | null> => {
 	try {
 		await refreshToken(dispatch)
 		const response = await getRole()
@@ -324,16 +325,15 @@ export const putAbUsForm = async (
 	dispatch: Dispatch
 ): Promise<number> => {
 	try {
-		if ((await refreshToken(dispatch)) === 403) {
-			return 403
-		}
+		if ((await refreshToken(dispatch)) === 403) return 403
 		await putForm(data)
+		return 200
 	} catch (e) {
 		if (request.isAxiosError(e) && e.response) {
 			console.log(e.response?.data as IError)
 		}
 	}
-	return 200
+	return 400
 }
 
 export const putAbUsAddress = async (
@@ -345,12 +345,13 @@ export const putAbUsAddress = async (
 			return 403
 		}
 		await putAddress(data)
+		return 200
 	} catch (e) {
 		if (request.isAxiosError(e) && e.response) {
 			console.log(e.response?.data as IError)
 		}
 	}
-	return 200
+	return 400
 }
 
 export const portfolioLinkRequest = async (
@@ -358,16 +359,15 @@ export const portfolioLinkRequest = async (
 	dispatch: Dispatch
 ): Promise<number> => {
 	try {
-		if ((await refreshToken(dispatch)) === 403) {
-			return 403
-		}
+		await refreshToken(dispatch)
 		await putPortfolioLink(data)
+		return 200
 	} catch (e) {
 		if (request.isAxiosError(e) && e.response) {
 			console.log(e.response?.data as IError)
 		}
 	}
-	return 200
+	return 403
 }
 
 export const deleteJobItemRequest = async (
@@ -375,16 +375,15 @@ export const deleteJobItemRequest = async (
 	dispatch: Dispatch
 ): Promise<number> => {
 	try {
-		if ((await refreshToken(dispatch)) === 403) {
-			return 403
-		}
+		await refreshToken(dispatch)
 		await deleteJobItem(id)
+		return 200
 	} catch (e) {
 		if (request.isAxiosError(e) && e.response) {
 			console.log(e.response?.data as IError)
 		}
 	}
-	return 200
+	return 403
 }
 
 export const updateJobItemRequest = async (
@@ -485,8 +484,6 @@ export const addEducationItemRequest = async (
 	return 403
 }
 
-//граница
-
 export const putParentItemRequest = async (
 	id: string,
 	data: IParent,
@@ -556,7 +553,7 @@ export const postDocumentItemRequest = async (
 	dispatch: Dispatch
 ): Promise<number> => {
 	try {
-		await refreshToken(dispatch)
+		if ((await refreshToken(dispatch)) === 403) return 403
 		await postDocument(data)
 		return 200
 	} catch (e) {
@@ -564,7 +561,7 @@ export const postDocumentItemRequest = async (
 			console.log(e.response?.data as IError)
 		}
 	}
-	return 403
+	return 400
 }
 
 export const getDocumentItemRequest = async (
@@ -573,6 +570,24 @@ export const getDocumentItemRequest = async (
 	try {
 		await refreshToken(dispatch)
 		const response = await getDocument()
+		return response.data
+	} catch (e) {
+		if (request.isAxiosError(e) && e.response) {
+			console.log(e.response?.data as IError)
+		}
+	}
+	return null
+}
+
+export const getAdmission = async (
+	dispatch: Dispatch
+): Promise<{
+	link: string
+	session: string
+} | null> => {
+	try {
+		await refreshToken(dispatch)
+		const response = await getAdmissionLink()
 		return response.data
 	} catch (e) {
 		if (request.isAxiosError(e) && e.response) {

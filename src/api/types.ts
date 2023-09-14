@@ -99,7 +99,7 @@ export type IDocumentsRequest = {
 }
 
 export type IRole = {
-	role: TypeRole
+	role: TypeRole | null
 }
 
 export type formItem = {

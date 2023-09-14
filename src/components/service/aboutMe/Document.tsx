@@ -18,9 +18,11 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { RootState, useAppSelector } from '../../../store'
 import {
+	GetRole,
 	getDocumentItemRequest,
 	postDocumentItemRequest
 } from '../../../store/creators/MainCreators'
@@ -36,6 +38,7 @@ import {
 	passportSeries,
 	snils
 } from '../../../store/reducers/FormReducers/DocumentReducer'
+import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
 import { useGetDocumentsQuery } from '../../../store/slice/documentSlice'
 
 const props: UploadProps = {
@@ -56,23 +59,32 @@ const props: UploadProps = {
 	}
 }
 export const Document = () => {
+	const navigate = useNavigate()
 	const [t, i18n] = useTranslation()
 	dayjs.locale(i18n.language)
 	const dispatch = useDispatch()
 
 	const [IsEmpty, changeIsEmpty] = useState<boolean>(false)
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
-	const role = useAppSelector(
-		state => state.Profile.profileData.CurrentData?.roles
-	)
+	const role = useAppSelector(state => state.InfoUser?.role)
 	const documentStorage = useAppSelector(
 		(state: RootState) => state.CountriesEducation.documents
 	)
 	const documentData = useAppSelector((state: RootState) => state.Document)
-
 	const { data: documents } = useGetDocumentsQuery(i18n.language, {
 		skip: SkipCountriesQuery
 	})
+
+	const getRole = async () => {
+		if (!role) {
+			const response = await GetRole(dispatch)
+			if (response) {
+				putRole(response[0].role)
+			} else {
+				navigate('/')
+			}
+		}
+	}
 
 	const getData = async () => {
 		const response = await getDocumentItemRequest(dispatch)
@@ -95,10 +107,11 @@ export const Document = () => {
 					snils: !response.snils ? '' : response.snils
 				})
 			)
-		} else console.log('403')
+		} else navigate('/')
 	}
 
 	useEffect(() => {
+		getRole()
 		getData()
 	}, [])
 
@@ -142,12 +155,10 @@ export const Document = () => {
 		}
 		const response = await postDocumentItemRequest(documentData, dispatch)
 		if (response === 200) changeIsEmpty(false)
-		else {
-			console.log('403')
-		}
+		if (response === 400) changeIsEmpty(true)
+		if (response === 403) navigate('/')
 	}
-	if (!role) return <></>
-	const isStudent = role[0].type === 'STUD'
+	const isStudent = role === 'STUD'
 
 	return (
 		<div className="m-14 radio">
