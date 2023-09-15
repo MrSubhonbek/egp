@@ -19,8 +19,8 @@ export const Apply = () => {
 		const response = await getAdmission(dispatch)
 
 		if (response) {
-			cookie.set('s_id', response.session)
-			cookie.set('s_abit_id', response.session)
+			cookie.set('s_id', response.session, {domain: 'kpfu.ru'})
+			cookie.set('s_abit_id', response.session, {domain: 'kpfu.ru'})
 			window.open(response.link, '_blank')
 		}
 	}
