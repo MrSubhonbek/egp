@@ -6,7 +6,7 @@ import { IDocumentsRequest } from './../../api/types'
 
 export const documentsAPi = createApi({
 	reducerPath: 'documentsAPi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'https://egp.kpfu.ru/user-api' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'https://newlk.kpfu.ru/user-api/' }),
 	endpoints: build => ({
 		getDocuments: build.query<IDocumentsRequest[], string>({
 			query: language => ({

@@ -6,11 +6,6 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
 import { ApproveEmail } from './components/approve/ApproveEmail'
 import { CheckEmail } from './components/checkEmail/checkEmail'
-import { FormModal } from './components/formUser/AboutUserForm/UserForm'
-import { DocumentForm } from './components/formUser/DocumentForm/DocumentForm'
-import { EducationForm } from './components/formUser/EducationForm/EducationForm'
-import { ParentForm } from './components/formUser/ParentForm/ParentForm'
-import { WorkForm } from './components/formUser/WorkForm/WorkForm'
 import { Login } from './components/login/Login'
 import { Registration } from './components/registration/Registration'
 import Service from './components/service'
@@ -30,23 +25,11 @@ const App = () => {
 	const dataApi = async () => {
 		const res = await refreshToken(dispatch)
 		if (res === 200) {
-			if (currentUrl.pathname.includes('/api/register/approve')) {
-				navigate(currentUrl.pathname)
-			} else {
-				const isForm = [
-					'/form',
-					'/parent',
-					'/work',
-					'/documents',
-					'/education'
-				].some(el => el === currentUrl.pathname)
-				if (isForm) {
-					navigate('/form')
-				} else {
-					if (!currentUrl.pathname.includes('/services' || '/user')) {
-						navigate('/user')
-					}
-				}
+			if (
+				!currentUrl.pathname.includes('/services' || '/user') &&
+				!currentUrl.pathname.includes('/api/register/approve')
+			) {
+				navigate('/user')
 			}
 		}
 		if (res === 403) {
@@ -64,16 +47,9 @@ const App = () => {
 		) {
 			dataApi()
 		} else {
-			const IsBadPage = [
-				'/form',
-				'/parent',
-				'/work',
-				'/documents',
-				'/education'
-			].some(el => el === currentUrl.pathname)
 			if (
-				IsBadPage ||
-				['/services', '/user'].some(el => el === currentUrl.pathname)
+				['/services', '/user'].some(el => el === currentUrl.pathname) &&
+				!currentUrl.pathname.includes('/api/register/approve')
 			) {
 				navigate('/')
 			}
@@ -98,11 +74,6 @@ const App = () => {
 					/>
 					<Route path="/user/*" element={<User />} />
 					<Route path="/api/register/approve" element={<ApproveEmail />} />
-					<Route path="/form" element={<FormModal />} />
-					<Route path="/education" element={<EducationForm />} />
-					<Route path="/documents" element={<DocumentForm />} />
-					<Route path="/work" element={<WorkForm />} />
-					<Route path="/parent" element={<ParentForm />} />
 					<Route
 						path="/registration/checkingEmail"
 						element={<CheckEmail email={email} />}

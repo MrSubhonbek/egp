@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { CardForm } from '../approve/cardForm'
@@ -9,6 +9,10 @@ interface ICheckEmailProps {
 
 export const CheckEmail: FC<ICheckEmailProps> = ({ email }) => {
 	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (email === '') navigate('/')
+	}, [])
 
 	const buttonEffect = () => {
 		console.log("it's buttons effect")

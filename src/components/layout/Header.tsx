@@ -38,7 +38,6 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 			await logout(dispatch)
 			navigate('/')
 		} else {
-			console.log(response)
 			dispatch(putRole(response[0].role))
 		}
 	}

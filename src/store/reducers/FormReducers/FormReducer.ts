@@ -38,7 +38,14 @@ export const FormReducer = createSlice({
 			state.countryId = action.payload
 		},
 		allData: (state, action: PayloadAction<formItem>): formItem => {
-			return action.payload
+			return {
+				...action.payload,
+				gender: !action.payload.gender ? 'M' : action.payload.gender,
+				countryId: !action.payload.countryId ? 184 : action.payload.countryId,
+				phone: !action.payload.phone ? '' : action.payload.phone,
+				patronymic: !action.payload.patronymic ? '' : action.payload.patronymic,
+				birthDay: !action.payload.birthDay ? '' : action.payload.birthDay
+			}
 		}
 	}
 })

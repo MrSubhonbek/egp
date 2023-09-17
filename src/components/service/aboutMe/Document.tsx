@@ -92,7 +92,7 @@ export const Document = () => {
 			dispatch(
 				allData({
 					documentTypeId: !response.documentTypeId
-						? 1
+						? 2
 						: response.documentTypeId,
 					passportSeries: !response.passportSeries
 						? ''

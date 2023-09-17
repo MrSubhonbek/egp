@@ -50,7 +50,7 @@ type TypeSchedule = {
 	saturday: Day[]
 }
 const baseQuery = fetchBaseQuery({
-	baseUrl: 'https://egp.kpfu.ru/user-api/',
+	baseUrl: 'https://newlk.kpfu.ru/user-api',
 	prepareHeaders: (headers, { getState }) => {
 		const accessToken = localStorage.getItem('access')
 		console.log(accessToken)

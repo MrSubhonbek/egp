@@ -2,8 +2,9 @@ export interface IRegRequest {
 	lastName: string
 	password: string
 	firstName: string
-	email: string | null
-	agreement: string | null
+	email: string
+	agreement: string
+	middleName: string | null
 }
 
 export interface IAuthRequest {
@@ -19,6 +20,7 @@ export interface errorItem {
 export type IRegForm = {
 	surname: string
 	name: string
+	middleName: string | null
 	email: string
 	password: string
 	confirmPassword: string

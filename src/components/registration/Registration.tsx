@@ -40,15 +40,18 @@ export const Registration: FC<IRegProps> = ({ changeEmail, email }) => {
 	const onFinish = async (values: IRegForm) => {
 		if (confirmPassword) {
 			if (values.email || values.name || values.password) {
-				const response = await dispatch(
-					registerUser({
+				const response = await registerUser(
+					{
 						lastName: values.surname,
 						password: values.password,
+						middleName: !values.middleName ? null : values.middleName,
 						firstName: values.name,
 						email: values.email,
 						agreement: 'true'
-					})
+					},
+					dispatch
 				)
+
 				if (response === 200) {
 					navigate('/registration/checkingEmail')
 				}
@@ -67,7 +70,7 @@ export const Registration: FC<IRegProps> = ({ changeEmail, email }) => {
 					onFinish={onFinish}
 				>
 					<Title className={styles.title}>{t('registration')}</Title>
-					<Inputs email={email} error={error} changeEmail={changeEmail} />
+					<Inputs error={error} changeEmail={changeEmail} />
 					<Password
 						error={error}
 						confirmPassword={confirmPassword}

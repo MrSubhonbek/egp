@@ -44,7 +44,7 @@ export const ApproveEmail = () => {
 			localStorage.getItem('userInfo') !== null ||
 			cookies.get('refresh') !== undefined
 		) {
-			navigate('/form')
+			navigate('/user')
 		}
 	}
 

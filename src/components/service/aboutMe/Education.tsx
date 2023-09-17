@@ -203,7 +203,7 @@ export const Education = () => {
 			documentSeries: null,
 			graduateYear: null,
 			specialization: null,
-			educationLevelId: 1,
+			educationLevelId: 2,
 			countryId: 184
 		}
 		const response = await addEducationItemRequest(item, dispatch)

@@ -1,21 +1,24 @@
 import { Button, Typography } from 'antd'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import ReactPlayer from 'react-player'
 import { useNavigate } from 'react-router-dom'
 
 import universityPicture from '../../../assets/images/universityView.png'
-import universityPicSec from '../../../assets/images/universityViewSec.png'
+import { StartPlaySVG, StopPlaySVG } from '../../../assets/svg'
 import {
 	ArrowLongLeftSVG,
 	LargeLogoSVG,
 	QuotationMarksSVG
 } from '../../../assets/svg'
-import pause from '../../../assets/svg/pause.svg'
+import video from '../../../assets/video/Kfu.mp4'
 import { Faq } from '../../faq/Faq'
 import { Footer } from '../../layout/Footer'
 
 const AboutUniversity = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
+	const [play, changePlay] = useState(false)
 	return (
 		<div className="flex flex-col w-full min-h-screen">
 			<Faq />
@@ -82,21 +85,29 @@ const AboutUniversity = () => {
 					(IT), psychology and cultural studies, humanities, pedagogical and
 					interdisciplinary fields.
 				</span>
-				<div className="relative w-full">
-					<img
-						src={pause}
-						alt=""
-						className="absolute right-32 bottom-16 z-10 w-[100px] h-[100px]"
-					/>
+				<div className="relative m-auto min-[1100px]:w-[885px] min-[1100px]:h-[500px]">
+					<div
+						className="absolute right-32 bottom-16 z-10 bg-bluekfu w-[100px] min-[1100px]:w-[80px] min-[1100px]:h-[80px] h-[100px] cursor-pointer flex justify-center items-center rounded-full"
+						onClick={() => {
+							changePlay(!play)
+						}}
+					>
+						{play ? <StartPlaySVG /> : <StopPlaySVG />}
+					</div>
 					<Typography.Title
 						level={2}
 						style={{ color: 'white' }}
-						className="absolute z-10 font-normal left-10 bottom-14"
+						className="absolute z-10 font-normal left-10 bottom-14 rounded-full"
 					>
 						Kazan <br /> Federal University
 					</Typography.Title>
 					<div className="bg-black opacity-30 left-0 right-0 bottom-0 top-0 absolute"></div>
-					<img src={universityPicSec} className="w-full h-full" alt="" />
+					<ReactPlayer
+						url={video}
+						width={'100%'}
+						height={'100%'}
+						playing={play}
+					/>
 				</div>
 			</div>
 			<Footer />

@@ -7,12 +7,11 @@ import { IError } from '../../../api/types'
 import styles from './Inputs.module.scss'
 
 interface IInputsProps {
-	email: string
 	error: IError | null
 	changeEmail: (email: string) => void
 }
 
-export const Inputs: FC<IInputsProps> = ({ error, changeEmail, email }) => {
+export const Inputs: FC<IInputsProps> = ({ error, changeEmail }) => {
 	const { t } = useTranslation()
 
 	return (
@@ -41,7 +40,7 @@ export const Inputs: FC<IInputsProps> = ({ error, changeEmail, email }) => {
 					)
 				}
 			>
-				<Input size="large" placeholder={t('surname')} />
+				<Input size="large" placeholder="surname" />
 			</Form.Item>
 			<Form.Item
 				name="name"
@@ -67,7 +66,33 @@ export const Inputs: FC<IInputsProps> = ({ error, changeEmail, email }) => {
 					)
 				}
 			>
-				<Input size="large" placeholder={t('name')} />
+				<Input size="large" placeholder="name" />
+			</Form.Item>
+			<Form.Item
+				name="middleName"
+				className={styles.input}
+				style={{ marginBottom: 30 }}
+				validateStatus={
+					error !== null &&
+					error.details.length > 0 &&
+					error.details.some(el => el.field === 'middleName')
+						? 'error'
+						: undefined
+				}
+				help={
+					error !== null &&
+					error.details.length > 0 &&
+					error.details.some(el => el.field === 'middleName') && (
+						<div>
+							{error.details.map(el => {
+								if (el.field === 'middleName') return <p>{el.message}</p>
+								else return ''
+							})}
+						</div>
+					)
+				}
+			>
+				<Input size="large" placeholder="patronymic" />
 			</Form.Item>
 			<Form.Item
 				name="email"

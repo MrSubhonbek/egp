@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import Cookies from 'universal-cookie'
+import { Cookies } from 'react-cookie'
 
 import { IAuthRegState, IAuthSuccess, IError } from '../../api/types'
 import { RootState } from '../index'

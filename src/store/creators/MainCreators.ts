@@ -122,20 +122,21 @@ export const refreshToken = async (dispatch: Dispatch): Promise<number> => {
 	}
 }
 
-export const registerUser =
-	(data: IRegRequest) =>
-	async (dispatch: Dispatch): Promise<number> => {
-		try {
-			await register(data)
-			dispatch(registrationFailure(null))
-			return 200
-		} catch (e) {
-			if (request.isAxiosError(e) && e.response) {
-				dispatch(registrationFailure(e.response?.data as IError))
-			}
+export const registerUser = async (
+	data: IRegRequest,
+	dispatch: Dispatch
+): Promise<number> => {
+	try {
+		await register(data)
+		dispatch(registrationFailure(null))
+		return 200
+	} catch (e) {
+		if (request.isAxiosError(e) && e.response) {
+			dispatch(registrationFailure(e.response?.data as IError))
 		}
-		return 400
 	}
+	return 400
+}
 
 export const approveEmail = async (
 	data: IApproveRequest,
