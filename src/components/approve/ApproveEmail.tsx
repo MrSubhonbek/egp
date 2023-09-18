@@ -59,9 +59,7 @@ export const ApproveEmail = () => {
 			mainTittle="Welcome"
 			secondTittle={
 				<span>
-					Here we need an interesting welcome text about what he can do user.
-					However, we should not forget that high-tech the concept of social
-					order does not give us any other choice but definitions of new offers.
+
 				</span>
 			}
 			buttonText="Start"

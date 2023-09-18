@@ -92,7 +92,7 @@ export const Inputs: FC<IInputsProps> = ({ error, changeEmail }) => {
 					)
 				}
 			>
-				<Input size="large" placeholder="patronymic" />
+				<Input size="large" placeholder="middle name" />
 			</Form.Item>
 			<Form.Item
 				name="email"
