@@ -43,7 +43,7 @@ export const Inputs: FC<IInputsProps> = ({ error }) => {
 					placeholder={t('password')}
 				/>
 			</Form.Item>
-			<p className={styles.forgot}>{t('rememberPassword')}</p>
+			{/*<p className={styles.forgot}>{t('rememberPassword')}</p>*/}
 		</>
 	)
 }

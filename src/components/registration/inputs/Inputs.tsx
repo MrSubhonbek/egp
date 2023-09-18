@@ -40,7 +40,7 @@ export const Inputs: FC<IInputsProps> = ({ error, changeEmail }) => {
 					)
 				}
 			>
-				<Input size="large" placeholder="surname" />
+				<Input size="large" placeholder="Surname" />
 			</Form.Item>
 			<Form.Item
 				name="name"
@@ -66,7 +66,7 @@ export const Inputs: FC<IInputsProps> = ({ error, changeEmail }) => {
 					)
 				}
 			>
-				<Input size="large" placeholder="name" />
+				<Input size="large" placeholder="Name" />
 			</Form.Item>
 			<Form.Item
 				name="middleName"
@@ -92,7 +92,7 @@ export const Inputs: FC<IInputsProps> = ({ error, changeEmail }) => {
 					)
 				}
 			>
-				<Input size="large" placeholder="middle name" />
+				<Input size="large" placeholder="Middle name" />
 			</Form.Item>
 			<Form.Item
 				name="email"
