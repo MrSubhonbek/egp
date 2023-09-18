@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useAppSelector } from '../../store'
 import DropDrag from '../dnd/DropDrag'
 import { block } from '../dnd/constant'
-import { Faq } from '../faq/Faq'
+// import { Faq } from '../faq/Faq'
 import { Layout } from '../layout/Layout'
 import { Heading } from '../ui/Heading'
 
@@ -26,7 +26,7 @@ export const User = () => {
 						{t('PersonalAccount')} <br />
 					</Heading>
 					<DropDrag edit={false} layouts={layouts} setLayouts={setLayouts} />
-					<Faq />
+					{/* <Faq /> */}
 				</div>
 			</div>
 		</Layout>

@@ -19,8 +19,8 @@ export const Apply = () => {
 		const response = await getAdmission(dispatch)
 
 		if (response) {
-			cookie.set('s_id', response.session, {domain: 'kpfu.ru'})
-			cookie.set('s_abit_id', response.session, {domain: 'kpfu.ru'})
+			cookie.set('s_id', response.session, { domain: 'kpfu.ru' })
+			cookie.set('s_abit_id', response.session, { domain: 'kpfu.ru' })
 			window.open(response.link, '_blank')
 		}
 	}
@@ -50,7 +50,7 @@ export const Apply = () => {
 					alt="avatar"
 				/>
 			</div>
-			<div className="max-xl:hidden absolute right-[108px] cursor-pointer hover:scale-x-125 hover:right-20 w-[100px] hover:w-[120px] transition-all duration-200 h-full flex items-center">
+			{/* <div className="max-xl:hidden absolute right-[108px] cursor-pointer hover:scale-x-125 hover:right-20 w-[100px] hover:w-[120px] transition-all duration-200 h-full flex items-center">
 				<svg
 					width="87"
 					height="40"
@@ -66,7 +66,7 @@ export const Apply = () => {
 						strokeLinejoin="round"
 					/>
 				</svg>
-			</div>
+			</div> */}
 		</div>
 	)
 }

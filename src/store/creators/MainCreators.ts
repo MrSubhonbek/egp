@@ -597,3 +597,20 @@ export const getAdmission = async (
 	}
 	return null
 }
+
+export async function getPhones() {
+	var response = await fetch(
+		window.location.origin + '/public/phone-codes.json',
+		{
+			method: 'get',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}
+	)
+		.then(response => response.json())
+		.then(data => {
+			return data.results
+		})
+	return response
+}

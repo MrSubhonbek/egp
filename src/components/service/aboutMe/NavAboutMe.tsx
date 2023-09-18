@@ -47,27 +47,27 @@ export const NavAboutMe = () => {
 			id: '/services/aboutMe/document',
 			icon: <MyDocsSvg />,
 			name: t('documents')
-		},
-		{
-			id: '/services/aboutMe/address',
-			icon: <AddressSvg />,
-			name: t('adress')
-		},
-		{
-			id: '/services/aboutMe/education',
-			icon: <EducationSvg />,
-			name: t('education')
-		},
-		{
-			id: '/services/aboutMe/work',
-			icon: <WorkSvg />,
-			name: t('work')
-		},
-		{
-			id: '/services/aboutMe/parent',
-			icon: <ParentSvg />,
-			name: t('Parents')
 		}
+		// {
+		// 	id: '/services/aboutMe/address',
+		// 	icon: <AddressSvg />,
+		// 	name: t('adress')
+		// },
+		// {
+		// 	id: '/services/aboutMe/education',
+		// 	icon: <EducationSvg />,
+		// 	name: t('education')
+		// },
+		// {
+		// 	id: '/services/aboutMe/work',
+		// 	icon: <WorkSvg />,
+		// 	name: t('work')
+		// },
+		// {
+		// 	id: '/services/aboutMe/parent',
+		// 	icon: <ParentSvg />,
+		// 	name: t('Parents')
+		// }
 	]
 	const isStudent = role === 'STUD'
 	const handleList = navList.map(({ icon, name, id }, index) => {
@@ -99,10 +99,10 @@ export const NavAboutMe = () => {
 			<div className="bg-[#F5F8FB] flex w-full">
 				{pathname === navList[0].id && <AboutMe />}
 				{pathname === navList[1].id && <Document />}
-				{pathname === navList[2].id && <Address />}
+				{/* {pathname === navList[2].id && <Address />}
 				{pathname === navList[3].id && <Education />}
 				{pathname === navList[4].id && <Work />}
-				{pathname === navList[5].id && <Parent />}
+				{pathname === navList[5].id && <Parent />} */}
 				<div className="p-14 w-full justify-center">
 					<div className="h-3/4 bg-white fixed w-full max-w-md rounded-[20px] shadow flex flex-col items-center justify-center">
 						<div>
@@ -125,7 +125,7 @@ export const NavAboutMe = () => {
 						<Typography.Text className="px-5 mt-5 py-[5px] bg-sky-100 rounded-full opacity-60 text-center text-black text-base font-normal leading-tight">
 							{roleConverter(role)}
 						</Typography.Text>
-						<div className="w-[250px] mt-5">
+						{/* <div className="w-[250px] mt-5">
 							<Typography.Text>{t('FilledOn')} 69.9%</Typography.Text>
 							<Progress
 								showInfo={false}
@@ -135,7 +135,7 @@ export const NavAboutMe = () => {
 						</div>
 						<Button className="rounded-full mt-5" type="primary" ghost>
 							{t('ViewProfile')}
-						</Button>
+						</Button> */}
 					</div>
 				</div>
 			</div>

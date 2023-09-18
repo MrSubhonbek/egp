@@ -11,8 +11,8 @@ import { RootState } from '../../store'
 import { registerUser } from '../../store/creators/MainCreators'
 import { clearRegistrationErrors } from '../../store/creators/SomeCreators'
 import { BackMainPage } from '../back-main-page/BackMainPage'
-import { Faq } from '../faq/Faq'
 
+// import { Faq } from '../faq/Faq'
 import styles from './Registration.module.scss'
 import { Buttons } from './buttons/Buttons'
 import { Inputs } from './inputs/Inputs'
@@ -85,7 +85,7 @@ export const Registration: FC<IRegProps> = ({ changeEmail, email }) => {
 						alt="group"
 					/>
 				</div>
-				<Faq />
+				{/* <Faq /> */}
 			</div>
 		</div>
 	)

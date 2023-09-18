@@ -10,8 +10,8 @@ import { RootState } from '../../store'
 import { loginUser } from '../../store/creators/MainCreators'
 import { clearLoginErrors } from '../../store/creators/SomeCreators'
 import { BackMainPage } from '../back-main-page/BackMainPage'
-import { Faq } from '../faq/Faq'
 
+// import { Faq } from '../faq/Faq'
 import styles from './Login.module.scss'
 import { Buttons } from './buttons/Buttons'
 import { Inputs } from './inputs/Inputs'
@@ -65,7 +65,7 @@ export const Login = () => {
 						alt="group"
 					/>
 				</div>
-				<Faq />
+				{/* <Faq /> */}
 			</div>
 		</div>
 	)

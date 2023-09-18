@@ -14,10 +14,7 @@ export const AboutUniversity = () => {
 					<div className="font-semibold text-xl text-start">
 						About the university
 					</div>
-					<div className="text-base text-start mt-[30px] max-h-[100px]">
-						Mini-text in 3-4 lines about how cool KFU is, statistics,
-						infographics inside — laudatory marketing odes to the university
-					</div>
+					<div className="text-base text-start mt-[30px] max-h-[100px]"></div>
 				</div>
 				<div className="text-start absolute bottom-[40px]">
 					<Button

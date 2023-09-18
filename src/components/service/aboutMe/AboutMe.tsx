@@ -13,10 +13,13 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import InputMask from 'react-input-mask'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import json from '../../../../public/phone-codes.json'
 import { RootState, useAppSelector } from '../../../store'
+import { getPhones } from '../../../store/creators/MainCreators'
 import {
 	GetRole,
 	getAbUsForm,
@@ -79,7 +82,9 @@ export const AboutMe = () => {
 			/^\p{L}+$/u.test(formData.patronymic) || formData.patronymic === ''
 
 		const IsCorrectPhone =
-			/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(formData.phone)
+			/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
+				formData.phone
+			) || !formData.phone
 
 		if (
 			!/^\p{L}+$/u.test(formData.name) ||
@@ -252,13 +257,14 @@ export const AboutMe = () => {
 				</Space>
 				<Space direction="vertical" size={'small'}>
 					<Typography.Text>{t('telephone')}</Typography.Text>
-					<Input
+					<InputMask
 						disabled={isStudent}
 						placeholder="+7 999 898-88-00"
-						size="large"
+						mask={'+9 999 999-99-99'}
 						className={clsx(
-							'w-[624px] shadow ',
+							'ant-input ant-input-lg css-dev-only-do-not-override-p7prni w-[624px] shadow ',
 							IsError &&
+								formData.phone &&
 								!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
 									formData.phone
 								) &&
@@ -266,8 +272,9 @@ export const AboutMe = () => {
 						)}
 						onChange={e => dispatch(phone(e.target.value))}
 						value={formData.phone}
-					/>
+					></InputMask>
 					{IsError &&
+						formData.phone &&
 						!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
 							formData.phone
 						) && <div className="text-sm text-rose-500">{t('BadPhone')}</div>}

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import {
 	DzenSvg,
@@ -13,7 +14,7 @@ export const Footer = () => {
 	return (
 		<footer className="w-full min-h-[400px] bg-[#212121] text-white text-base">
 			<div className="flex justify-around my-[100px] ">
-				<div className='flex flex-col justify-center'>
+				<div className="flex flex-col justify-center">
 					<LogoSvg />
 					<div className=" flex flex-col mt-10 mb-5">
 						<span>
@@ -32,11 +33,18 @@ export const Footer = () => {
 						<strong>Соцсети:</strong>
 					</span>
 					<div className="flex gap-5 my-5">
-						<VkSvg />
-						<YoutubeSvg />
-						<DzenSvg />
-						<OkSvg />
-						<TelegramSvg />
+						<Link
+							to={'https://vk.com/kazan_federal_university'}
+							target="_blank"
+						>
+							<VkSvg />
+						</Link>
+						<Link to={'https://www.youtube.com/@univertv'} target="_blank">
+							<YoutubeSvg />
+						</Link>
+						<Link to={'https://t.me/kznuniversity'} target="_blank">
+							<TelegramSvg />
+						</Link>
 					</div>
 				</div>
 			</div>

@@ -12,7 +12,7 @@ import {
 	QuotationMarksSVG
 } from '../../../assets/svg'
 import video from '../../../assets/video/Kfu.mp4'
-import { Faq } from '../../faq/Faq'
+// import { Faq } from '../../faq/Faq'
 import { Footer } from '../../layout/Footer'
 
 const AboutUniversity = () => {
@@ -21,7 +21,7 @@ const AboutUniversity = () => {
 	const [play, changePlay] = useState(false)
 	return (
 		<div className="flex flex-col w-full min-h-screen">
-			<Faq />
+			{/* <Faq /> */}
 			<div className="flex flex-col mx-6 my-20">
 				<Button
 					className="rounded-2xl border-solid border-black border-[1px] w-min h-auto mb-10"
@@ -33,16 +33,16 @@ const AboutUniversity = () => {
 					</div>
 				</Button>
 				<div className="flex justify-between w-full mb-40 max-lg:flex-col max-lg:items-center">
-					<div className="flex flex-col justify-between w-5/12 max-lg:w-3/4 max-lg:mb-5">
+					<div className="flex flex-col w-5/12 max-lg:w-3/4 max-lg:mb-5">
 						<Typography.Title level={2} className="font-normal">
 							About the university
 						</Typography.Title>
 
-						<Typography.Title level={4} className="font-normal mt-5 mb-5">
+						<Typography.Title level={4} className="font-normal mt-1">
 							MISSION
 						</Typography.Title>
 
-						<div className="flex flex-col">
+						<div className="flex flex-col mt-4">
 							<p className="leading-1 mb-2">
 								<span className="font-bold uppercase">
 									generation, concentration and dissemination&nbsp;
@@ -92,7 +92,7 @@ const AboutUniversity = () => {
 							changePlay(!play)
 						}}
 					>
-						{play ? <StartPlaySVG /> : <StopPlaySVG />}
+						{play ? <StopPlaySVG /> : <StartPlaySVG />}
 					</div>
 					<Typography.Title
 						level={2}
