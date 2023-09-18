@@ -1,14 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-	DzenSvg,
-	LogoSvg,
-	OkSvg,
-	TelegramSvg,
-	VkSvg,
-	YoutubeSvg
-} from '../../assets/svg'
+import { LogoSvg, TelegramSvg, VkSvg, YoutubeSvg } from '../../assets/svg'
 
 export const Footer = () => {
 	return (

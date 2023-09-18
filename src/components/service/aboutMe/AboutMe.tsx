@@ -79,7 +79,7 @@ export const AboutMe = () => {
 
 	const setChanges = async () => {
 		const IsCorrectPatronymic =
-			/^\p{L}+$/u.test(formData.patronymic) || formData.patronymic === ''
+			/^\p{L}[\p{L}\-\s]+$/u.test(formData.patronymic) || !formData.patronymic
 
 		const IsCorrectPhone =
 			/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
@@ -87,8 +87,8 @@ export const AboutMe = () => {
 			) || !formData.phone
 
 		if (
-			!/^\p{L}+$/u.test(formData.name) ||
-			!/^\p{L}+$/u.test(formData.surName) ||
+			!/^\p{L}[\p{L}\-\s]+$/u.test(formData.name) ||
+			!/^\p{L}[\p{L}\-\s]+$/u.test(formData.surName) ||
 			!IsCorrectPatronymic ||
 			!IsCorrectPhone ||
 			formData.birthDay === ''
@@ -158,13 +158,13 @@ export const AboutMe = () => {
 						className={clsx(
 							'w-[624px] shadow ',
 							IsError &&
-								!/^\p{L}+$/u.test(formData.surName) &&
+								!/^\p{L}[\p{L}\-\s]+$/u.test(formData.surName) &&
 								'border-rose-500'
 						)}
 						onChange={e => dispatch(surName(e.target.value))}
 						value={formData.surName}
 					/>
-					{IsError && !/^\p{L}+$/u.test(formData.surName) && (
+					{IsError && !/^\p{L}[\p{L}\-\s]+$/u.test(formData.surName) && (
 						<div className="text-sm text-rose-500">{t('EmptyFolder')}</div>
 					)}
 				</Space>
@@ -176,12 +176,14 @@ export const AboutMe = () => {
 						size="large"
 						className={clsx(
 							'w-[624px] shadow ',
-							IsError && !/^\p{L}+$/u.test(formData.name) && 'border-rose-500'
+							IsError &&
+								!/^\p{L}[\p{L}\-\s]+$/u.test(formData.name) &&
+								'border-rose-500'
 						)}
 						onChange={e => dispatch(name(e.target.value))}
 						value={formData.name}
 					/>
-					{IsError && !/^\p{L}+$/u.test(formData.name) && (
+					{IsError && !/^\p{L}[\p{L}\-\s]+$/u.test(formData.name) && (
 						<div className="text-sm text-rose-500">{t('EmptyFolder')}</div>
 					)}
 				</Space>
@@ -194,7 +196,7 @@ export const AboutMe = () => {
 						className={clsx(
 							'w-[624px] shadow ',
 							IsError &&
-								!/^\p{L}+$/u.test(formData.patronymic) &&
+								!/^\p{L}[\p{L}\-\s]+$/u.test(formData.patronymic) &&
 								formData.patronymic !== '' &&
 								'border-rose-500'
 						)}
@@ -202,7 +204,7 @@ export const AboutMe = () => {
 						value={formData.patronymic}
 					/>
 					{IsError &&
-						!/^\p{L}+$/u.test(formData.patronymic) &&
+						!/^\p{L}[\p{L}\-\s]+$/u.test(formData.patronymic) &&
 						formData.patronymic !== '' && (
 							<div className="text-sm text-rose-500">{t('BadPatronymic')}</div>
 						)}
@@ -261,8 +263,10 @@ export const AboutMe = () => {
 						disabled={isStudent}
 						placeholder="+7 999 898-88-00"
 						mask={'+9 999 999-99-99'}
+						type="text"
 						className={clsx(
-							'ant-input ant-input-lg css-dev-only-do-not-override-p7prni w-[624px] shadow ',
+							'w-[624px] shadow ant-input ant-input-lg css-dev-only-do-not-override-p7prni',
+							isStudent && 'ant-input-disabled',
 							IsError &&
 								formData.phone &&
 								!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(

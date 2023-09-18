@@ -127,23 +127,24 @@ export const Document = () => {
 	}, [documents])
 
 	const handleAddDocument = async () => {
-		const IsCorrectPasswordData = [
-			documentData.passportNumber,
-			documentData.passportSeries
-		].some(el => /^[0-9]{4}$/.test(el))
-
-		const IsCorrectSNILS = /^[0-9]{3}\-[0-9]{3}\-[0-9]{3} [0-9]{2}$/.test(
-			documentData.snils
-		)
-		const IsCorrectDivisionCode = /^[0-9]{3}\-[0-9]{3}$/.test(
-			documentData.divisionCode
-		)
-		const IsCorrectINN = /^[0-9]{12}$/.test(documentData.inn)
+		const IsCorrectNumber = /^[0-9]{4}$/.test(documentData.passportNumber)
+		const IsCorrectSeries =
+			/^[0-9]{4}$/.test(documentData.passportSeries) ||
+			!documentData.passportSeries
+		const IsCorrectSNILS =
+			/^[0-9]{3}\-[0-9]{3}\-[0-9]{3} [0-9]{2}$/.test(documentData.snils) ||
+			!documentData.snils
+		const IsCorrectDivisionCode =
+			/^[0-9]{3}\-[0-9]{3}$/.test(documentData.divisionCode) ||
+			!documentData.divisionCode
+		const IsCorrectINN =
+			/^[0-9]{12}$/.test(documentData.inn) || !documentData.inn
 		const IsCorrectWhomIssued =
 			!/\s\s/.test(documentData.issuedBy) &&
 			/^[\p{L}\s]+$/u.test(documentData.issuedBy)
 		if (
-			!IsCorrectPasswordData ||
+			!IsCorrectNumber ||
+			!IsCorrectSeries ||
 			!IsCorrectSNILS ||
 			!IsCorrectINN ||
 			!IsCorrectDivisionCode ||
@@ -199,6 +200,7 @@ export const Document = () => {
 							className={clsx(
 								'shadow w-full',
 								IsEmpty &&
+									documentData.divisionCode &&
 									!/^[0-9]{3}\-[0-9]{3}$/.test(documentData.divisionCode) &&
 									'border-rose-500'
 							)}
@@ -206,6 +208,7 @@ export const Document = () => {
 							onChange={e => dispatch(divisionCode(e.currentTarget.value))}
 						/>
 						{IsEmpty &&
+							documentData.divisionCode &&
 							!/^[0-9]{3}\-[0-9]{3}$/.test(documentData.divisionCode) && (
 								<span className="text-red-500 text-sm">
 									{t('BadDivisionCode')}
@@ -253,6 +256,7 @@ export const Document = () => {
 							className={clsx(
 								'shadow ',
 								IsEmpty &&
+									documentData.passportSeries &&
 									!/^[0-9]{4}$/.test(documentData.passportSeries) &&
 									'border-rose-500'
 							)}
@@ -264,9 +268,11 @@ export const Document = () => {
 									: ''
 							}
 						/>
-						{IsEmpty && !/^[0-9]{4}$/.test(documentData.passportSeries) && (
-							<span className="text-red-500 text-sm">{t('BadPassport')}</span>
-						)}
+						{IsEmpty &&
+							documentData.passportSeries &&
+							!/^[0-9]{4}$/.test(documentData.passportSeries) && (
+								<span className="text-red-500 text-sm">{t('BadPassport')}</span>
+							)}
 					</Space>
 					<Space direction="vertical" className="w-[300px]">
 						<Typography.Text>{t('number')}</Typography.Text>
@@ -280,7 +286,7 @@ export const Document = () => {
 									!/^[0-9]{4}$/.test(documentData.passportNumber) &&
 									'border-rose-500'
 							)}
-							maxLength={4}
+							maxLength={200}
 							onChange={e => dispatch(passportNumber(e.target.value))}
 							value={
 								documentData.passportNumber !== ''
@@ -331,6 +337,7 @@ export const Document = () => {
 						className={clsx(
 							'shadow ',
 							IsEmpty &&
+								documentData.snils &&
 								!/^[0-9]{3}\-[0-9]{3}\-[0-9]{3} [0-9]{2}$/.test(
 									documentData.snils
 								) &&
@@ -341,6 +348,7 @@ export const Document = () => {
 						value={documentData.snils}
 					/>
 					{IsEmpty &&
+						documentData.snils &&
 						!/^[0-9]{3}\-[0-9]{3}\-[0-9]{3} [0-9]{2}$/.test(
 							documentData.snils
 						) && <span className="text-red-500 text-sm">{t('BadSnils')}</span>}
@@ -355,15 +363,18 @@ export const Document = () => {
 						className={clsx(
 							'shadow ',
 							IsEmpty &&
+								documentData.inn &&
 								!/^[0-9]{12}$/.test(documentData.inn) &&
 								'border-rose-500'
 						)}
 						onChange={e => dispatch(inn(e.target.value))}
 						value={documentData.inn}
 					/>
-					{IsEmpty && !/^[0-9]{12}$/.test(documentData.inn) && (
-						<span className="text-red-500 text-sm">{t('BadInn')}</span>
-					)}
+					{IsEmpty &&
+						documentData.inn &&
+						!/^[0-9]{12}$/.test(documentData.inn) && (
+							<span className="text-red-500 text-sm">{t('BadInn')}</span>
+						)}
 				</Space>
 				<Space size={'small'} className={clsx(isStudent && 'hidden')}>
 					<Typography.Text className="text-black opacity-80 text-sm font-normal leading-none">
