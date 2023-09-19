@@ -1,9 +1,11 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { LogoSvg, TelegramSvg, VkSvg, YoutubeSvg } from '../../assets/svg'
 
 export const Footer = () => {
+	const { t } = useTranslation()
 	return (
 		<footer className="w-full min-h-[400px] bg-[#212121] text-white text-base">
 			<div className="flex justify-around my-[100px] ">
@@ -11,19 +13,19 @@ export const Footer = () => {
 					<LogoSvg />
 					<div className=" flex flex-col mt-10 mb-5">
 						<span>
-							<strong>Адрес:</strong> 420008 г. Казань, ул. Кремлевская, 18
+							<strong>{t('adress')}:</strong> {t('mainBuildringAdress')}
 						</span>
 						<span>
 							<strong>Email:</strong> public.mail@kpfu.ru
 						</span>
 					</div>
 					<span>
-						<strong>© 2023 Казанский федеральный университет</strong>
+						<strong>© 2023 {t('kfu')}</strong>
 					</span>
 				</div>
 				<div className="flex flex-col">
 					<span>
-						<strong>Соцсети:</strong>
+						<strong>{t('socialNetwork')}:</strong>
 					</span>
 					<div className="flex gap-5 my-5">
 						<Link

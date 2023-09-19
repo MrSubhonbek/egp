@@ -54,6 +54,7 @@
 	"periodOperation": "Period of operation",
 	"timeLine": "August 2018 — May 2023",
 	"work": "Work",
+	"socialNetwork": "Social network",
 	"workExperience": "Work experience",
 	"tellYourWorkExperience": "Tell us about your work experience in general",
 	"linkPortfolio": "Link to the portfolio",
@@ -93,6 +94,7 @@
 	"parentDocument": "Parent's documents",
 	"documentInfo": "Document data",
 	"adress": "Address",
+	"mainBuildringAdress": "420008 Kazan, Kremlevskaya str., 18",
 	"RegAdress": "Registration address",
 	"ResidenseAdress": "Address of residence",
 	"AdressLocation": "RF, c. Kazan, Adoratsky str., 3, sq. 88",
@@ -187,5 +189,6 @@
 	"Bachelor": "Bachelor",
 	"Magistracy": "Magistracy",
 	"Postgraduate": "Postgraduate",
-	"Residency": "Residency"
+	"Residency": "Residency",
+	"AboutUniversity": "About the university"
 }

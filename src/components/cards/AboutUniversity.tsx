@@ -9,14 +9,14 @@ export const AboutUniversity = () => {
 	const { t } = useTranslation()
 	return (
 		<div className="flex overflow-hidden">
-			<div className="ml-[40px] mt-[40px]">
+			<div className="ml-[40px] mt-[40px] flex flex-col justify-around bg-orange-500">
 				<div>
 					<div className="font-semibold text-xl text-start">
-						About the university
+						{t('AboutUniversity')}
 					</div>
-					<div className="text-base text-start mt-[30px] max-h-[100px]"></div>
+					{/* <div className="text-base text-start mt-[30px] max-h-[100px]"></div> */}
 				</div>
-				<div className="text-start absolute bottom-[40px]">
+				<div className="text-start ">
 					<Button
 						className="rounded-full border-black  w-[200px] h-[50px] text-base font-semibold mt-[40px]"
 						onClick={() => {

@@ -274,7 +274,7 @@ export const AboutMe = () => {
 						)}
 						onChange={e => dispatch(phone(e.target.value))}
 						value={formData.phone}
-					></InputMask>
+					/>
 					{IsError &&
 						formData.phone &&
 						!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
