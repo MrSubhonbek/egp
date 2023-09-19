@@ -265,7 +265,7 @@ export const AboutMe = () => {
 						mask={'+9 999 999-99-99'}
 						type="text"
 						className={clsx(
-							'w-[624px] shadow ant-input ant-input-lg css-dev-only-do-not-override-p7prni',
+							'ant-input ant-input-lg css-p7prni w-[624px] shadow ',
 							isStudent && 'ant-input-disabled',
 							IsError &&
 								formData.phone &&
