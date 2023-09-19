@@ -42,12 +42,12 @@ export const NavAboutMe = () => {
 			id: '/services/aboutMe/aboutMe',
 			icon: <AboutMeSvg />,
 			name: t('aboutMe')
-		},
-		{
-			id: '/services/aboutMe/document',
-			icon: <MyDocsSvg />,
-			name: t('documents')
 		}
+		// {
+		// 	id: '/services/aboutMe/document',
+		// 	icon: <MyDocsSvg />,
+		// 	name: t('documents')
+		// }
 		// {
 		// 	id: '/services/aboutMe/address',
 		// 	icon: <AddressSvg />,
@@ -98,7 +98,7 @@ export const NavAboutMe = () => {
 			</div>
 			<div className="bg-[#F5F8FB] flex w-full">
 				{pathname === navList[0].id && <AboutMe />}
-				{pathname === navList[1].id && <Document />}
+				{/* {pathname === navList[1].id && <Document />} */}
 				{/* {pathname === navList[2].id && <Address />}
 				{pathname === navList[3].id && <Education />}
 				{pathname === navList[4].id && <Work />}

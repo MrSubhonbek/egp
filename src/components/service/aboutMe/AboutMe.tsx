@@ -17,9 +17,8 @@ import InputMask from 'react-input-mask'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import json from '../../../../public/phone-codes.json'
+import json from '../../../api/phone-codes.json'
 import { RootState, useAppSelector } from '../../../store'
-import { getPhones } from '../../../store/creators/MainCreators'
 import {
 	GetRole,
 	getAbUsForm,
@@ -42,7 +41,6 @@ import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
 export const AboutMe = () => {
 	const { t, i18n } = useTranslation()
-
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const [IsError, setError] = useState<boolean>(false)
 	const formData = useAppSelector(state => state.Form)
@@ -262,10 +260,10 @@ export const AboutMe = () => {
 					<InputMask
 						disabled={isStudent}
 						placeholder="+7 999 898-88-00"
-						mask={'+9 999 999-99-99'}
+						mask={'+7 999 999-99-99'}
 						type="text"
 						className={clsx(
-							'ant-input ant-input-lg css-p7prni w-[624px] shadow ',
+							'ant-input ant-input-lg css-dev-only-do-not-override-p7prni css-p7prni w-[624px] shadow ',
 							isStudent && 'ant-input-disabled',
 							IsError &&
 								formData.phone &&

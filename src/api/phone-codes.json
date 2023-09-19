@@ -25,14 +25,6 @@
 			"desc_ru": "мобильные"
 		},
 		{
-			"mask": "+971-#-###-####",
-			"cc": "AE",
-			"name_en": "United Arab Emirates",
-			"desc_en": "",
-			"name_ru": "Объединенные Арабские Эмираты",
-			"desc_ru": ""
-		},
-		{
 			"mask": "+93-##-###-####",
 			"cc": "AF",
 			"name_en": "Afghanistan",
@@ -74,7 +66,7 @@
 		},
 		{
 			"mask": "+599-###-####",
-			"cc": "AN",
+			"cc": "CN",
 			"name_en": "Caribbean Netherlands",
 			"desc_en": "",
 			"name_ru": "Карибские Нидерланды",
@@ -90,8 +82,8 @@
 		},
 		{
 			"mask": "+599-9###-####",
-			"cc": "AN",
-			"name_en": "Netherlands Antilles",
+			"cc": "ANC",
+			"name_en": "Netherlands Antilles Curacao",
 			"desc_en": "Curacao",
 			"name_ru": "Нидерландские Антильские острова",
 			"desc_ru": "Кюрасао"
@@ -158,14 +150,6 @@
 			"name_en": "Azerbaijan",
 			"desc_en": "",
 			"name_ru": "Азербайджан",
-			"desc_ru": ""
-		},
-		{
-			"mask": "+387-##-#####",
-			"cc": "BA",
-			"name_en": "Bosnia and Herzegovina",
-			"desc_en": "",
-			"name_ru": "Босния и Герцеговина",
 			"desc_ru": ""
 		},
 		{
@@ -271,22 +255,6 @@
 			"desc_en": "",
 			"name_ru": "Бразилия",
 			"desc_ru": ""
-		},
-		{
-			"mask": "+55(##)7###-####",
-			"cc": "BR",
-			"name_en": "Brazil",
-			"desc_en": "mobile",
-			"name_ru": "Бразилия",
-			"desc_ru": "мобильные"
-		},
-		{
-			"mask": "+55(##)9####-####",
-			"cc": "BR",
-			"name_en": "Brazil",
-			"desc_en": "mobile",
-			"name_ru": "Бразилия",
-			"desc_ru": "мобильные"
 		},
 		{
 			"mask": "+1(242)###-####",
@@ -1823,14 +1791,6 @@
 			"desc_en": "mobile",
 			"name_ru": "Соломоновы Острова ",
 			"desc_ru": "мобильные"
-		},
-		{
-			"mask": "+677-#####",
-			"cc": "SB",
-			"name_en": "Solomon Islands",
-			"desc_en": "",
-			"name_ru": "Соломоновы Острова",
-			"desc_ru": ""
 		},
 		{
 			"mask": "+248-#-###-###",
