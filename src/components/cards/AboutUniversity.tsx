@@ -9,7 +9,7 @@ export const AboutUniversity = () => {
 	const { t } = useTranslation()
 	return (
 		<div className="flex overflow-hidden">
-			<div className="ml-[40px] mt-[40px] flex flex-col justify-around bg-orange-500">
+			<div className="ml-[40px] mt-[40px] flex flex-col justify-around">
 				<div>
 					<div className="font-semibold text-xl text-start">
 						{t('AboutUniversity')}
