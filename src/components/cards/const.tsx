@@ -21,22 +21,21 @@ export const event = [
 		date: '24.09.2023'
 	}
 ]
-export const educationalCourse = [
+export const scheduleData = [
 	{
-		titleUp: 'Облачные технологии в образовании',
-		titleDown: 'Облачные технологии в образовании',
-		priceUp: '10 000',
-		priceDown: '10 000',
-		hourUp: '30',
-		hourDown: '30'
+		subject: 'physics',
+		data: '21.09.2023',
+		mark: '4.8'
 	},
 	{
-		titleUp: 'Облачные технологии в образовании',
-		titleDown: 'Облачные технологии в образовании',
-		priceUp: '10 000',
-		priceDown: '10 000',
-		hourUp: '30',
-		hourDown: '30'
+		subject: 'geography',
+		data: '20.09.2023',
+		mark: '4.6'
+	},
+	{
+		subject: 'history',
+		data: '19.09.2023',
+		mark: '4.4'
 	}
 ]
 

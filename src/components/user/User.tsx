@@ -26,8 +26,7 @@ export const User = () => {
 					>
 						{t('PersonalAccount')} <br />
 					</Heading>
-					<DropDrag edit={false} layouts={layouts} setLayouts={setLayouts} />
-					{/* <Faq /> */}
+					<DropDrag edit={true} layouts={layouts} setLayouts={setLayouts} />
 				</div>
 			</div>
 		</Layout>

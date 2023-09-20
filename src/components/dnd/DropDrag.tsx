@@ -55,7 +55,7 @@ const DropDrag: FunctionComponent<IDropDragProps> = ({
 		return (
 			<div
 				key={item.i}
-				className="bg-white/70 backdrop-blur-sm rounded-[20px] shadow-md "
+				className="bg-white/70 backdrop-blur-sm rounded-[20px] shadow-md"
 			>
 				<div className="w-full h-full">
 					{edit && (
@@ -66,7 +66,7 @@ const DropDrag: FunctionComponent<IDropDragProps> = ({
 							<DeleteOutlined className=" mt-2 mr-2 opacity-50" />
 						</div>
 					)}
-					{jsxElements.filter(el => el.index === item.i)[0].element}
+					{jsxElements[item.i].element}
 				</div>
 			</div>
 		)

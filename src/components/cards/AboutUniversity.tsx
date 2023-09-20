@@ -27,8 +27,8 @@ export const AboutUniversity = () => {
 					</Button>
 				</div>
 			</div>
-			<div className="min-w-[125px] min-h-[125px] ml-[15px] mt-[50px] mr-[50px] max-h-[125px] bg-[#3E89F9] bg-opacity-80 rounded-full">
-				<img className="rounded-b-full -mt-[5px]" src={img} alt="" />
+			<div className="absolute min-w-[125px] min-h-[145px] ml-[60%] mt-[50px] mr-[1px] max-h-[145px] bg-[#3E89F9] bg-opacity-80 rounded-full flex justify-center items-center">
+				<img className="rounded-b-full " src={img} alt="" />
 			</div>
 		</div>
 	)

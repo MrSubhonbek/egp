@@ -31,7 +31,7 @@ const App = () => {
 				const videoObjectUrl = URL.createObjectURL(blob)
 				localStorage.setItem('greetingVideo', JSON.stringify(videoObjectUrl))
 			} catch (e) {
-				console.error('good dam')
+				console.error('error')
 			}
 		}
 	}
@@ -51,7 +51,6 @@ const App = () => {
 		}
 	}
 	useEffect(() => {
-		installVideo()
 		if (i18n.language === 'ru') {
 			i18n.changeLanguage('en')
 		}
@@ -70,6 +69,10 @@ const App = () => {
 			}
 		}
 	}, [])
+
+	useEffect(() => {
+		installVideo()
+	})
 
 	return (
 		<>
