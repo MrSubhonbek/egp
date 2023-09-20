@@ -4,6 +4,7 @@ import { Cookies } from 'react-cookie'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
+import video from './assets/video/Kfu.mp4'
 import { ApproveEmail } from './components/approve/ApproveEmail'
 import { CheckEmail } from './components/checkEmail/checkEmail'
 import { Login } from './components/login/Login'
@@ -22,6 +23,19 @@ const App = () => {
 	const dispatch = useAppDispatch()
 	const currentUrl = useLocation()
 
+	const installVideo = async () => {
+		if (!localStorage.getItem('greetingVideo')) {
+			try {
+				const response = await fetch(video)
+				const blob = await response.blob()
+				const videoObjectUrl = URL.createObjectURL(blob)
+				localStorage.setItem('greetingVideo', JSON.stringify(videoObjectUrl))
+			} catch (e) {
+				console.error('good dam')
+			}
+		}
+	}
+
 	const dataApi = async () => {
 		const res = await refreshToken(dispatch)
 		if (res === 200) {
@@ -37,6 +51,7 @@ const App = () => {
 		}
 	}
 	useEffect(() => {
+		installVideo()
 		if (i18n.language === 'ru') {
 			i18n.changeLanguage('en')
 		}
