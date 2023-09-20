@@ -11,13 +11,14 @@ import {
 import ruPicker from 'antd/locale/ru_RU'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { isArray, random } from 'lodash'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import InputMask from 'react-input-mask'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import json from '../../../api/phone-codes.json'
+import phones from '../../../api/phones.json'
 import { RootState, useAppSelector } from '../../../store'
 import {
 	GetRole,
@@ -50,6 +51,9 @@ export const AboutMe = () => {
 	const countryStorage = useAppSelector(
 		(state: RootState) => state.CountriesEducation.countries
 	)
+	const [mask, changeMask] = useState<string | string[]>('')
+	const [currentMask, changeCurrentMask] = useState<string>('')
+
 	var email = useRef<string>('')
 
 	const exit = async () => {
@@ -99,7 +103,6 @@ export const AboutMe = () => {
 			if (status === 200) setError(false)
 		}
 	}
-
 	const { data: countries } = useGetCountriesQuery(i18n.language, {
 		skip: SkipCountriesQuery
 	})
@@ -119,8 +122,19 @@ export const AboutMe = () => {
 
 	useEffect(() => {
 		if (!countryStorage) changeQuerySkip(false)
+		getMask()
 	}, [countryStorage])
 
+	const getMask = () => {
+		if (countryStorage) {
+			var mask: string | string[] = phones[random(0, 1) * 150].mask
+			changeMask(mask)
+			if (!isArray(mask)) {
+				changeCurrentMask(mask)
+			}
+		}
+		console.log(currentMask)
+	}
 	useEffect(() => {
 		if (countries) {
 			dispatch(addCountries(countries))
@@ -244,7 +258,10 @@ export const AboutMe = () => {
 						size="large"
 						className="w-[624px] shadow rounded-lg"
 						value={formData.countryId}
-						onChange={e => dispatch(country(e))}
+						onChange={e => {
+							dispatch(country(e))
+							getMask()
+						}}
 						options={
 							countryStorage == null
 								? []
@@ -257,24 +274,39 @@ export const AboutMe = () => {
 				</Space>
 				<Space direction="vertical" size={'small'}>
 					<Typography.Text>{t('telephone')}</Typography.Text>
-					<InputMask
-						disabled={isStudent}
-						placeholder="+7 999 898-88-00"
-						mask={'+7 999 999-99-99'}
-						type="text"
-						className={clsx(
-							'ant-input ant-input-lg css-dev-only-do-not-override-p7prni css-p7prni w-[624px] shadow ',
-							isStudent && 'ant-input-disabled',
-							IsError &&
-								formData.phone &&
-								!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
-									formData.phone
-								) &&
-								'border-rose-500'
+					<span className="w-[624px] flex justify-between gap-5">
+						{isArray(mask) && (
+							<Select
+								disabled={isStudent}
+								placeholder="set mask"
+								size="large"
+								className="shadow rounded-lg w-[200px]"
+								options={mask.map((element, index) => ({
+									label: element,
+									value: index
+								}))}
+								onChange={e => changeCurrentMask(mask[e])}
+							/>
 						)}
-						onChange={e => dispatch(phone(e.target.value))}
-						value={formData.phone}
-					/>
+						<InputMask
+							disabled={isStudent || !currentMask}
+							placeholder="+7 999 898-88-00"
+							mask={currentMask}
+							type="text"
+							className={clsx(
+								'ant-input ant-input-lg css-dev-only-do-not-override-p7prni css-p7prni w-full shadow ',
+								isStudent && 'ant-input-disabled',
+								IsError &&
+									formData.phone &&
+									!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
+										formData.phone
+									) &&
+									'border-rose-500'
+							)}
+							onChange={e => dispatch(phone(e.target.value))}
+							value={formData.phone}
+						/>
+					</span>
 					{IsError &&
 						formData.phone &&
 						!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(

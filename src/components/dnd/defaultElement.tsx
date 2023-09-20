@@ -14,5 +14,25 @@ export const jsxElements = [
 	{
 		index: '1',
 		element: <AboutUniversity />
+	},
+	{
+		index: '2',
+		element: <Educational />
+	},
+	{
+		index: '3',
+		element: <Events />
+	},
+	{
+		index: '4',
+		element: <Jobs />
+	},
+	{
+		index: '5',
+		element: <News />
+	},
+	{
+		index: '6',
+		element: <Olympics />
 	}
 ]

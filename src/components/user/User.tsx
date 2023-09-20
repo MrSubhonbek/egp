@@ -11,6 +11,7 @@ import { Heading } from '../ui/Heading'
 
 export const User = () => {
 	const [layouts, setLayouts] = useState<{ [index: string]: any[] }>(() => {
+		localStorage.removeItem('dashboard')
 		return localStorage.getItem('dashboard')
 			? JSON.parse(localStorage.getItem('dashboard') || '')
 			: block
