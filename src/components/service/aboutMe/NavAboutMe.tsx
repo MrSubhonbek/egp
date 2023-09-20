@@ -37,38 +37,52 @@ export const NavAboutMe = () => {
 		if (role === 'SEEKER') return 'seeker'
 		if (role === 'STUD') return 'student'
 	}
-	const navList = [
-		{
-			id: '/services/aboutMe/aboutMe',
-			icon: <AboutMeSvg />,
-			name: t('aboutMe')
-		}
-		// {
-		// 	id: '/services/aboutMe/document',
-		// 	icon: <MyDocsSvg />,
-		// 	name: t('documents')
-		// }
-		// {
-		// 	id: '/services/aboutMe/address',
-		// 	icon: <AddressSvg />,
-		// 	name: t('adress')
-		// },
-		// {
-		// 	id: '/services/aboutMe/education',
-		// 	icon: <EducationSvg />,
-		// 	name: t('education')
-		// },
-		// {
-		// 	id: '/services/aboutMe/work',
-		// 	icon: <WorkSvg />,
-		// 	name: t('work')
-		// },
-		// {
-		// 	id: '/services/aboutMe/parent',
-		// 	icon: <ParentSvg />,
-		// 	name: t('Parents')
-		// }
-	]
+
+	var navList = []
+
+	if (role === 'STUD') {
+		navList = [
+			{
+				id: '/services/aboutMe/aboutMe',
+				icon: <AboutMeSvg />,
+				name: t('aboutMe')
+			},
+			{
+				id: '/services/aboutMe/document',
+				icon: <MyDocsSvg />,
+				name: t('documents')
+			},
+			{
+				id: '/services/aboutMe/address',
+				icon: <AddressSvg />,
+				name: t('adress')
+			},
+			{
+				id: '/services/aboutMe/education',
+				icon: <EducationSvg />,
+				name: t('education')
+			},
+			{
+				id: '/services/aboutMe/work',
+				icon: <WorkSvg />,
+				name: t('work')
+			},
+			{
+				id: '/services/aboutMe/parent',
+				icon: <ParentSvg />,
+				name: t('Parents')
+			}
+		]
+	} else {
+		navList = [
+			{
+				id: '/services/aboutMe/aboutMe',
+				icon: <AboutMeSvg />,
+				name: t('aboutMe')
+			}
+		]
+	}
+
 	const isStudent = role === 'STUD'
 	const handleList = navList.map(({ icon, name, id }, index) => {
 		if (isStudent && id === '/services/aboutMe/work') return
@@ -98,11 +112,11 @@ export const NavAboutMe = () => {
 			</div>
 			<div className="bg-[#F5F8FB] flex w-full">
 				{pathname === navList[0].id && <AboutMe />}
-				{/* {pathname === navList[1].id && <Document />} */}
-				{/* {pathname === navList[2].id && <Address />}
-				{pathname === navList[3].id && <Education />}
-				{pathname === navList[4].id && <Work />}
-				{pathname === navList[5].id && <Parent />} */}
+				{role === 'STUD' && pathname === navList[1].id && <Document />}
+				{role === 'STUD' && pathname === navList[2].id && <Address />}
+				{role === 'STUD' && pathname === navList[3].id && <Education />}
+				{role === 'STUD' && pathname === navList[4].id && <Work />}
+				{role === 'STUD' && pathname === navList[5].id && <Parent />}
 				<div className="p-14 w-full justify-center">
 					<div className="h-3/4 bg-white fixed w-full max-w-md rounded-[20px] shadow flex flex-col items-center justify-center">
 						<div>
