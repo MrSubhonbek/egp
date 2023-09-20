@@ -11,7 +11,7 @@ import {
 import ruPicker from 'antd/locale/ru_RU'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { isArray, random } from 'lodash'
+import { isArray } from 'lodash'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import InputMask from 'react-input-mask'
@@ -51,8 +51,9 @@ export const AboutMe = () => {
 	const countryStorage = useAppSelector(
 		(state: RootState) => state.CountriesEducation.countries
 	)
-	const [mask, changeMask] = useState<string | string[]>('')
-	const [currentMask, changeCurrentMask] = useState<string>('')
+	const maskRange = useRef<null | string[]>(null)
+	const [currentMask, changeCurrent] = useState<string>('')
+	const [selectMaskItem, changeMaskItem] = useState<number | null>(null)
 
 	var email = useRef<string>('')
 
@@ -122,18 +123,22 @@ export const AboutMe = () => {
 
 	useEffect(() => {
 		if (!countryStorage) changeQuerySkip(false)
-		getMask()
+		getMask(formData.countryId)
 	}, [countryStorage])
 
-	const getMask = () => {
+	const getMask = (countryId: number) => {
 		if (countryStorage) {
-			var mask: string | string[] = phones[random(0, 1) * 150].mask
-			changeMask(mask)
-			if (!isArray(mask)) {
-				changeCurrentMask(mask)
+			var m: string | string[] = phones.filter(el => el.id === countryId)[0]
+				.mask
+			if (isArray(m)) {
+				maskRange.current = m
+				changeMaskItem(null)
+				changeCurrent('')
+			} else {
+				maskRange.current = null
+				changeCurrent(m)
 			}
 		}
-		console.log(currentMask)
 	}
 	useEffect(() => {
 		if (countries) {
@@ -259,8 +264,8 @@ export const AboutMe = () => {
 						className="w-[624px] shadow rounded-lg"
 						value={formData.countryId}
 						onChange={e => {
+							getMask(e)
 							dispatch(country(e))
-							getMask()
 						}}
 						options={
 							countryStorage == null
@@ -275,23 +280,27 @@ export const AboutMe = () => {
 				<Space direction="vertical" size={'small'}>
 					<Typography.Text>{t('telephone')}</Typography.Text>
 					<span className="w-[624px] flex justify-between gap-5">
-						{isArray(mask) && (
+						{maskRange.current && (
 							<Select
 								disabled={isStudent}
 								placeholder="set mask"
 								size="large"
 								className="shadow rounded-lg w-[200px]"
-								options={mask.map((element, index) => ({
+								onChange={e => {
+									maskRange.current && changeCurrent(maskRange.current[e])
+									changeMaskItem(e)
+								}}
+								options={maskRange.current.map((element, index) => ({
 									label: element,
 									value: index
 								}))}
-								onChange={e => changeCurrentMask(mask[e])}
+								value={selectMaskItem}
 							/>
 						)}
 						<InputMask
 							disabled={isStudent || !currentMask}
-							placeholder="+7 999 898-88-00"
-							mask={currentMask}
+							placeholder={isStudent ? '' : currentMask}
+							mask={isStudent ? '' : currentMask}
 							type="text"
 							className={clsx(
 								'ant-input ant-input-lg css-dev-only-do-not-override-p7prni css-p7prni w-full shadow ',
