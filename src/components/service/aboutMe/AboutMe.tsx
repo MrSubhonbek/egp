@@ -8,7 +8,7 @@ import {
 	Space,
 	Typography
 } from 'antd'
-import ruPicker from 'antd/locale/ru_RU'
+import enPicker from 'antd/locale/en_US'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { isArray } from 'lodash'
@@ -41,6 +41,7 @@ import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
 export const AboutMe = () => {
+	dayjs.locale('en')
 	const { t, i18n } = useTranslation()
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const [IsError, setError] = useState<boolean>(false)
@@ -85,9 +86,7 @@ export const AboutMe = () => {
 			/^\p{L}[\p{L}\-\s]+$/u.test(formData.patronymic) || !formData.patronymic
 
 		const IsCorrectPhone =
-			/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
-				formData.phone
-			) || !formData.phone
+			/^\+([0-9\s\-]+)$/u.test(formData.phone) || !formData.phone
 
 		if (
 			!/^\p{L}[\p{L}\-\s]+$/u.test(formData.name) ||
@@ -228,7 +227,7 @@ export const AboutMe = () => {
 				</Space>
 				<Space direction="vertical" size={'small'}>
 					<Typography.Text>{t('birth')}</Typography.Text>
-					<ConfigProvider locale={ruPicker}>
+					<ConfigProvider locale={enPicker}>
 						<DatePicker
 							disabled={isStudent}
 							placeholder={t('birth')}
@@ -307,9 +306,7 @@ export const AboutMe = () => {
 								isStudent && 'ant-input-disabled',
 								IsError &&
 									formData.phone &&
-									!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
-										formData.phone
-									) &&
+									!/^\+([0-9\s\-]+)$/u.test(formData.phone) &&
 									'border-rose-500'
 							)}
 							onChange={e => dispatch(phone(e.target.value))}
@@ -318,9 +315,9 @@ export const AboutMe = () => {
 					</span>
 					{IsError &&
 						formData.phone &&
-						!/^\+[0-9]\s[0-9]{3}\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(
-							formData.phone
-						) && <div className="text-sm text-rose-500">{t('BadPhone')}</div>}
+						!/^\+([0-9\s\-]+)$/u.test(formData.phone) && (
+							<div className="text-sm text-rose-500">{t('BadPhone')}</div>
+						)}
 				</Space>
 				<Space direction="vertical" size={'small'}>
 					<Typography.Text>{t('email')}</Typography.Text>

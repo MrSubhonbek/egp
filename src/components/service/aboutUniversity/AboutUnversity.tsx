@@ -11,19 +11,18 @@ import {
 	LargeLogoSVG,
 	QuotationMarksSVG
 } from '../../../assets/svg'
-import mp4 from '../../../assets/video/Kfu.mp4'
 import { Footer } from '../../layout/Footer'
 
 const AboutUniversity = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const [play, changePlay] = useState(false)
-	// const [video, getVideo] = useState<string>('')
-	// useEffect(() => {
-	// 	if (localStorage.getItem('greetingVideo')) {
-	// 		getVideo(JSON.parse(localStorage.getItem('greetingVideo') || ''))
-	// 	}
-	// }, [])
+	const [video, getVideo] = useState<string>('')
+	useEffect(() => {
+		if (localStorage.getItem('greetingVideo')) {
+			getVideo(JSON.parse(localStorage.getItem('greetingVideo') || ''))
+		}
+	}, [])
 	return (
 		<div className="flex flex-col w-full min-h-screen">
 			<div className="flex flex-col mx-6 my-20">
@@ -106,18 +105,18 @@ const AboutUniversity = () => {
 						Kazan <br /> Federal University
 					</Typography.Title>
 					<div className="bg-black opacity-30 left-0 right-0 bottom-0 top-0 absolute"></div>
-					{/* {localStorage.getItem('greetingVideo') !== null && ( */}
-					<ReactPlayer
-						url={mp4}
-						width={'100%'}
-						height={'100%'}
-						playing={play}
-						controls={true}
-						onEnded={() => changePlay(false)}
-						onPause={() => play && changePlay(false)}
-						onPlay={() => !play && changePlay(true)}
-					/>
-					{/* )} */}
+					{localStorage.getItem('greetingVideo') !== null && (
+						<ReactPlayer
+							url={video}
+							width={'100%'}
+							height={'100%'}
+							playing={play}
+							controls={true}
+							onEnded={() => changePlay(false)}
+							onPause={() => play && changePlay(false)}
+							onPlay={() => !play && changePlay(true)}
+						/>
+					)}
 				</div>
 			</div>
 			<Footer />
