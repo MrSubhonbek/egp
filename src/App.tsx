@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
-import mp4 from './assets/video/Kfu.mp4'
+// import mp4 from './assets/video/Kfu.mp4'
 import { ApproveEmail } from './components/approve/ApproveEmail'
 import { CheckEmail } from './components/checkEmail/checkEmail'
 import { Login } from './components/login/Login'
@@ -18,24 +18,24 @@ const App = () => {
 	const cookies = new Cookies()
 	const [email, changeEmail] = useState('')
 	const { t, i18n } = useTranslation()
-	const [video, changeVideo] = useState<string>('')
+	// const [video, changeVideo] = useState<string>('')
 
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 	const currentUrl = useLocation()
 
-	const installVideo = async () => {
-		if (!localStorage.getItem('greetingVideo')) {
-			try {
-				const response = await fetch(mp4)
-				const blob = await response.blob()
-				const videoObjectUrl = URL.createObjectURL(blob)
-				changeVideo(videoObjectUrl)
-			} catch (e) {
-				console.error('error')
-			}
-		}
-	}
+	// const installVideo = async () => {
+	// 	if (!localStorage.getItem('greetingVideo')) {
+	// 		try {
+	// 			const response = await fetch(mp4)
+	// 			const blob = await response.blob()
+	// 			const videoObjectUrl = URL.createObjectURL(blob)
+	// 			changeVideo(videoObjectUrl)
+	// 		} catch (e) {
+	// 			console.error('error')
+	// 		}
+	// 	}
+	// }
 
 	const dataApi = async () => {
 		const res = await refreshToken(dispatch)
@@ -71,11 +71,11 @@ const App = () => {
 		}
 	}, [])
 
-	useEffect(() => {
-		console.log(video)
-		installVideo()
-		if (video) localStorage.setItem('greetingVideo', JSON.stringify(video))
-	})
+	// useEffect(() => {
+	// 	console.log(video)
+	// 	installVideo()
+	// 	if (video) localStorage.setItem('greetingVideo', JSON.stringify(video))
+	// })
 
 	return (
 		<>
