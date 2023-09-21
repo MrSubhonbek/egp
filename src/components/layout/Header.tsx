@@ -1,4 +1,4 @@
-import { Divider, Drawer } from 'antd'
+import { Button, Divider, Drawer } from 'antd'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
 import clsx from 'clsx'
@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { IUserData, TypeRole } from '../../api/types'
+import { MenuSvg } from '../../assets/svg'
 import {
 	LogoIasSvg,
 	LogoutSvg,
@@ -123,6 +124,21 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		>
 			<div className="w-screen flex h-full justify-between px-8">
 				<div className="flex gap-8 items-center">
+					{role === 'STUD' && (
+						<Button
+							onClick={showDrawer}
+							className={clsx(
+								'h-[40px] rounded-full  font-semibold bg-transparent border-2 flex items-center justify-center w-[130px] ',
+								type === 'main'
+									? 'text-[#1F5CB8] border-[#1F5CB8] '
+									: 'text-white border-white hover:!border-white hover:!text-white'
+							)}
+							type="default"
+							icon={<MenuSvg white={type === 'service'} />}
+						>
+							<span className="pl-2">{t('services')}</span>
+						</Button>
+					)}
 					<div className="flex items-center gap-5">
 						<LogoIasSvg white={type === 'service'} />
 						<Divider type="vertical" className="border-l-white h-10 m-0" />
