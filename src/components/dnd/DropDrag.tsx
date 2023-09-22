@@ -1,11 +1,13 @@
-import { DeleteOutlined } from '@ant-design/icons'
+// import { DeleteOutlined } from '@ant-design/icons'
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
+import { RootState, useAppSelector } from '../../store'
+
 import './DropDrag.scss'
-import { jsxElements } from './defaultElement'
+import { anotherElements, studElements } from './defaultElement'
 
 interface IDropDragProps {
 	edit: boolean
@@ -19,15 +21,21 @@ const DropDrag: FunctionComponent<IDropDragProps> = ({
 	layouts,
 	setLayouts
 }) => {
+	const role = useAppSelector((state: RootState) => state.InfoUser.role)
 	const [currentBreakpoint, setCurrentBreakpoint] = useState<string>('lg')
 	const [mounted, setMounted] = useState(false)
 	const [toolbox, setToolbox] = useState<{ [index: string]: any[] }>({
 		lg: []
 	})
+	const [cards, changeCards] = useState<
+		{ index: string; element: JSX.Element }[] | null
+	>(null)
 
 	useEffect(() => {
 		setMounted(true)
+		changeCards(role === 'STUD' ? studElements : anotherElements)
 	}, [])
+
 	useEffect(() => {
 		localStorage.setItem('dashboard', JSON.stringify(layouts))
 	}, [layouts])
@@ -44,12 +52,12 @@ const DropDrag: FunctionComponent<IDropDragProps> = ({
 		setLayouts({ ...layouts })
 	}
 
-	const onRemoveItem = (i: number) => {
-		setLayouts({
-			...layouts,
-			lg: [...layouts.lg].filter(item => item.i !== i)
-		})
-	}
+	// const onRemoveItem = (i: number) => {
+	// 	setLayouts({
+	// 		...layouts,
+	// 		lg: [...layouts.lg].filter(item => item.i !== i)
+	// 	})
+	// }
 
 	const generateDOM = layouts.lg.map(item => {
 		return (
@@ -58,15 +66,15 @@ const DropDrag: FunctionComponent<IDropDragProps> = ({
 				className="bg-white/70 backdrop-blur-sm rounded-[20px] shadow-md"
 			>
 				<div className="w-full h-full">
-					{edit && (
+					{/* {edit && (
 						<div
 							className="absolute top-2 cursor-pointer right-2"
 							onClick={() => onRemoveItem(item.i)}
 						>
 							<DeleteOutlined className=" mt-2 mr-2 opacity-50" />
 						</div>
-					)}
-					{jsxElements[item.i].element}
+					)} */}
+					{cards && cards[item.i].element}
 				</div>
 			</div>
 		)

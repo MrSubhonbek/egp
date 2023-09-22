@@ -282,3 +282,22 @@ export type IParentError = {
 	inn: boolean
 	snils: boolean
 }
+
+export interface Day {
+	name: string
+	time: string
+	teacher: string
+	teacherId: number
+	building: string
+	room: string
+	type: string
+}
+
+export type TypeSchedule = {
+	monday: Day[]
+	tuesday: Day[]
+	wednesday: Day[]
+	thursday: Day[]
+	friday: Day[]
+	saturday: Day[]
+}

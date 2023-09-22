@@ -1,27 +1,29 @@
 const endpoints = {
-	LOGIN: '/login',
-	REFRESH: '/token/refresh',
+	LOGIN: '/user-api/login',
+	REFRESH: '/user-api/token/refresh',
 	REG: {
-		REGISTER: '/register',
-		APPROVE: '/register/approve'
+		REGISTER: '/user-api/register',
+		APPROVE: '/user-api/register/approve'
 	},
 	USER: {
 		INFO: {
-			ROLE: '/users/me/role',
-			DOCUMENT: '/users/me/document',
-			EDUCATION: '/users/me/education',
-			PARENT: '/users/me/parent',
+			ROLE: '/user-api/users/me/role',
+			DOCUMENT: '/user-api/users/me/document',
+			EDUCATION: '/user-api/users/me/education',
+			PARENT: '/user-api/users/me/parent',
 			JOB: {
-				JOB: '/users/me/work-history',
-				JOBITEM: '/users/me/work-history/items'
+				JOB: '/user-api/users/me/work-history',
+				JOBITEM: '/user-api/users/me/work-history/items'
 			},
-			FORM: '/users/me',
-			ADDRESS: '/users/me/address'
+			FORM: '/user-api/users/me',
+			ADDRESS: '/user-api/users/me/address',
+			SCHEDULE: '/schedule-api/schedule'
 		},
 		COUNTRIES: '/country',
-		EDUCATION_LEVEL: '/education/levels',
+		EDUCATION_LEVEL_ANOTHER: '/education/levels',
+		EDUCATION_LEVEL_STUD: '/student/institution',
 		DOCUMENTS: '/document',
-		ADMISSION: '/admission-link'
+		ADMISSION: '/user-api/admission-link'
 	}
 }
 

@@ -1,7 +1,11 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 
+import { useAppSelector } from '../../store'
+import { GetRole } from '../../store/creators/MainCreators'
+import { putRole } from '../../store/reducers/FormReducers/InfoUserReducer'
 import { Header } from '../layout/Header'
 
 import { NavAboutMe } from './aboutMe/NavAboutMe'
@@ -10,9 +14,28 @@ import { NavElectronicBook } from './electronicBook/NavElectronicBook'
 import { NavSchedule } from './schedule/NavSchedule'
 import { NavSession } from './session/NavSession'
 
-const Service = ({ children }: { children?: ReactNode }) => {
+const Service = () => {
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const role = useAppSelector(state => state.InfoUser.role)
 	const { pathname } = useLocation()
 	const { t } = useTranslation()
+
+	const getRole = async () => {
+		const response = await GetRole(dispatch)
+		if (response) {
+			dispatch(putRole(response[0].role))
+		} else {
+			navigate('/')
+		}
+	}
+
+	useEffect(() => {
+		getRole()
+	}, [])
+
+	if (!role) return <></>
+
 	return (
 		<div className="h-screen w-screen">
 			<Header type="service" service={t('StudentService')} />

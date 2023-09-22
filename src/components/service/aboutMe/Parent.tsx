@@ -87,7 +87,6 @@ export const Parent = () => {
 	useEffect(() => {
 		if (updateItems) {
 			getData()
-			getRole()
 			setUpdate(false)
 		}
 	}, [updateItems])
@@ -142,17 +141,6 @@ export const Parent = () => {
 			}))
 			dispatch(allData(corrected))
 		} else console.log('403')
-	}
-
-	const getRole = async () => {
-		if (!role) {
-			const response = await GetRole(dispatch)
-			if (response) {
-				putRole(response[0].role)
-			} else {
-				navigate('/')
-			}
-		}
 	}
 
 	const handleAddParent = async () => {

@@ -16,9 +16,7 @@ import {
 	PersonSvg
 } from '../../assets/svg'
 import { RootState, useAppSelector } from '../../store'
-import { GetRole } from '../../store/creators/MainCreators'
 import { logout } from '../../store/creators/SomeCreators'
-import { putRole } from '../../store/reducers/FormReducers/InfoUserReducer'
 import { ModalNav } from '../service/modalMenu/ModalNav'
 
 type TypeHeaderProps = {
@@ -30,36 +28,25 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [open, setOpen] = useState(false)
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const role = useAppSelector((state: RootState) => state.InfoUser.role)
-
-	const getRole = async () => {
-		const response = await GetRole(dispatch)
-		if (response === null) {
-			await logout(dispatch)
-			navigate('/')
-		} else {
-			dispatch(putRole(response[0].role))
-		}
-	}
+	const [userData, changeuserData] = useState<IUserData | string>('')
 
 	const roleConverter = (role: TypeRole | null) => {
-		if (role === 'ABIT') return 'enrollee'
-		if (role === 'ATTEND') return 'attend'
-		if (role === 'GUEST' || role === null) return 'guest'
-		if (role === 'SCHOOL') return 'schoolboy'
-		if (role === 'SEEKER') return 'seeker'
-		if (role === 'STUD') return 'student'
+		if (role === 'ABIT') return 'Enrollee'
+		if (role === 'ATTEND') return 'Attend'
+		if (role === 'GUEST' || role === null) return 'Guest'
+		if (role === 'SCHOOL') return 'Schoolboy'
+		if (role === 'SEEKER') return 'Seeker'
+		if (role === 'STUD') return 'Student'
 	}
 
 	useEffect(() => {
-		getRole()
+		if (localStorage.getItem('userInfo')) {
+			changeuserData(JSON.parse(localStorage.getItem('userInfo') || ''))
+		}
 	}, [])
 
-	var user: IUserData | string = ''
-	if (localStorage.getItem('userInfo')) {
-		user = JSON.parse(localStorage.getItem('userInfo') || '')
-	}
 	const showDrawer = () => {
 		setOpen(!open)
 	}
@@ -76,7 +63,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		{
 			label: (
 				<div className="p-2 text-sm text-[#1F5CB8] font-bold cursor-default">
-					{typeof user === 'string' ? '' : user.email}
+					{typeof userData === 'string' ? '' : userData.email}
 				</div>
 			),
 			key: '0'
@@ -166,12 +153,14 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 									className={clsx('h-full', type === 'service' && 'text-white')}
 								>
 									<div className="font-bold text-sm truncate max-w-[120px]">
-										{typeof user === 'string'
+										{typeof userData === 'string'
 											? ''
-											: `${user?.lastname} ${user?.firstname.charAt(0)}. ${
-													user?.middlename === ''
+											: `${userData?.lastname} ${userData?.firstname.charAt(
+													0
+											  )}. ${
+													userData?.middlename === ''
 														? ''
-														: user?.middlename.charAt(0) + '.'
+														: userData?.middlename.charAt(0) + '.'
 											  }`}
 									</div>
 									<div className="text-sm">{roleConverter(role)}</div>

@@ -75,17 +75,6 @@ export const Document = () => {
 		skip: SkipCountriesQuery
 	})
 
-	const getRole = async () => {
-		if (!role) {
-			const response = await GetRole(dispatch)
-			if (response) {
-				putRole(response[0].role)
-			} else {
-				navigate('/')
-			}
-		}
-	}
-
 	const getData = async () => {
 		const response = await getDocumentItemRequest(dispatch)
 		if (response) {
@@ -111,7 +100,6 @@ export const Document = () => {
 	}
 
 	useEffect(() => {
-		getRole()
 		getData()
 	}, [])
 

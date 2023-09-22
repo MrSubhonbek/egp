@@ -5,8 +5,10 @@ import {
 	logoutSuccess,
 	registrationFailure
 } from '../reducers/AuthRegReducer'
+import { putRole } from '../reducers/FormReducers/InfoUserReducer'
 
 export const logout = async (dispatch: Dispatch): Promise<void> => {
+	dispatch(putRole(null))
 	dispatch(logoutSuccess())
 }
 

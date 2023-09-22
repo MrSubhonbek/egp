@@ -18,7 +18,7 @@ const App = () => {
 	const cookies = new Cookies()
 	const [email, changeEmail] = useState('')
 	const { t, i18n } = useTranslation()
-	const [video, changeVideo] = useState<string>('')
+	// const [video, changeVideo] = useState<string>('')
 
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -51,6 +51,7 @@ const App = () => {
 			navigate('/')
 		}
 	}
+
 	useEffect(() => {
 		if (i18n.language === 'ru') {
 			i18n.changeLanguage('en')

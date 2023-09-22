@@ -1,6 +1,4 @@
-import React, { FC } from 'react';
-
-
+import React, { FC } from 'react'
 
 import { Footer } from './Footer'
 import { Header } from './Header'

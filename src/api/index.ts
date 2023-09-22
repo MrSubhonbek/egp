@@ -18,6 +18,7 @@ import {
 	IRole,
 	IWorkHistoryRequest,
 	IWorkState,
+	TypeSchedule,
 	educationItem,
 	formItem,
 	workItem
@@ -125,3 +126,6 @@ export const getAdmissionLink = (): AxiosPromise<{
 	link: string
 	session: string
 }> => axiosInstance.get(endpoints.USER.ADMISSION)
+
+export const getStudSchedule = (): AxiosPromise<TypeSchedule> =>
+	axiosInstance.get(endpoints.USER.INFO.SCHEDULE)

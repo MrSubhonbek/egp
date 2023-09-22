@@ -1,22 +1,50 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppSelector } from '../../store'
+import { GetRole } from '../../store/creators/MainCreators'
+import { putRole } from '../../store/reducers/FormReducers/InfoUserReducer'
 import DropDrag from '../dnd/DropDrag'
-import { block } from '../dnd/constant'
-// import { Faq } from '../faq/Faq'
+import { anotherBlock, studBlock } from '../dnd/constant'
 import { Layout } from '../layout/Layout'
 import { Heading } from '../ui/Heading'
 
 export const User = () => {
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const { t } = useTranslation()
+	const role = useAppSelector(state => state.InfoUser.role)
+
 	const [layouts, setLayouts] = useState<{ [index: string]: any[] }>(() => {
-		localStorage.removeItem('dashboard')
 		return localStorage.getItem('dashboard')
 			? JSON.parse(localStorage.getItem('dashboard') || '')
-			: block
+			: role === 'STUD'
+			? studBlock
+			: anotherBlock
 	})
-	const { t } = useTranslation()
+
+	const getRole = async () => {
+		const response = await GetRole(dispatch)
+		if (response) {
+			dispatch(putRole(response[0].role))
+		} else {
+			navigate('/')
+		}
+	}
+
+	useEffect(() => {
+		getRole()
+	}, [])
+
+	useEffect(() => {
+		if (role) setLayouts(role === 'STUD' ? studBlock : anotherBlock)
+	}, [role])
+
+	if (!role) return <></>
+
 	return (
 		<Layout>
 			<div className="px-10 flex items-center justify-center">

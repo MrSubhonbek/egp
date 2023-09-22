@@ -1,6 +1,8 @@
 import { RootState } from '..'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import { TypeSchedule } from '../../api/types'
+
 export interface ICalendar {
 	semester: number
 	type_id: number
@@ -23,15 +25,6 @@ export interface ICalendar {
 	full_shifr: string
 }
 
-interface Day {
-	name: string
-	time: string
-	teacher: string
-	teacherId: number
-	building: string
-	room: string
-	type: string
-}
 interface Exam {
 	building_name: string
 	room_num: string
@@ -41,16 +34,9 @@ interface Exam {
 	date_note: string
 	time_note: string
 }
-type TypeSchedule = {
-	monday: Day[]
-	tuesday: Day[]
-	wednesday: Day[]
-	thursday: Day[]
-	friday: Day[]
-	saturday: Day[]
-}
+
 const baseQuery = fetchBaseQuery({
-	baseUrl: 'https://newlk.kpfu.ru/user-api',
+	baseUrl: 'https://newlk.kpfu.ru/schedule-api/',
 	prepareHeaders: (headers, { getState }) => {
 		const accessToken = localStorage.getItem('access')
 		console.log(accessToken)

@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import img from '../../assets/images/image15.png'
+import img from '../../assets/images/aboutUniversity.png'
 
 export const AboutUniversity = () => {
 	const navigate = useNavigate()
@@ -14,7 +14,10 @@ export const AboutUniversity = () => {
 					<div className="font-semibold text-xl text-start">
 						{t('AboutUniversity')}
 					</div>
-					{/* <div className="text-base text-start mt-[30px] max-h-[100px]"></div> */}
+					<div className="text-base text-start mt-[30px] max-h-[100px] max-w-[60%]">
+						One of the oldest universities in Russia, founded in 1804. The
+						university is famous for its strong schools of mathematics...
+					</div>
 				</div>
 				<div className="text-start ">
 					<Button
@@ -27,8 +30,8 @@ export const AboutUniversity = () => {
 					</Button>
 				</div>
 			</div>
-			<div className="absolute min-w-[125px] min-h-[145px] ml-[60%] mt-[50px] mr-[1px] max-h-[145px] bg-[#3E89F9] bg-opacity-80 rounded-full flex justify-center items-center">
-				<img className="rounded-b-full " src={img} alt="" />
+			<div className="absolute min-w-[125px] min-h-[125px] top-[40px] right-[10px] max-h-[125px] bg-[#3E89F9] bg-opacity-80 rounded-full flex justify-center items-center">
+				<img width={'90px'} height={'90px'} src={img} alt="" />
 			</div>
 		</div>
 	)

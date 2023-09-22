@@ -20,6 +20,7 @@ import {
 	getJob,
 	getParent,
 	getRole,
+	getStudSchedule,
 	job,
 	login,
 	parent,
@@ -49,6 +50,7 @@ import {
 	IParentRequest,
 	IRole,
 	IWorkHistoryRequest,
+	TypeSchedule,
 	educationItem,
 	formItem,
 	workItem
@@ -61,6 +63,7 @@ import {
 	refreshSuccess,
 	registrationFailure
 } from '../reducers/AuthRegReducer'
+import { putRole } from '../reducers/FormReducers/InfoUserReducer'
 import { ProfileSuccess } from '../reducers/ProfileReducer'
 
 import { IWorkState } from './../../api/types'
@@ -81,6 +84,7 @@ export const loginUser =
 				})
 			)
 			localStorage.setItem('userInfo', JSON.stringify(res.data.user))
+			localStorage.removeItem('dashboard')
 			dispatch(ProfileSuccess(res.data.user))
 			answer = 200
 		} catch (e) {
@@ -96,6 +100,7 @@ export const refreshToken = async (dispatch: Dispatch): Promise<number> => {
 	let userData = localStorage.getItem('userInfo')
 
 	if (accessToken == null || userData == null) {
+		dispatch(putRole(null))
 		dispatch(logoutSuccess())
 		return 403
 	}
@@ -598,19 +603,17 @@ export const getAdmission = async (
 	return null
 }
 
-export async function getPhones() {
-	var response = await fetch(
-		window.location.origin + '/public/phone-codes.json',
-		{
-			method: 'get',
-			headers: {
-				'Content-Type': 'application/json'
-			}
+export const getSchedule = async (
+	dispatch: Dispatch
+): Promise<TypeSchedule | null> => {
+	try {
+		await refreshToken(dispatch)
+		const response = await getStudSchedule()
+		return response.data
+	} catch (e) {
+		if (request.isAxiosError(e) && e.response) {
+			console.log(e.response?.data as IError)
 		}
-	)
-		.then(response => response.json())
-		.then(data => {
-			return data.results
-		})
-	return response
+	}
+	return null
 }

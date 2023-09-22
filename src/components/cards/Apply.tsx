@@ -26,7 +26,7 @@ export const Apply = () => {
 	}
 	return (
 		<div
-			className="rounded-[1vw] w-full pl-[55px] flex h-full overflow-y-auto"
+			className="rounded-[1vw] w-full p-10 flex h-full overflow-y-auto"
 			style={{
 				background: 'linear-gradient(89.94deg, #71AAFF 12.16%, #3D7AD5 104.42%)'
 			}}

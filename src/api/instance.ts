@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Cookies } from 'react-cookie'
 
 const cookies = new Cookies()
-export const API_URL = `https://newlk.kpfu.ru/user-api/`
+export const API_URL = `https://newlk.kpfu.ru/`
 export const axiosInstance = axios.create({
 	baseURL: API_URL,
 	headers: {
@@ -13,15 +13,10 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
 	config => {
 		if (
-			['role', 'document', 'address'].some(
-				el =>
-					config.url === '/users/me/' + el ||
-					config.url === '/users/me' ||
-					config.url === '/admission-link' ||
-					config.url?.includes('work-history') ||
-					config.url?.includes('education') ||
-					config.url?.includes('parent')
-			)
+			config.url?.includes('users') ||
+			config.url === '/admission-link' ||
+			config.url === '/schedule' ||
+			config.url?.includes('schedule-api')
 		) {
 			config.headers['Authorization'] =
 				'Bearer ' + `${localStorage.getItem('access')}`

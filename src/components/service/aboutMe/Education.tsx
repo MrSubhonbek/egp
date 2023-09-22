@@ -71,9 +71,12 @@ export const Education = () => {
 	const educationData = useAppSelector(state => state.Education)
 	const role = useAppSelector(state => state.InfoUser?.role)
 
-	const { data: educationLevel } = useGetEducationLevelQuery(i18n.language, {
-		skip: SkipCountriesQuery
-	})
+	const { data: educationLevel } = useGetEducationLevelQuery(
+		{ language: i18n.language, role: !role ? 'ABIT' : role },
+		{
+			skip: SkipCountriesQuery
+		}
+	)
 	const { data: countries } = useGetCountriesQuery(i18n.language, {
 		skip: SkipCountriesQuery
 	})
@@ -88,17 +91,6 @@ export const Education = () => {
 		const response = await getEducationItemRequest(dispatch)
 		if (response !== null) {
 			dispatch(allData(response))
-		}
-	}
-
-	const getRole = async () => {
-		if (!role) {
-			const response = await GetRole(dispatch)
-			if (response) {
-				putRole(response[0].role)
-			} else {
-				navigate('/')
-			}
 		}
 	}
 
@@ -224,7 +216,6 @@ export const Education = () => {
 	useEffect(() => {
 		if (updateItems) {
 			getData()
-			getRole()
 			setUpdate(false)
 		}
 	}, [updateItems])
