@@ -4,11 +4,7 @@ import { useDispatch } from 'react-redux'
 
 import { TypeSchedule } from '../../api/types'
 import img from '../../assets/images/image15.png'
-import { useAppSelector } from '../../store'
 import { getSchedule } from '../../store/creators/MainCreators'
-import { useGetScheduleQuery } from '../../store/slice/scheduleSlice'
-
-// import { useNavigate } from 'react-router-dom'
 
 type week =
 	| 'monday'
@@ -17,11 +13,9 @@ type week =
 	| 'thursday'
 	| 'friday'
 	| 'saturday'
-type scheduleWeek = ''
 
 export const Schedule = () => {
 	const dispatch = useDispatch()
-	// const navigate = useNavigate()
 	const [activeButton, changeActive] = useState<week>('monday')
 	const [schedule, changeSchedule] = useState<TypeSchedule | null>()
 

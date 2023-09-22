@@ -1,8 +1,10 @@
 import { Radio, RadioChangeEvent, Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { useGetScheduleQuery } from '../../../store/slice/scheduleSlice'
+import { TypeSchedule } from '../../../api/types'
+import { getSchedule } from '../../../store/creators/MainCreators'
 
 import './StyleSchedule.scss'
 
@@ -33,43 +35,54 @@ const columns: ColumnsType<DataType> = [
 		}
 	},
 	{
-		title: 'Время',
+		title: 'Time',
 		dataIndex: 'time',
 		key: 'time',
 		render: item => <p className="text-base whitespace-nowrap">{item}</p>
 	},
 	{
-		title: 'Предмет',
+		title: 'Subject',
 		dataIndex: 'name',
 		key: 'name',
 		render: item => <p className="text-base">{item}</p>
 	},
 	{
-		title: 'Преподаватель',
+		title: 'Teacher',
 		dataIndex: 'teacher',
 		key: 'teacher',
 		render: item => <p className="text-base">{item}</p>
 	},
 	{
-		title: 'Корпус',
+		title: 'Department',
 		key: 'building',
 		dataIndex: 'building',
 		render: item => <p className="text-base">{item}</p>
 	},
 	{
-		title: 'Аудитория',
+		title: 'Classroom',
 		key: 'room',
 		dataIndex: 'room',
 		render: item => <p className="text-base">{item}</p>
 	}
 ]
 export const Schedule = () => {
-	const { data: schedule, isLoading } = useGetScheduleQuery()
+	const dispatch = useDispatch()
+	const [schedule, setSchedule] = useState<TypeSchedule | null>()
+
+	const getPlan = async () => {
+		const response = await getSchedule(dispatch)
+		if (!response) console.log(404)
+		else setSchedule(response)
+	}
+
 	const [data, setData] = useState<DataType[] | undefined>()
+
 	useEffect(() => {
-		setData(schedule?.monday)
-	}, [isLoading, schedule])
-	if (schedule === undefined) return null
+		if (!schedule) getPlan()
+		else setData(schedule.monday)
+	}, [schedule])
+
+	if (!schedule) return null
 
 	const onChange = (e: RadioChangeEvent) => {
 		//@ts-ignore
@@ -77,7 +90,7 @@ export const Schedule = () => {
 	}
 	return (
 		<div className="mt-14 mx-14 radio">
-			<div className="mb-14 text-[28px]">Мое расписание</div>
+			<div className="mb-14 text-[28px]">My schedule</div>
 			<Radio.Group
 				onChange={onChange}
 				defaultValue="monday"
@@ -88,37 +101,37 @@ export const Schedule = () => {
 					className="rounded-full bg-transparent h-full flex items-center  text-base"
 					value="monday"
 				>
-					Понедельник
+					Monday
 				</Radio.Button>
 				<Radio.Button
 					className="rounded-full h-full flex items-center text-base bg-transparent"
 					value="tuesday"
 				>
-					Вторник
+					Tuesday
 				</Radio.Button>
 				<Radio.Button
 					className="rounded-full h-full flex items-center text-base bg-transparent"
 					value="wednesday"
 				>
-					Среда
+					Wednesday
 				</Radio.Button>
 				<Radio.Button
 					className="rounded-full h-full flex items-center text-base bg-transparent"
 					value="thursday"
 				>
-					Четверг
+					Thursday
 				</Radio.Button>
 				<Radio.Button
 					className="rounded-full h-full flex items-center text-base bg-transparent"
 					value="friday"
 				>
-					Пятница
+					Friday
 				</Radio.Button>
 				<Radio.Button
 					className="rounded-full h-full flex items-center text-base bg-transparent"
 					value="saturday"
 				>
-					Суббота
+					Saturday
 				</Radio.Button>
 			</Radio.Group>
 			<div className="my-10 gap-5 flex">
@@ -130,36 +143,36 @@ export const Schedule = () => {
 				/>
 				<div className="flex flex-col gap-6 text-sm">
 					<div className="flex items-center gap-2">
-						<div className="min-w-3 min-h-3 w-[11px] h-[11px]  rounded-full bg-[#A7FAFF]" />
-						Потоковая лекция
+						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#A7FAFF]" />
+						Streaming lecture
 					</div>
 					<div className="flex items-center gap-2">
-						<div className="min-w-3 min-h-3 w-[11px] h-[11px] rounded-full bg-[#3A92E3]" />
-						Лекция
+						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#3A92E3]" />
+						Lecture
 					</div>
 					<div className="flex items-center gap-2">
-						<div className="min-w-3 min-h-3 w-[11px] h-[11px] rounded-full bg-[#FFE24C]" />
-						Семинар
+						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#FFE24C]" />
+						Seminar
 					</div>
 					<div className="flex items-center gap-2">
-						<div className="min-w-3 min-h-3 w-[11px] h-[11px] rounded-full bg-[#59C348]" />
-						Лабораторное занятие
+						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#59C348]" />
+						Laboratory lesson
 					</div>
 					<div className="flex items-center gap-2">
-						<div className="min-w-3 min-h-3 w-[11px] h-[11px] rounded-full bg-[#E93A3A]" />
-						Факультатив
+						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#E93A3A]" />
+						Facultative
 					</div>
 					<div className="flex items-center gap-2">
-						<div className="min-w-3 min-h-3 w-[11px] h-[11px] rounded-full bg-[#844EC9]" />
-						Практика
+						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#844EC9]" />
+						Practice
 					</div>
 					<div className="flex items-center gap-2">
-						<div className="min-w-3 min-h-3 w-[11px] h-[11px] rounded-full bg-[#FF9838]" />
-						Тестирование
+						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#FF9838]" />
+						Testing
 					</div>
 					<div className="flex items-center gap-2">
-						<div className="min-w-3 min-h-3 w-[11px] h-[11px] rounded-full bg-[#B3B3B3]" />
-						Тип дисциплины не указан
+						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#B3B3B3]" />
+						The type of discipline is not specified
 					</div>
 				</div>
 			</div>

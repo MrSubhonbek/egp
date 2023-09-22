@@ -11,12 +11,12 @@ const navList = [
 	{
 		id: '/services/schedule/schedule',
 		icon: <CalendarSvg />,
-		name: 'Мое расписание'
+		name: 'My schedule'
 	},
 	{
 		id: '/services/schedule/services',
 		icon: <BriefcaseSvg />,
-		name: 'Расписание служб'
+		name: 'Service schedule'
 	}
 ]
 export const NavSchedule = () => {
