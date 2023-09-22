@@ -4,10 +4,12 @@ import endpoints from './endpoints'
 import { axiosInstance } from './instance'
 import {
 	AbUSParentResponse,
+	Exam,
 	IAddress,
 	IAddressRequest,
 	IApproveRequest,
 	IAuthSuccess,
+	ICalendar,
 	IDocument,
 	IDocumentAbUs,
 	IDocumentRequest,
@@ -15,6 +17,7 @@ import {
 	IEducationState,
 	IParent,
 	IParentRequest,
+	IPerformance,
 	IRole,
 	IWorkHistoryRequest,
 	IWorkState,
@@ -44,17 +47,17 @@ export const register = (params: IRegRequest): AxiosPromise<number> =>
 export const approve = (params: IApproveRequest): AxiosPromise<IAuthSuccess> =>
 	axiosInstance.post(endpoints.REG.APPROVE, params)
 
-export const job = (params: IWorkHistoryRequest) =>
-	axiosInstance.post(endpoints.USER.INFO.JOB.JOB, params)
+// export const job = (params: IWorkHistoryRequest) =>
+// 	axiosInstance.post(endpoints.USER.INFO.JOB.JOB, params)
 
-export const form = (params: formItem) =>
-	axiosInstance.post(endpoints.USER.INFO.FORM, params)
+// export const form = (params: formItem) =>
+// 	axiosInstance.post(endpoints.USER.INFO.FORM, params)
 
-export const parent = (params: IParentRequest) =>
-	axiosInstance.post(endpoints.USER.INFO.PARENT, params)
+// export const parent = (params: IParentRequest) =>
+// 	axiosInstance.post(endpoints.USER.INFO.PARENT, params)
 
-export const education = (params: IEducationRequest) =>
-	axiosInstance.post(endpoints.USER.INFO.EDUCATION, params)
+// export const education = (params: IEducationRequest) =>
+// 	axiosInstance.post(endpoints.USER.INFO.EDUCATION, params)
 
 export const role = (params: IRole) =>
 	axiosInstance.post(endpoints.USER.INFO.ROLE, params)
@@ -62,8 +65,8 @@ export const role = (params: IRole) =>
 export const getRole = (): AxiosPromise<IRole[]> =>
 	axiosInstance.get(endpoints.USER.INFO.ROLE)
 
-export const document = (params: IDocumentRequest) =>
-	axiosInstance.post(endpoints.USER.INFO.DOCUMENT, params)
+// export const document = (params: IDocumentRequest) =>
+// 	axiosInstance.post(endpoints.USER.INFO.DOCUMENT, params)
 
 export const getAddress = (): AxiosPromise<IAddress> =>
 	axiosInstance.get(endpoints.USER.INFO.ADDRESS)
@@ -129,3 +132,12 @@ export const getAdmissionLink = (): AxiosPromise<{
 
 export const getStudSchedule = (): AxiosPromise<TypeSchedule> =>
 	axiosInstance.get(endpoints.USER.INFO.SCHEDULE)
+
+export const getExamsSchedule = (): AxiosPromise<Exam[]> =>
+	axiosInstance.get(endpoints.USER.INFO.EXAM_SCHEDULE)
+
+export const getStudyPlan = (): AxiosPromise<ICalendar[]> =>
+	axiosInstance.get(endpoints.USER.INFO.STUD_PLAN)
+
+export const getPerformance = (): AxiosPromise<IPerformance> =>
+	axiosInstance.get(endpoints.USER.INFO.PERFORMANCE)

@@ -50,23 +50,6 @@ export const Apply = () => {
 					alt="avatar"
 				/>
 			</div>
-			{/* <div className="max-xl:hidden absolute right-[108px] cursor-pointer hover:scale-x-125 hover:right-20 w-[100px] hover:w-[120px] transition-all duration-200 h-full flex items-center">
-				<svg
-					width="87"
-					height="40"
-					viewBox="0 0 87 40"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="M1 20.4528C1 20.4528 52.8054 20.4528 86 20.4528M86 20.4528C80.4447 12.856 71.7748 1 71.7748 1M86 20.4528C80.4447 27.6959 71.7748 39 71.7748 39"
-						stroke="white"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
-				</svg>
-			</div> */}
 		</div>
 	)
 }

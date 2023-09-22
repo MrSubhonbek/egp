@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { RootState, useAppSelector } from '../../../store'
 import {
-	GetRole,
 	getAbUsAddress,
 	putAbUsAddress
 } from '../../../store/creators/MainCreators'
@@ -21,8 +20,7 @@ import {
 	index,
 	street
 } from '../../../store/reducers/FormReducers/AddressReducer'
-import { addCountries } from '../../../store/reducers/FormReducers/CountriesEducationReducer'
-import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
+import { addCountries } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
 export const Address = () => {
@@ -38,7 +36,7 @@ export const Address = () => {
 		(state: RootState) => state.Address.residenceAddress
 	)
 	const countryStorage = useAppSelector(
-		(state: RootState) => state.CountriesEducation.countries
+		(state: RootState) => state.Services.countries
 	)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()

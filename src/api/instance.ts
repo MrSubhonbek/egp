@@ -16,7 +16,8 @@ axiosInstance.interceptors.request.use(
 			config.url?.includes('users') ||
 			config.url === '/admission-link' ||
 			config.url === '/schedule' ||
-			config.url?.includes('schedule-api')
+			config.url?.includes('schedule-api') ||
+			config.url?.includes('academic-performance-api')
 		) {
 			config.headers['Authorization'] =
 				'Bearer ' + `${localStorage.getItem('access')}`

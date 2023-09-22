@@ -22,11 +22,9 @@ import { useNavigate } from 'react-router-dom'
 
 import { RootState, useAppSelector } from '../../../store'
 import {
-	GetRole,
 	getDocumentItemRequest,
 	postDocumentItemRequest
 } from '../../../store/creators/MainCreators'
-import { addDocuments } from '../../../store/reducers/FormReducers/CountriesEducationReducer'
 import {
 	allData,
 	dateIssue,
@@ -38,7 +36,7 @@ import {
 	passportSeries,
 	snils
 } from '../../../store/reducers/FormReducers/DocumentReducer'
-import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
+import { addDocuments } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetDocumentsQuery } from '../../../store/slice/documentSlice'
 
 const props: UploadProps = {
@@ -68,7 +66,7 @@ export const Document = () => {
 	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const role = useAppSelector(state => state.InfoUser?.role)
 	const documentStorage = useAppSelector(
-		(state: RootState) => state.CountriesEducation.documents
+		(state: RootState) => state.Services.documents
 	)
 	const documentData = useAppSelector((state: RootState) => state.Document)
 	const { data: documents } = useGetDocumentsQuery(i18n.language, {

@@ -4,12 +4,12 @@ import logger from 'redux-logger'
 
 import AuthRegReducer from './reducers/AuthRegReducer'
 import AddressReducer from './reducers/FormReducers/AddressReducer'
-import CountriesEducationReducer from './reducers/FormReducers/CountriesEducationReducer'
 import DocumentReducer from './reducers/FormReducers/DocumentReducer'
 import EducationReducer from './reducers/FormReducers/EducationReducer'
 import FormReducer from './reducers/FormReducers/FormReducer'
 import InfoUserReducer from './reducers/FormReducers/InfoUserReducer'
 import ParentReducer from './reducers/FormReducers/ParentReducer'
+import ServicesReducer from './reducers/FormReducers/ServicesReducer'
 import WorkReducer from './reducers/FormReducers/WorkReducer'
 import ProfileReducer from './reducers/ProfileReducer'
 import { countriesAPi } from './slice/countrySlice'
@@ -28,7 +28,7 @@ export const store = configureStore({
 		Work: WorkReducer,
 		Parent: ParentReducer,
 		Address: AddressReducer,
-		CountriesEducation: CountriesEducationReducer,
+		Services: ServicesReducer,
 		[scheduleApi.reducerPath]: scheduleApi.reducer,
 		[countriesAPi.reducerPath]: countriesAPi.reducer,
 		[educationLevelAPi.reducerPath]: educationLevelAPi.reducer,

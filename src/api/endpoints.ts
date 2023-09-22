@@ -18,7 +18,10 @@ const endpoints = {
 			FORM: '/user-api/users/me',
 			ADDRESS: '/user-api/users/me/address',
 			SCHEDULE: '/schedule-api/schedule',
-			FD: '/academic-performance-api'
+			EXAM_SCHEDULE: '/schedule-api/calendar/examsSchedule',
+			STUD_PLAN: '/schedule-api/calendar/studyplan',
+			PERFORMANCE: '/academic-performance-api/performance',
+			TEACHERS_RATING: '/academic-performance-api/teachers-rating'
 		},
 		COUNTRIES: '/country',
 		EDUCATION_LEVEL_ANOTHER: '/education/levels',

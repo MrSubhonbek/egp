@@ -13,12 +13,11 @@ import {
 } from 'antd'
 import type { UploadProps } from 'antd'
 import enPicker from 'antd/locale/en_US'
-import ruPicker from 'antd/locale/ru_RU'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import 'dayjs/locale/en'
 import 'dayjs/locale/ru'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -63,7 +62,7 @@ const props: UploadProps = {
 
 export const Work = () => {
 	const { t, i18n } = useTranslation()
-	dayjs.locale(i18n.language)
+	dayjs.locale('en')
 	const [IsError, setError] = useState<IWorkError>({
 		item: null,
 		portfolio: false

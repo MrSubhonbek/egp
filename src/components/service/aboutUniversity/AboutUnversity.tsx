@@ -14,16 +14,20 @@ import {
 import mp4 from '../../../assets/video/Kfu.mp4'
 import { Footer } from '../../layout/Footer'
 
+import './AboutUniversity.scss'
+
 const AboutUniversity = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const [play, changePlay] = useState(false)
+
 	// const [video, getVideo] = useState<string>('')
 	// useEffect(() => {
 	// 	if (localStorage.getItem('greetingVideo')) {
 	// 		getVideo(JSON.parse(localStorage.getItem('greetingVideo') || ''))
 	// 	}
 	// }, [])
+
 	return (
 		<div className="flex flex-col w-full min-h-screen">
 			<div className="flex flex-col mx-6 my-20">
@@ -33,7 +37,9 @@ const AboutUniversity = () => {
 				>
 					<div className="flex items-center">
 						<ArrowLongLeftSVG />
-						<span className="text-lg ml-2">{t('back')}</span>
+						<span className="text-lg ml-2" style={{}}>
+							{t('back')}
+						</span>
 					</div>
 				</Button>
 				<div className="flex justify-between w-full mb-40 max-lg:flex-col max-lg:items-center">

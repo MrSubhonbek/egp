@@ -239,10 +239,67 @@ export type IAddressRequest = {
 	residenceAddress: addressItem | null
 }
 
-export type ICountriesDocumentsState = {
+export interface Exam {
+	building_name: string
+	room_num: string
+	name: string
+	employee_id: number
+	employee_name: string
+	date_note: string
+	time_note: string
+}
+
+export type IAnswer = 'y' | 'n'
+
+export interface ICalendar {
+	semester: number
+	type_id: number
+	type_name: string
+	gost_hours: number
+	laboratory_hours: number
+	total_laboratory_hours: number
+	lecture_hours: number
+	total_lecture_hours: number
+	practice_hours: number
+	total_practice_hours: number
+	seminar_hours: number
+	total_seminar_hours: number
+	independent_hours: number
+	total_independent_hours: number
+	is_exam: boolean
+	is_quiz: boolean
+	subject_id: number
+	subject_name: string
+	full_shifr: string
+}
+
+export interface performanceItem {
+	semester: number
+	type: string
+	hours: number
+	credit: number
+	is_test: IAnswer
+	is_exam: IAnswer
+	semester_points: number
+	subject_name: string
+	points_string: string
+	exam_points: number
+	pass_date: string
+	total_points: number
+}
+
+export interface IPerformance {
+	journal: performanceItem[]
+}
+
+export type IServices = {
 	countries: ICountryRequest[] | null
 	educations: IEducationLevelRequest[] | null
 	documents: IDocumentsRequest[] | null
+	schedule: TypeSchedule | null
+	examsSchedule: Exam[] | null
+	studyPlan: ICalendar[] | null
+	performance: IPerformance | null
 }
 
 export type IWorkItemsError = {

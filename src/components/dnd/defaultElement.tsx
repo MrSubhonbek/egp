@@ -11,22 +11,18 @@ import { Session } from '../cards/Session'
 export const studElements = [
 	{
 		index: '0',
-		element: <Apply />
-	},
-	{
-		index: '1',
 		element: <Schedule />
 	},
 	{
-		index: '2',
+		index: '1',
 		element: <AboutUniversity />
 	},
 	{
-		index: '3',
+		index: '2',
 		element: <Grade />
 	},
 	{
-		index: '4',
+		index: '3',
 		element: <Session />
 	}
 ]

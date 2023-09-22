@@ -19,7 +19,15 @@ body {
 		width: 5px;
 	}
 
-	body::-webkit-scrollbar-thumb {
+	div::-webkit-scrollbar {
+		width: 2px;
+	}
+
+	div::-webkit-scrollbar-thumb {
+		background: white;
+	}
+
+	*::-webkit-scrollbar-thumb {
 		background: #ccc;
 	}
 }

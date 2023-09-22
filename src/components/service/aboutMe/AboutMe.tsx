@@ -20,13 +20,8 @@ import { useNavigate } from 'react-router-dom'
 
 import phones from '../../../api/phones.json'
 import { RootState, useAppSelector } from '../../../store'
-import {
-	GetRole,
-	getAbUsForm,
-	putAbUsForm
-} from '../../../store/creators/MainCreators'
+import { getAbUsForm, putAbUsForm } from '../../../store/creators/MainCreators'
 import { logout } from '../../../store/creators/SomeCreators'
-import { addCountries } from '../../../store/reducers/FormReducers/CountriesEducationReducer'
 import {
 	allData,
 	birthDay,
@@ -37,7 +32,7 @@ import {
 	phone,
 	surName
 } from '../../../store/reducers/FormReducers/FormReducer'
-import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
+import { addCountries } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
 export const AboutMe = () => {
@@ -50,7 +45,7 @@ export const AboutMe = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const countryStorage = useAppSelector(
-		(state: RootState) => state.CountriesEducation.countries
+		(state: RootState) => state.Services.countries
 	)
 	const maskRange = useRef<null | string[]>(null)
 	const [currentMask, changeCurrent] = useState<string>('')

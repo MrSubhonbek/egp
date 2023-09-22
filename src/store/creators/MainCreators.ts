@@ -9,21 +9,19 @@ import {
 	deleteEducation,
 	deleteJobItem,
 	deleteParent,
-	document,
-	education,
-	form,
 	getAddress,
 	getAdmissionLink,
 	getDocument,
 	getEducation,
+	getExamsSchedule,
 	getForm,
 	getJob,
 	getParent,
+	getPerformance,
 	getRole,
 	getStudSchedule,
-	job,
+	getStudyPlan,
 	login,
-	parent,
 	postDocument,
 	postParent,
 	putAddress,
@@ -38,18 +36,17 @@ import {
 } from '../../api/index'
 import {
 	AbUSParentResponse,
+	Exam,
 	IAddress,
 	IAddressRequest,
+	ICalendar,
 	IDocument,
 	IDocumentAbUs,
-	IDocumentRequest,
-	IEducationRequest,
 	IEducationState,
 	IError,
 	IParent,
-	IParentRequest,
+	IPerformance,
 	IRole,
-	IWorkHistoryRequest,
 	TypeSchedule,
 	educationItem,
 	formItem,
@@ -193,86 +190,6 @@ export const GetRole = async (dispatch: Dispatch): Promise<IRole[] | null> => {
 		}
 	}
 	return null
-}
-
-export const setForm = async (
-	data: formItem,
-	dispatch: Dispatch
-): Promise<number> => {
-	try {
-		await refreshToken(dispatch)
-		await form(data)
-		return 200
-	} catch (e) {
-		if (request.isAxiosError(e) && e.response) {
-			console.log(e.response?.data as IError)
-		}
-	}
-	return 403
-}
-
-export const setJob = async (
-	data: IWorkHistoryRequest,
-	dispatch: Dispatch
-): Promise<number> => {
-	try {
-		await refreshToken(dispatch)
-		await job(data)
-		return 200
-	} catch (e) {
-		if (request.isAxiosError(e) && e.response) {
-			console.log(e.response?.data as IError)
-		}
-	}
-	return 403
-}
-
-export const setDocument = async (
-	data: IDocumentRequest,
-	dispatch: Dispatch
-): Promise<number> => {
-	try {
-		await refreshToken(dispatch)
-		await document(data)
-		return 200
-	} catch (e) {
-		if (request.isAxiosError(e) && e.response) {
-			console.log(e.response?.data as IError)
-		}
-	}
-	return 403
-}
-
-export const setParent = async (
-	data: IParentRequest,
-	dispatch: Dispatch
-): Promise<number> => {
-	try {
-		await refreshToken(dispatch)
-		await parent(data)
-		return 200
-	} catch (e) {
-		if (request.isAxiosError(e) && e.response) {
-			console.log(e.response?.data as IError)
-		}
-	}
-	return 403
-}
-
-export const setEducation = async (
-	data: IEducationRequest,
-	dispatch: Dispatch
-): Promise<number> => {
-	try {
-		await refreshToken(dispatch)
-		await education(data)
-		return 200
-	} catch (e) {
-		if (request.isAxiosError(e) && e.response) {
-			console.log(e.response?.data as IError)
-		}
-	}
-	return 403
 }
 
 export const getAbUsForm = async (
@@ -609,6 +526,51 @@ export const getSchedule = async (
 	try {
 		await refreshToken(dispatch)
 		const response = await getStudSchedule()
+		return response.data
+	} catch (e) {
+		if (request.isAxiosError(e) && e.response) {
+			console.log(e.response?.data as IError)
+		}
+	}
+	return null
+}
+
+export const getStudExamsSchedule = async (
+	dispatch: Dispatch
+): Promise<Exam[] | null> => {
+	try {
+		await refreshToken(dispatch)
+		const response = await getExamsSchedule()
+		return response.data
+	} catch (e) {
+		if (request.isAxiosError(e) && e.response) {
+			console.log(e.response?.data as IError)
+		}
+	}
+	return null
+}
+
+export const getStudyPlans = async (
+	dispatch: Dispatch
+): Promise<ICalendar[] | null> => {
+	try {
+		await refreshToken(dispatch)
+		const response = await getStudyPlan()
+		return response.data
+	} catch (e) {
+		if (request.isAxiosError(e) && e.response) {
+			console.log(e.response?.data as IError)
+		}
+	}
+	return null
+}
+
+export const getStudPerformance = async (
+	dispatch: Dispatch
+): Promise<IPerformance | null> => {
+	try {
+		await refreshToken(dispatch)
+		const response = await getPerformance()
 		return response.data
 	} catch (e) {
 		if (request.isAxiosError(e) && e.response) {

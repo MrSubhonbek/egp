@@ -1,10 +1,13 @@
 import { Button } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { TypeSchedule } from '../../api/types'
 import img from '../../assets/images/image15.png'
+import { useAppSelector } from '../../store'
 import { getSchedule } from '../../store/creators/MainCreators'
+import { addSchedule } from '../../store/reducers/FormReducers/ServicesReducer'
 
 type week =
 	| 'monday'
@@ -16,13 +19,14 @@ type week =
 
 export const Schedule = () => {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	const [activeButton, changeActive] = useState<week>('monday')
-	const [schedule, changeSchedule] = useState<TypeSchedule | null>()
+	const scheduleStorage = useAppSelector(state => state.Services.schedule)
 
 	const getPlan = async () => {
 		const response = await getSchedule(dispatch)
 		if (!response) console.log(404)
-		else changeSchedule(response)
+		else dispatch(addSchedule(response))
 	}
 
 	const setActiveButton = (buttonName: week) => {
@@ -30,8 +34,8 @@ export const Schedule = () => {
 	}
 
 	useEffect(() => {
-		if (!schedule) getPlan()
-	}, [schedule])
+		if (!scheduleStorage) getPlan()
+	}, [scheduleStorage])
 
 	const disableStyle = {
 		color: 'white',
@@ -98,17 +102,45 @@ export const Schedule = () => {
 				</div>
 			</div>
 			<hr className="h-full w-[2px] my-auto bg-white mx-3 border-none" />
-			<div className="flex flex-col justify-between min-w-[300px] max-w-[300px]">
-				{schedule &&
-					schedule[activeButton].map((el, index) => (
-						<div className="flex gap-5 w-full" key={index}>
+			<div className="flex flex-col justify-start min-w-[300px] max-w-[300px] max-h-full overflow-y-auto">
+				{scheduleStorage &&
+					scheduleStorage[activeButton].map((el, index) => (
+						<div className="flex w-full gap-x-[40px] mb-[20px]" key={index}>
 							<span className="text-start min-w-[100px]">{el.time}</span>
 							<span className="font-bold text-start">{el.name}</span>
 						</div>
 					))}
 			</div>
-			<div className="min-w-[190px] max-w-[190px] min-h-[190px] max-h-[190px] bg-white flex items-center justify-center absolute right-[20px] top-0 bottom-0 my-auto rounded-[50%]">
-				<img src={img} alt="" width={'240px'} height={'210px'} />
+			<div className="max-lg:hidden w-1/4 relative flex items-center justify-center">
+				<div className="bg-white rounded-[50%] min-w-[180px] max-w-[180px] max-h-[180px] min-h-[180px] absolute"></div>
+				<img
+					src={img}
+					alt=""
+					width={'240px'}
+					height={'210px'}
+					className="absolute bottom-[40px]"
+				/>
+			</div>
+			<div
+				className="max-xl:hidden relative w-1/4 flex justify-center items-center "
+				onClick={() => navigate('/services/schedule')}
+			>
+				<svg
+					width="87"
+					height="40"
+					viewBox="0 0 87 40"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					className="absolute cursor-pointer hover:scale-x-125 w-[100px] min-h-[40px] hover:w-[120px] hover:h-[60px] transition-all duration-200"
+				>
+					<path
+						d="M1 20.4528C1 20.4528 52.8054 20.4528 86 20.4528M86 20.4528C80.4447 12.856 71.7748 1 71.7748 1M86 20.4528C80.4447 27.6959 71.7748 39 71.7748 39"
+						stroke="white"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</svg>
 			</div>
 		</div>
 	)

@@ -31,7 +31,7 @@ export const AboutUniversity = () => {
 				</div>
 			</div>
 			<div className="absolute min-w-[125px] min-h-[125px] top-[40px] right-[10px] max-h-[125px] bg-[#3E89F9] bg-opacity-80 rounded-full flex justify-center items-center">
-				<img width={'90px'} height={'90px'} src={img} alt="" />
+				<img className="mb-8 ml-6" src={img} alt="" />
 			</div>
 		</div>
 	)

@@ -21,16 +21,11 @@ import { useNavigate } from 'react-router-dom'
 import { IEducationError, IEducationState } from '../../../api/types'
 import { RootState, useAppSelector } from '../../../store'
 import {
-	GetRole,
 	addEducationItemRequest,
 	deleteEducationItemRequest,
 	getEducationItemRequest,
 	putEducationItemRequest
 } from '../../../store/creators/MainCreators'
-import {
-	addCountries,
-	addEducations
-} from '../../../store/reducers/FormReducers/CountriesEducationReducer'
 import {
 	allData,
 	countryId,
@@ -41,7 +36,10 @@ import {
 	nameOfInstitute,
 	specialization
 } from '../../../store/reducers/FormReducers/EducationReducer'
-import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
+import {
+	addCountries,
+	addEducations
+} from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 import { useGetEducationLevelQuery } from '../../../store/slice/educationLevelSlice'
 
@@ -81,10 +79,10 @@ export const Education = () => {
 		skip: SkipCountriesQuery
 	})
 	const countriesStorage = useAppSelector(
-		(state: RootState) => state.CountriesEducation.countries
+		(state: RootState) => state.Services.countries
 	)
 	const educationStorage = useAppSelector(
-		(state: RootState) => state.CountriesEducation.educations
+		(state: RootState) => state.Services.educations
 	)
 
 	const getData = async () => {

@@ -13,13 +13,13 @@ export const studBlock = {
 			static: true
 		},
 		{
-			w: 3,
+			w: 1,
 			h: 2,
 			maxH: 4,
 			maxW: 4,
 			minH: 2,
 			x: 0,
-			y: 0,
+			y: 1,
 			i: '1',
 			moved: false,
 			static: false
@@ -30,8 +30,8 @@ export const studBlock = {
 			maxH: 4,
 			maxW: 4,
 			minH: 2,
-			x: 0,
-			y: 2,
+			x: 1,
+			y: 1,
 			i: '2',
 			moved: false,
 			static: false
@@ -42,21 +42,9 @@ export const studBlock = {
 			maxH: 4,
 			maxW: 4,
 			minH: 2,
-			x: 0,
-			y: 2,
+			x: 2,
+			y: 1,
 			i: '3',
-			moved: false,
-			static: false
-		},
-		{
-			w: 1,
-			h: 2,
-			maxH: 4,
-			maxW: 4,
-			minH: 2,
-			x: 0,
-			y: 2,
-			i: '4',
 			moved: false,
 			static: false
 		}
@@ -84,7 +72,7 @@ export const anotherBlock = {
 			maxW: 4,
 			minH: 2,
 			x: 0,
-			y: 2,
+			y: 1,
 			i: '1',
 			moved: false,
 			static: false

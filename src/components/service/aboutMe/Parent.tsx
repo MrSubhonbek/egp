@@ -23,14 +23,11 @@ import { useNavigate } from 'react-router-dom'
 import { IParentError, IParentState } from '../../../api/types'
 import { RootState, useAppSelector } from '../../../store'
 import {
-	GetRole,
 	deleteParentItemRequest,
 	getParentItemRequest,
 	postParentItemRequest,
 	putParentItemRequest
 } from '../../../store/creators/MainCreators'
-import { addDocuments } from '../../../store/reducers/FormReducers/CountriesEducationReducer'
-import { putRole } from '../../../store/reducers/FormReducers/InfoUserReducer'
 import {
 	FIO,
 	allData,
@@ -47,6 +44,7 @@ import {
 	residenceAddress,
 	snils
 } from '../../../store/reducers/FormReducers/ParentReducer'
+import { addDocuments } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetDocumentsQuery } from '../../../store/slice/documentSlice'
 
 const props: UploadProps = {
@@ -78,7 +76,7 @@ export const Parent = () => {
 	const [updateItems, setUpdate] = useState<boolean>(true)
 	const parentData = useAppSelector(state => state.Parent)
 	const documentStorage = useAppSelector(
-		(state: RootState) => state.CountriesEducation.documents
+		(state: RootState) => state.Services.documents
 	)
 	const { data: documents } = useGetDocumentsQuery(i18n.language, {
 		skip: SkipCountriesQuery
