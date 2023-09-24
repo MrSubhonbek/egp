@@ -47,17 +47,18 @@ export const Address = () => {
 
 	const getData = async () => {
 		const response = await getAbUsAddress(dispatch)
-		if (response !== null) {
+		if (typeof response !== 'number') {
 			if (response.residenceAddress) {
 				setValue(1)
 			}
 			dispatch(allData(response))
 		}
+		if (response === 403) navigate('/')
 	}
 
 	useEffect(() => {
-		getData()
-	}, [])
+		if (!registrationAddressData.house) getData()
+	}, [registrationAddressData])
 
 	useEffect(() => {
 		if (!countryStorage) changeQuerySkip(false)
@@ -145,7 +146,7 @@ export const Address = () => {
 				},
 				dispatch
 			)
-			if (status === 400) setError(true)
+			if (status === 404) setError(true)
 			if (status === 200) setError(false)
 			if (status === 403) navigate('/')
 		}

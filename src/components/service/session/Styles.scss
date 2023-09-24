@@ -1,0 +1,23 @@
+.table {
+	padding: 0;
+}
+
+.table tr > td:first-child {
+	padding: 0 !important;
+}
+
+.table tr > td:first-child div {
+	width: 100%;
+	display: flex;
+}
+
+.table tr > td:first-child span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.table tr > td:first-child span:first-child {
+	border-right: solid 1px #f0f0f0;
+}

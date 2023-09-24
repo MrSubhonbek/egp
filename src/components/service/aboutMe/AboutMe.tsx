@@ -21,7 +21,6 @@ import { useNavigate } from 'react-router-dom'
 import phones from '../../../api/phones.json'
 import { RootState, useAppSelector } from '../../../store'
 import { getAbUsForm, putAbUsForm } from '../../../store/creators/MainCreators'
-import { logout } from '../../../store/creators/SomeCreators'
 import {
 	allData,
 	birthDay,
@@ -53,16 +52,9 @@ export const AboutMe = () => {
 
 	var email = useRef<string>('')
 
-	const exit = async () => {
-		await logout(dispatch)
-		navigate('/')
-	}
-
 	const getData = async () => {
 		const response = await getAbUsForm(dispatch)
-		if (response !== null) {
-			dispatch(allData(response))
-		}
+		if (typeof response !== 'number') dispatch(allData(response))
 	}
 
 	const setChanges = async () => {
@@ -82,7 +74,7 @@ export const AboutMe = () => {
 			setError(true)
 		} else {
 			const status = await putAbUsForm(formData, dispatch)
-			if (status === 400) setError(true)
+			if (status === 404) setError(true)
 			if (status === 403) navigate('/')
 			if (status === 200) setError(false)
 		}
@@ -97,10 +89,8 @@ export const AboutMe = () => {
 			if (typeof personalData !== 'string') {
 				email.current = personalData.email
 			}
-		} else {
-			exit()
 		}
-		getData()
+		if (!formData.birthDay) getData()
 	}, [])
 
 	useEffect(() => {

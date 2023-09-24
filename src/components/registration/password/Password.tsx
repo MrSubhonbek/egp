@@ -42,8 +42,9 @@ export const Password: FC<IPasswordProps> = ({
 					error.details.length > 0 &&
 					error.details.some(el => el.field === 'password') && (
 						<div>
-							{error.details.map(el => {
-								if (el.field === 'password') return <p>{el.message}</p>
+							{error.details.map((el, index) => {
+								if (el.field === 'password')
+									return <p key={index}>{el.message}</p>
 								else return ''
 							})}
 						</div>

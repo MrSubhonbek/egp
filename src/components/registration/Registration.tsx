@@ -12,7 +12,6 @@ import { registerUser } from '../../store/creators/MainCreators'
 import { clearRegistrationErrors } from '../../store/creators/SomeCreators'
 import { BackMainPage } from '../back-main-page/BackMainPage'
 
-// import { Faq } from '../faq/Faq'
 import styles from './Registration.module.scss'
 import { Buttons } from './buttons/Buttons'
 import { Inputs } from './inputs/Inputs'
@@ -29,13 +28,13 @@ export const Registration: FC<IRegProps> = ({ changeEmail, email }) => {
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 	const error = useSelector((state: RootState) => state.AuthReg.regData.error)
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const [check, setCheck] = useState(false)
 	const [confirmPassword, setConfirmPassword] = useState(false)
 
 	useEffect(() => {
 		dispatch(clearRegistrationErrors())
-	}, [i18n.language])
+	}, [])
 
 	const onFinish = async (values: IRegForm) => {
 		if (confirmPassword) {
@@ -51,10 +50,7 @@ export const Registration: FC<IRegProps> = ({ changeEmail, email }) => {
 					},
 					dispatch
 				)
-
-				if (response === 200) {
-					navigate('/registration/checkingEmail')
-				}
+				if (response === 200) navigate('/registration/checkingEmail')
 			}
 		}
 	}
@@ -67,7 +63,7 @@ export const Registration: FC<IRegProps> = ({ changeEmail, email }) => {
 					name="login"
 					className={styles.loginForm}
 					initialValues={{ remember: true }}
-					onFinish={onFinish}
+					onFinish={e => onFinish(e)}
 				>
 					<Title className={styles.title}>{t('registration')}</Title>
 					<Inputs error={error} changeEmail={changeEmail} />
@@ -85,7 +81,6 @@ export const Registration: FC<IRegProps> = ({ changeEmail, email }) => {
 						alt="group"
 					/>
 				</div>
-				{/* <Faq /> */}
 			</div>
 		</div>
 	)

@@ -87,9 +87,10 @@ export const Education = () => {
 
 	const getData = async () => {
 		const response = await getEducationItemRequest(dispatch)
-		if (response !== null) {
+		if (typeof response !== 'number') {
 			dispatch(allData(response))
 		}
+		if (response === 403) navigate('/')
 	}
 
 	const [updateItems, setUpdate] = useState<boolean>(true)
@@ -176,14 +177,14 @@ export const Education = () => {
 				dispatch
 			)
 			if (status === 200) setUpdate(true)
-			else navigate('/')
+			if (status === 403) navigate('/')
 		}
 	}
 
 	const handleDeleteEducation = async (id: string) => {
 		const response = await deleteEducationItemRequest(id, dispatch)
 		if (response === 200) setUpdate(true)
-		else navigate('/')
+		if (response === 403) navigate('/')
 	}
 
 	const handleAddEducation = async () => {
@@ -198,7 +199,7 @@ export const Education = () => {
 		}
 		const response = await addEducationItemRequest(item, dispatch)
 		if (response === 200) setUpdate(true)
-		else navigate('/')
+		if (response === 403) navigate('/')
 	}
 
 	useEffect(() => {

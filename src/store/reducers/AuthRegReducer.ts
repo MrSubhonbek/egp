@@ -1,10 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Cookies } from 'react-cookie'
 
 import { IAuthRegState, IAuthSuccess, IError } from '../../api/types'
 import { RootState } from '../index'
-
-const cookies = new Cookies()
 
 interface IloginSuccess extends Omit<IAuthSuccess, 'user'> {}
 
@@ -23,9 +20,6 @@ export const AuthRegReducer = createSlice({
 	initialState,
 	reducers: {
 		loginSuccess: (state, action: PayloadAction<IloginSuccess>) => {
-			localStorage.setItem('access', action.payload.accessToken)
-			cookies.remove('refresh')
-			cookies.set('refresh', action.payload.refreshToken)
 			state.authData.accessToken = action.payload.accessToken
 			state.authData.error = null
 		},
@@ -38,12 +32,8 @@ export const AuthRegReducer = createSlice({
 		registrationFailure: (state, action: PayloadAction<IError | null>) => {
 			state.regData.error = action.payload
 		},
-		logoutSuccess: (): IAuthRegState => {
-			cookies.remove('refresh')
-			localStorage.removeItem('access')
-			localStorage.removeItem('userInfo')
-			return initialState
-		}
+		setDefaultAuthReg: (state, action: PayloadAction<void>) =>
+			(state = initialState)
 	}
 })
 
@@ -51,7 +41,7 @@ export const {
 	loginFailure,
 	loginSuccess,
 	registrationFailure,
-	logoutSuccess,
+	setDefaultAuthReg,
 	refreshSuccess
 } = AuthRegReducer.actions
 

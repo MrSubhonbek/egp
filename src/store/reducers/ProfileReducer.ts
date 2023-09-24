@@ -18,13 +18,12 @@ export const ProfileReducer = createSlice({
 			state.profileData.CurrentData = action.payload
 			state.profileData.error = null
 		},
-		ProfileFailure: (state, action: PayloadAction<IError>) => {
-			state.profileData.error = action.payload
-		}
+		setDefaultProfile: (state, action: PayloadAction<void>) =>
+			(state = initialState)
 	}
 })
 
-export const { ProfileFailure, ProfileSuccess } = ProfileReducer.actions
+export const { ProfileSuccess, setDefaultProfile } = ProfileReducer.actions
 
 export default ProfileReducer.reducer
 

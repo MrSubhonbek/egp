@@ -136,7 +136,7 @@ export const getStudSchedule = (): AxiosPromise<TypeSchedule> =>
 export const getExamsSchedule = (): AxiosPromise<Exam[]> =>
 	axiosInstance.get(endpoints.USER.INFO.EXAM_SCHEDULE)
 
-export const getStudyPlan = (): AxiosPromise<ICalendar[]> =>
+export const getStudyPlan = (): AxiosPromise<ICalendar> =>
 	axiosInstance.get(endpoints.USER.INFO.STUD_PLAN)
 
 export const getPerformance = (): AxiosPromise<IPerformance> =>

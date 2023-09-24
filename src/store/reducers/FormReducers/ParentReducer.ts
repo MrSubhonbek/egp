@@ -87,7 +87,9 @@ export const ParentReducer = createSlice({
 		) => {
 			state.filter(el => el.id === action.payload.id)[0].residenceAddress =
 				action.payload.residenceAddress
-		}
+		},
+		setDefaultParent: (state, action: PayloadAction<void>) =>
+			(state = initialState)
 	}
 })
 
@@ -105,7 +107,8 @@ export const {
 	snils,
 	residenceAddress,
 	registrationAddress,
-	allData
+	allData,
+	setDefaultParent
 } = ParentReducer.actions
 
 export default ParentReducer.reducer

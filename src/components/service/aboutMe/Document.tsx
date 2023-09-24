@@ -75,7 +75,7 @@ export const Document = () => {
 
 	const getData = async () => {
 		const response = await getDocumentItemRequest(dispatch)
-		if (response) {
+		if (typeof response !== 'number') {
 			dispatch(
 				allData({
 					documentTypeId: !response.documentTypeId
@@ -94,11 +94,12 @@ export const Document = () => {
 					snils: !response.snils ? '' : response.snils
 				})
 			)
-		} else navigate('/')
+		}
+		if (response === 403) navigate('/')
 	}
 
 	useEffect(() => {
-		getData()
+		if (!documentData.inn) getData()
 	}, [])
 
 	useEffect(() => {
@@ -142,7 +143,7 @@ export const Document = () => {
 		}
 		const response = await postDocumentItemRequest(documentData, dispatch)
 		if (response === 200) changeIsEmpty(false)
-		if (response === 400) changeIsEmpty(true)
+		if (response === 404) changeIsEmpty(true)
 		if (response === 403) navigate('/')
 	}
 	const isStudent = role === 'STUD'

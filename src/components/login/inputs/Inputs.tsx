@@ -1,5 +1,5 @@
 import { Form, Input } from 'antd'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { IError } from '../../../api/types'
@@ -43,7 +43,6 @@ export const Inputs: FC<IInputsProps> = ({ error }) => {
 					placeholder={t('password')}
 				/>
 			</Form.Item>
-			{/*<p className={styles.forgot}>{t('rememberPassword')}</p>*/}
 		</>
 	)
 }

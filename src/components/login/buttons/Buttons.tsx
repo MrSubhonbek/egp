@@ -2,7 +2,6 @@ import { Button, Form } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import { GosSvg } from '../../../assets/svg'
 import { useAppDispatch } from '../../../store'
 import { clearLoginErrors } from '../../../store/creators/SomeCreators'
 

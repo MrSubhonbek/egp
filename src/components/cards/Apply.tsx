@@ -8,6 +8,7 @@ import { getAdmission } from '../../store/creators/MainCreators'
 
 export const Apply = () => {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	const cookie = new Cookies()
 	const disableStyle = {
 		color: '#004EC2',
@@ -18,11 +19,12 @@ export const Apply = () => {
 	const request = async () => {
 		const response = await getAdmission(dispatch)
 
-		if (response) {
+		if (typeof response !== 'number') {
 			cookie.set('s_id', response.session, { domain: 'kpfu.ru' })
 			cookie.set('s_abit_id', response.session, { domain: 'kpfu.ru' })
 			window.open(response.link, '_blank')
 		}
+		if (response === 403) navigate('/')
 	}
 	return (
 		<div

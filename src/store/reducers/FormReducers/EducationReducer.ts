@@ -80,7 +80,9 @@ export const EducationReducer = createSlice({
 		) => {
 			state.filter(el => el.id === action.payload.id)[0].specialization =
 				action.payload.specialization
-		}
+		},
+		setDefaultEducation: (state, action: PayloadAction<void>) =>
+			(state = initialState)
 	}
 })
 
@@ -94,7 +96,8 @@ export const {
 	countryId,
 	graduateYear,
 	specialization,
-	allData
+	allData,
+	setDefaultEducation
 } = EducationReducer.actions
 
 export default EducationReducer.reducer

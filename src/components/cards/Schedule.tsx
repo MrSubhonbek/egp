@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { TypeSchedule } from '../../api/types'
 import img from '../../assets/images/image15.png'
 import { useAppSelector } from '../../store'
 import { getSchedule } from '../../store/creators/MainCreators'
@@ -25,8 +24,8 @@ export const Schedule = () => {
 
 	const getPlan = async () => {
 		const response = await getSchedule(dispatch)
-		if (!response) console.log(404)
-		else dispatch(addSchedule(response))
+		if (response === 403) navigate('/')
+		if (typeof response !== 'number') dispatch(addSchedule(response))
 	}
 
 	const setActiveButton = (buttonName: week) => {
@@ -54,7 +53,7 @@ export const Schedule = () => {
 				background: 'linear-gradient(89.94deg, #71AAFF 12.16%, #3D7AD5 104.42%)'
 			}}
 		>
-			<div className="flex flex-col h-full justify-between">
+			<div className="flex flex-col h-full justify-between w-1/2">
 				<span className="bg-none text-4xl font-bold text-start">Schedule</span>
 				<div className="flex w-full flex-wrap gap-1">
 					<Button
@@ -111,7 +110,7 @@ export const Schedule = () => {
 						</div>
 					))}
 			</div>
-			<div className="max-lg:hidden w-1/4 relative flex items-center justify-center">
+			<div className="max-lg:hidden w-full relative flex items-center justify-center ">
 				<div className="bg-white rounded-[50%] min-w-[180px] max-w-[180px] max-h-[180px] min-h-[180px] absolute"></div>
 				<img
 					src={img}
@@ -122,7 +121,7 @@ export const Schedule = () => {
 				/>
 			</div>
 			<div
-				className="max-xl:hidden relative w-1/4 flex justify-center items-center "
+				className="max-xl:hidden relative w-1/6 flex justify-center items-center"
 				onClick={() => navigate('/services/schedule')}
 			>
 				<svg

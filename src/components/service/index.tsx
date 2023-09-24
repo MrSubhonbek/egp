@@ -23,11 +23,8 @@ const Service = () => {
 
 	const getRole = async () => {
 		const response = await GetRole(dispatch)
-		if (response) {
-			dispatch(putRole(response[0].role))
-		} else {
-			navigate('/')
-		}
+		if (typeof response !== 'number') dispatch(putRole(response[0].role))
+		if (response === 403) navigate('/')
 	}
 
 	useEffect(() => {

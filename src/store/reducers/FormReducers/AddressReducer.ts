@@ -118,12 +118,22 @@ export const AddressReducer = createSlice({
 						index: action.payload.index
 					}
 			}
-		}
+		},
+		setDefaultAddress: (state, action: PayloadAction<void>) =>
+			(state = initialState)
 	}
 })
 
-export const { index, country, apartment, house, street, city, allData } =
-	AddressReducer.actions
+export const {
+	index,
+	country,
+	apartment,
+	house,
+	street,
+	city,
+	allData,
+	setDefaultAddress
+} = AddressReducer.actions
 
 export default AddressReducer.reducer
 

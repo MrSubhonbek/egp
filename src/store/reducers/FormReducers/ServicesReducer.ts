@@ -41,12 +41,14 @@ export const ServicesReducer = createSlice({
 		addExamsSchedule: (state, action: PayloadAction<Exam[]>) => {
 			state.examsSchedule = action.payload
 		},
-		addStudyPlan: (state, action: PayloadAction<ICalendar[]>) => {
+		addStudyPlan: (state, action: PayloadAction<ICalendar>) => {
 			state.studyPlan = action.payload
 		},
 		addPerformance: (state, action: PayloadAction<IPerformance>) => {
 			state.performance = action.payload
-		}
+		},
+		setDefaultServices: (state, action: PayloadAction<void>) =>
+			(state = initialState)
 	}
 })
 
@@ -57,7 +59,8 @@ export const {
 	addSchedule,
 	addExamsSchedule,
 	addStudyPlan,
-	addPerformance
+	addPerformance,
+	setDefaultServices
 } = ServicesReducer.actions
 
 export default ServicesReducer.reducer

@@ -16,7 +16,7 @@ import {
 	PersonSvg
 } from '../../assets/svg'
 import { RootState, useAppSelector } from '../../store'
-import { logout } from '../../store/creators/SomeCreators'
+import { LogOut } from '../../store/creators/SomeCreators'
 import { ModalNav } from '../service/modalMenu/ModalNav'
 
 type TypeHeaderProps = {
@@ -30,7 +30,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation()
 	const role = useAppSelector((state: RootState) => state.InfoUser.role)
-	const [userData, changeuserData] = useState<IUserData | string>('')
+	const [userData, changeUserData] = useState<IUserData | string>('')
 
 	const roleConverter = (role: TypeRole | null) => {
 		if (role === 'ABIT') return 'Enrollee'
@@ -43,17 +43,12 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 
 	useEffect(() => {
 		if (localStorage.getItem('userInfo')) {
-			changeuserData(JSON.parse(localStorage.getItem('userInfo') || ''))
+			changeUserData(JSON.parse(localStorage.getItem('userInfo') || ''))
 		}
 	}, [])
 
 	const showDrawer = () => {
 		setOpen(!open)
-	}
-
-	const exit = async () => {
-		await logout(dispatch)
-		navigate('/')
 	}
 
 	const onClose = () => {
@@ -89,7 +84,10 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 			label: (
 				<div
 					className="flex items-center gap-[15px] px-[4px] py-[5px]"
-					onClick={() => exit()}
+					onClick={() => {
+						LogOut(dispatch)
+						navigate('/')
+					}}
 				>
 					<LogoutSvg />
 					Log out

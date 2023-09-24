@@ -64,7 +64,9 @@ export const WorkReducer = createSlice({
 		) => {
 			state.items.filter(el => el.id === action.payload.id)[0].endDate =
 				action.payload.endDate
-		}
+		},
+		setDefaultWork: (state, action: PayloadAction<void>) =>
+			(state = initialState)
 	}
 })
 
@@ -77,7 +79,8 @@ export const {
 	additionalInfo,
 	startDate,
 	endDate,
-	allData
+	allData,
+	setDefaultWork
 } = WorkReducer.actions
 
 export default WorkReducer.reducer

@@ -112,7 +112,7 @@ export const Parent = () => {
 
 	const getData = async () => {
 		const response = await getParentItemRequest(dispatch)
-		if (response) {
+		if (typeof response !== 'number') {
 			const corrected: IParentState[] = response.map(el => ({
 				mother: el.mother,
 				father: el.father,
@@ -138,7 +138,8 @@ export const Parent = () => {
 				snils: el.snils
 			}))
 			dispatch(allData(corrected))
-		} else console.log('403')
+		}
+		if (response === 403) navigate('/')
 	}
 
 	const handleAddParent = async () => {
@@ -163,13 +164,13 @@ export const Parent = () => {
 			dispatch
 		)
 		if (response === 200) setUpdate(true)
-		else navigate('/')
+		if (response === 403) navigate('/')
 	}
 
 	const handleDeleteParent = async (id: number) => {
 		const response = await deleteParentItemRequest(id.toString(), dispatch)
 		if (response === 200) setUpdate(true)
-		else navigate('/')
+		if (response === 403) navigate('/')
 	}
 
 	const handleUpdateParent = async (item: IParentState) => {
@@ -197,7 +198,7 @@ export const Parent = () => {
 			dispatch
 		)
 		if (response === 200) setUpdate(true)
-		else navigate('/')
+		if (response === 403) navigate('/')
 	}
 
 	const isStudent = role === 'STUD'

@@ -1,4 +1,4 @@
-import { BookOutlined, TagOutlined } from '@ant-design/icons'
+import { TagOutlined } from '@ant-design/icons'
 import { Button, Col, Input, Radio, Row, Typography } from 'antd'
 import { RadioChangeEvent } from 'antd/lib'
 import clsx from 'clsx'

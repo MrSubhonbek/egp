@@ -20,27 +20,23 @@ const { Title } = Typography
 
 export const Login = () => {
 	const navigate = useNavigate()
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const error = useSelector((state: RootState) => state.AuthReg.authData.error)
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		dispatch(clearLoginErrors())
-	}, [i18n.language])
+	}, [])
 
-	const onFinish = (values: { email: string; password: string }) => {
-		const request = async () => {
-			let res = null
-			if (values.email || values.password) {
-				res = await dispatch(
-					loginUser({ username: values.email, password: values.password })
-				)
-			}
-			if (res === 200) {
-				navigate('/user')
-			}
+	const onFinish = async (values: { email: string; password: string }) => {
+		let res = null
+		if (values.email || values.password) {
+			res = await loginUser(
+				{ username: values.email, password: values.password },
+				dispatch
+			)
+			if (res === 200) navigate('/user')
 		}
-		request()
 	}
 
 	return (
@@ -51,7 +47,7 @@ export const Login = () => {
 					name="login"
 					className={styles.loginForm}
 					initialValues={{ remember: true }}
-					onFinish={onFinish}
+					onFinish={e => onFinish(e)}
 				>
 					<Title className={styles.title}>{t('authorization')}</Title>
 
@@ -65,7 +61,6 @@ export const Login = () => {
 						alt="group"
 					/>
 				</div>
-				{/* <Faq /> */}
 			</div>
 		</div>
 	)

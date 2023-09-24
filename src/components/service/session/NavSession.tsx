@@ -12,12 +12,12 @@ const navList = [
 	{
 		id: '/services/session/session',
 		icon: <CalendarSvg />,
-		name: 'Расписание сессии'
+		name: 'Session schedule'
 	},
 	{
 		id: '/services/session/curriculum',
 		icon: <SubtractSVG />,
-		name: 'Учебный план'
+		name: 'Curriculum'
 	}
 ]
 

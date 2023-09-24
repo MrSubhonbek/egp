@@ -251,7 +251,7 @@ export interface Exam {
 
 export type IAnswer = 'y' | 'n'
 
-export interface ICalendar {
+export interface ICalendarItem {
 	semester: number
 	type_id: number
 	type_name: string
@@ -271,6 +271,10 @@ export interface ICalendar {
 	subject_id: number
 	subject_name: string
 	full_shifr: string
+}
+
+export interface ICalendar {
+	subjects: ICalendarItem[]
 }
 
 export interface performanceItem {
@@ -298,7 +302,7 @@ export type IServices = {
 	documents: IDocumentsRequest[] | null
 	schedule: TypeSchedule | null
 	examsSchedule: Exam[] | null
-	studyPlan: ICalendar[] | null
+	studyPlan: ICalendar | null
 	performance: IPerformance | null
 }
 

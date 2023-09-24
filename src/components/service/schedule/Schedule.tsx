@@ -2,6 +2,7 @@ import { Radio, RadioChangeEvent, Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { TypeSchedule } from '../../../api/types'
 import { getSchedule } from '../../../store/creators/MainCreators'
@@ -63,16 +64,23 @@ const columns: ColumnsType<DataType> = [
 		key: 'room',
 		dataIndex: 'room',
 		render: item => <p className="text-base">{item}</p>
+	},
+	{
+		title: 'Period',
+		key: 'period',
+		dataIndex: 'duration',
+		render: item => <p className="text-base">{item}</p>
 	}
 ]
 export const Schedule = () => {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	const [schedule, setSchedule] = useState<TypeSchedule | null>()
 
 	const getPlan = async () => {
 		const response = await getSchedule(dispatch)
-		if (!response) console.log(404)
-		else setSchedule(response)
+		if (response === 403) navigate('/')
+		if (typeof response !== 'number') setSchedule(response)
 	}
 
 	const [data, setData] = useState<DataType[] | undefined>()

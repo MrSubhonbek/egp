@@ -74,7 +74,8 @@ export const Work = () => {
 
 	const getData = async () => {
 		const response = await getAbUsJob(dispatch)
-		response !== null && dispatch(allData(response))
+		if (typeof response !== 'number') dispatch(allData(response))
+		if (response === 403) navigate('/')
 	}
 
 	useEffect(() => {
@@ -160,7 +161,7 @@ export const Work = () => {
 				dispatch
 			)
 			if (response === 403) navigate('/')
-			else setUpdate(true)
+			if (response !== 200) setUpdate(true)
 		}
 	}
 
@@ -176,18 +177,18 @@ export const Work = () => {
 			dispatch
 		)
 		if (response === 403) navigate('/')
-		else setUpdate(true)
+		if (response === 200) setUpdate(true)
 	}
 	const handleDeleteWork = async (id: string) => {
 		const response = await deleteJobItemRequest(id, dispatch)
 		if (response === 403) navigate('/')
-		else setUpdate(true)
+		if (response === 200) setUpdate(true)
 	}
 	const handleUpdateWork = async (id: string, item: workItem) => {
 		if (!checkWorkItem(id, item)) {
 			const response = await updateJobItemRequest(id, item, dispatch)
 			if (response === 403) navigate('/')
-			else setUpdate(true)
+			if (response === 200) setUpdate(true)
 		}
 	}
 	return (

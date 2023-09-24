@@ -18,7 +18,7 @@ export const Session = () => {
 					<Button
 						className="rounded-full border-black  w-[200px] h-[50px] text-base font-semibold mt-[60px]"
 						onClick={() => {
-							navigate('/services/session')
+							navigate('/services/session/session')
 						}}
 					>
 						Watch

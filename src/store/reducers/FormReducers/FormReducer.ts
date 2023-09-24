@@ -46,7 +46,9 @@ export const FormReducer = createSlice({
 				patronymic: !action.payload.patronymic ? '' : action.payload.patronymic,
 				birthDay: !action.payload.birthDay ? '' : action.payload.birthDay
 			}
-		}
+		},
+		setDefaultForm: (state, action: PayloadAction<void>) =>
+			(state = initialState)
 	}
 })
 
@@ -58,7 +60,8 @@ export const {
 	gender,
 	phone,
 	country,
-	allData
+	allData,
+	setDefaultForm
 } = FormReducer.actions
 
 export default FormReducer.reducer

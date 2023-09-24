@@ -1,8 +1,8 @@
 import { Button, Carousel } from 'antd'
 import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-// import { useNavigate } from 'react-router-dom'
 import img from '../../assets/images/grade.png'
 import { useAppSelector } from '../../store'
 import { getStudPerformance } from '../../store/creators/MainCreators'
@@ -13,7 +13,7 @@ import { NextSvg, PrevSvg } from './const'
 export const Grade = () => {
 	const dispatch = useDispatch()
 	const studMarks = useAppSelector(state => state.Services.performance)
-	// const navigate = useNavigate()
+	const navigate = useNavigate()
 	const slider = useRef() as React.MutableRefObject<any>
 	const scheduleCourses = !studMarks ? (
 		<></>
@@ -38,8 +38,8 @@ export const Grade = () => {
 
 	const getPerformance = async () => {
 		const response = await getStudPerformance(dispatch)
-		if (!response) console.log('403')
-		else dispatch(addPerformance(response))
+		if (response === 403) navigate('/')
+		if (typeof response !== 'number') dispatch(addPerformance(response))
 	}
 
 	useEffect(() => {
