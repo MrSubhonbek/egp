@@ -16,15 +16,16 @@ import { setDefaultServices } from '../reducers/FormReducers/ServicesReducer'
 import { setDefaultWork } from '../reducers/FormReducers/WorkReducer'
 import { setDefaultProfile } from '../reducers/ProfileReducer'
 
-const cookies = new Cookies()
-
 export const LogOut = async (dispatch: Dispatch): Promise<void> => {
 	dispatch(putRole(null))
-	cookies.remove('refresh')
-	cookies.remove('s_id')
-	cookies.remove('s_abit_id')
-	cookies.remove('sessionId')
-	cookies.remove('sessionHash')
+	var cookies = document.cookie.split(';')
+
+	for (var i = 0; i < cookies.length; i++) {
+		var cookie = cookies[i]
+		var eqPos = cookie.indexOf('=')
+		var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
+		document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'
+	}
 	localStorage.clear()
 	dispatch(setDefaultAuthReg())
 	dispatch(setDefaultAddress())
