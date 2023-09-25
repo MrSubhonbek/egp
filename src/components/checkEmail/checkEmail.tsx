@@ -23,6 +23,7 @@ export const CheckEmail: FC<ICheckEmailProps> = ({ email }) => {
 	}
 	return (
 		<CardForm
+			IsButtonDisabled={true}
 			buttonEffect={buttonEffect}
 			closeEffect={closeEffect}
 			withDots={true}

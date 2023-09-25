@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { Cookies } from 'react-cookie'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,10 +8,12 @@ import { approveEmail, setRole } from '../../store/creators/MainCreators'
 import { CardForm } from './cardForm'
 
 export const ApproveEmail = () => {
-	const cookies = new Cookies()
 	const [searchParams] = useSearchParams()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
+	const [answer, changeAnswer] = useState<'loading' | 'bad' | 'success'>(
+		'loading'
+	)
 
 	const query = async () => {
 		if (searchParams.get('id') !== null && searchParams.get('hash') !== null) {
@@ -26,11 +27,11 @@ export const ApproveEmail = () => {
 
 			if (response === 200) {
 				await setRole({ role: 'ABIT' }, dispatch)
-				navigate('/api/register/approve')
+				changeAnswer('success')
 			}
-		}
-		if (!localStorage.getItem('access')) {
-			navigate('/')
+			if (response === 403) {
+				changeAnswer('bad')
+			}
 		}
 	}
 
@@ -39,12 +40,10 @@ export const ApproveEmail = () => {
 	}, [])
 
 	const buttonEffect = () => {
-		if (
-			localStorage.getItem('access') !== null ||
-			localStorage.getItem('userInfo') !== null ||
-			cookies.get('refresh') !== undefined
-		) {
+		if (answer === 'success') {
 			navigate('/user')
+		} else {
+			navigate('/')
 		}
 	}
 
@@ -53,15 +52,12 @@ export const ApproveEmail = () => {
 	}
 	return (
 		<CardForm
+			IsButtonDisabled={answer === 'loading' ? true : false}
 			buttonEffect={buttonEffect}
 			closeEffect={closeEffect}
 			withDots={false}
 			mainTittle="Welcome"
-			secondTittle={
-				<span>
-
-				</span>
-			}
+			secondTittle={<span></span>}
 			buttonText="Start"
 			buttonBgBlue={false}
 		/>

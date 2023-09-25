@@ -11,6 +11,7 @@ interface cardProps {
 	secondTittle: AllHTMLAttributes<HTMLSpanElement>
 	buttonText: string
 	buttonBgBlue: boolean
+	IsButtonDisabled: boolean
 }
 
 export const CardForm: FC<cardProps> = ({
@@ -20,8 +21,10 @@ export const CardForm: FC<cardProps> = ({
 	mainTittle,
 	secondTittle,
 	buttonText,
-	buttonBgBlue
+	buttonBgBlue,
+	IsButtonDisabled
 }) => {
+	console.log(IsButtonDisabled)
 	return (
 		<div className="w-screen h-screen">
 			<div
@@ -48,6 +51,7 @@ export const CardForm: FC<cardProps> = ({
 				<div className="flex justify-center">
 					{!buttonBgBlue && (
 						<Button
+							disabled={IsButtonDisabled}
 							className="rounded-md border-bluekfu border-[1px] border-solid text-bluekfu font-bold w-1/3 h-[56px] text-center"
 							onClick={buttonEffect}
 						>
@@ -56,6 +60,7 @@ export const CardForm: FC<cardProps> = ({
 					)}
 					{buttonBgBlue && (
 						<Button
+							disabled={IsButtonDisabled}
 							className="rounded-md bg-bluekfu text-white font-bold w-1/3 h-[56px] text-center hover:bg-white"
 							onClick={buttonEffect}
 						>

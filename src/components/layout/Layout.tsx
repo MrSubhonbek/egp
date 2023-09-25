@@ -9,7 +9,7 @@ interface ILayoutProps {
 
 export const Layout: FC<ILayoutProps> = ({ children }) => {
 	return (
-		<div className="flex flex-col w-full ">
+		<div className="flex flex-col w-full bg-[#f5f8fb]">
 			<div className=" flex w-full h-full min-h-screen">
 				<div className="flex flex-col w-full">
 					<Header />

@@ -150,8 +150,10 @@ export const approveEmail = async (
 				refreshToken: res.data.refreshToken
 			})
 		)
-		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
 		dispatch(ProfileSuccess(res.data.user))
+		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
+		cookies.set('refresh', res.data.refreshToken)
+		localStorage.setItem('access', res.data.accessToken)
 		return 200
 	} catch (e) {
 		return 403

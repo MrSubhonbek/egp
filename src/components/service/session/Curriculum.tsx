@@ -556,9 +556,9 @@ export const Curriculum = () => {
 			<Table
 				bordered
 				dataSource={tableData}
-				scroll={{ x: 500 }}
+				scroll={{ x: true }}
 				columns={columns}
-				className="max-w-[1250px] w-full mt-10 table"
+				className="tableCustom mt-10"
 				pagination={false}
 				loading={tableData.length === 0 ? true : false}
 			/>

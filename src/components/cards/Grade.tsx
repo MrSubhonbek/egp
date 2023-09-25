@@ -44,30 +44,29 @@ export const Grade = () => {
 
 	useEffect(() => {
 		if (!studMarks) getPerformance()
-		else console.log(studMarks)
 	}, [studMarks])
 
 	return (
-		<div className="px-[80px] mt-[40px]">
-			<div className="font-semibold text-xl text-start">
+		<div className="p-[40px] h-full">
+			<div className="font-semibold text-xl text-start flex z-10">
 				Academic performance
 			</div>
 			<div>
 				<div
 					onClick={() => slider.current.prev()}
-					className="absolute cursor-pointer left-[32px] top-[147px]"
+					className="absolute cursor-pointer left-[32px] top-[147px] flex z-10"
 				>
 					<PrevSvg />
 				</div>
 				<Carousel
-					className="mt-[20px] text-start min-w-[100px] min-h-[60px]"
+					className="mt-[20px] text-start min-w-[100px] min-h-[60px] flex z-10"
 					ref={slider}
 				>
 					{scheduleCourses}
 				</Carousel>
 				<div
 					onClick={() => slider.current.next()}
-					className="absolute cursor-pointer top-[147px] right-[32px]"
+					className="absolute cursor-pointer top-[147px] right-[32px] flex z-10"
 				>
 					<NextSvg />
 				</div>

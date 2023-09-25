@@ -16,7 +16,9 @@ import {
 	PersonSvg
 } from '../../assets/svg'
 import { RootState, useAppSelector } from '../../store'
+import { getAbUsForm } from '../../store/creators/MainCreators'
 import { LogOut } from '../../store/creators/SomeCreators'
+import { allData } from '../../store/reducers/FormReducers/FormReducer'
 import { ModalNav } from '../service/modalMenu/ModalNav'
 
 type TypeHeaderProps = {
@@ -30,7 +32,8 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 	const [open, setOpen] = useState(false)
 	const { t } = useTranslation()
 	const role = useAppSelector((state: RootState) => state.InfoUser.role)
-	const [userData, changeUserData] = useState<IUserData | string>('')
+	const form = useAppSelector((state: RootState) => state.Form)
+	const [userEmail, changeUserEmail] = useState<IUserData | string>('')
 
 	const roleConverter = (role: TypeRole | null) => {
 		if (role === 'ABIT') return 'Enrollee'
@@ -43,13 +46,23 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 
 	useEffect(() => {
 		if (localStorage.getItem('userInfo')) {
-			changeUserData(JSON.parse(localStorage.getItem('userInfo') || ''))
+			changeUserEmail(JSON.parse(localStorage.getItem('userInfo') || ''))
 		}
 	}, [])
 
 	const showDrawer = () => {
 		setOpen(!open)
 	}
+
+	const getUser = async () => {
+		const response = await getAbUsForm(dispatch)
+		if (response === 403) navigate('/')
+		if (typeof response !== 'number') dispatch(allData(response))
+	}
+
+	useEffect(() => {
+		if (!form.name) getUser()
+	}, [form])
 
 	const onClose = () => {
 		setOpen(false)
@@ -58,7 +71,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		{
 			label: (
 				<div className="p-2 text-sm text-[#1F5CB8] font-bold cursor-default">
-					{typeof userData === 'string' ? '' : userData.email}
+					{typeof userEmail === 'string' ? '' : userEmail.email}
 				</div>
 			),
 			key: '0'
@@ -104,7 +117,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		<header
 			className={clsx(
 				' z-20  h-[80px] fixed flex items-center justify-center w-full',
-				type === 'main' ? 'bg-white' : 'bg-[#65A1FA]'
+				type === 'main' ? 'bg-[#f5f8fb]' : 'bg-[#65A1FA]'
 			)}
 		>
 			<div className="w-screen flex h-full justify-between px-8">
@@ -151,15 +164,9 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 									className={clsx('h-full', type === 'service' && 'text-white')}
 								>
 									<div className="font-bold text-sm truncate max-w-[120px]">
-										{typeof userData === 'string'
-											? ''
-											: `${userData?.lastname} ${userData?.firstname.charAt(
-													0
-											  )}. ${
-													userData?.middlename === ''
-														? ''
-														: userData?.middlename.charAt(0) + '.'
-											  }`}
+										{`${form.surName} ${form.name.charAt(0)}. ${
+											!form.patronymic ? '' : form.patronymic.charAt(0) + '.'
+										}`}
 									</div>
 									<div className="text-sm">{roleConverter(role)}</div>
 								</div>

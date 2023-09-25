@@ -17,6 +17,7 @@ export const User = () => {
 	const navigate = useNavigate()
 	const { t } = useTranslation()
 	const role = useAppSelector(state => state.InfoUser.role)
+	const [IsDashBoardSet, changeIsSet] = useState(false)
 
 	const [layouts, setLayouts] = useState<{ [index: string]: any[] }>(() => {
 		return localStorage.getItem('dashboard')
@@ -37,10 +38,13 @@ export const User = () => {
 	}, [])
 
 	useEffect(() => {
-		if (role) setLayouts(role === 'STUD' ? studBlock : anotherBlock)
+		if (role) {
+			setLayouts(role === 'STUD' ? studBlock : anotherBlock)
+			changeIsSet(true)
+		}
 	}, [role])
 
-	if (!role) return <></>
+	if (!IsDashBoardSet) return <></>
 
 	return (
 		<Layout>
