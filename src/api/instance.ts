@@ -13,12 +13,19 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
 	config => {
 		if (
-			config.url?.includes('users') ||
-			config.url === '/admission-link' ||
-			config.url === '/schedule' ||
-			config.url?.includes('schedule-api') ||
-			config.url?.includes('academic-performance-api') ||
-			config.url?.includes('study-plan-api')
+			[
+				'users/me',
+				'schedule',
+				'examsSchedule',
+				'studyplan',
+				'performance',
+				'teachers-rating',
+				'country',
+				'levels',
+				'institution',
+				'document',
+				'admission-link'
+			].some(el => config.url?.includes(el))
 		) {
 			config.headers['Authorization'] =
 				'Bearer ' + `${localStorage.getItem('access')}`

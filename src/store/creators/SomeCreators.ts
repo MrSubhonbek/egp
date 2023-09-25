@@ -23,6 +23,8 @@ export const LogOut = async (dispatch: Dispatch): Promise<void> => {
 	cookies.remove('refresh')
 	cookies.remove('s_id')
 	cookies.remove('s_abit_id')
+	cookies.remove('sessionId')
+	cookies.remove('sessionHash')
 	localStorage.clear()
 	dispatch(setDefaultAuthReg())
 	dispatch(setDefaultAddress())

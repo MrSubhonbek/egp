@@ -16,21 +16,27 @@ export const ApproveEmail = () => {
 	)
 
 	const query = async () => {
-		if (searchParams.get('id') !== null && searchParams.get('hash') !== null) {
-			const response = await approveEmail(
-				{
-					id: searchParams.get('id'),
-					hash: searchParams.get('hash')
-				},
-				dispatch
-			)
-
-			if (response === 200) {
-				await setRole({ role: 'ABIT' }, dispatch)
-				changeAnswer('success')
-			}
-			if (response === 403) {
-				changeAnswer('bad')
+		if (localStorage.getItem('access')) {
+			changeAnswer('success')
+		} else {
+			if (
+				searchParams.get('id') !== null &&
+				searchParams.get('hash') !== null
+			) {
+				const response = await approveEmail(
+					{
+						id: searchParams.get('id'),
+						hash: searchParams.get('hash')
+					},
+					dispatch
+				)
+				if (response === 200) {
+					await setRole({ role: 'ABIT' }, dispatch)
+					changeAnswer('success')
+				}
+				if (response === 403) {
+					changeAnswer('bad')
+				}
 			}
 		}
 	}

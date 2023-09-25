@@ -24,7 +24,6 @@ export const CardForm: FC<cardProps> = ({
 	buttonBgBlue,
 	IsButtonDisabled
 }) => {
-	console.log(IsButtonDisabled)
 	return (
 		<div className="w-screen h-screen">
 			<div

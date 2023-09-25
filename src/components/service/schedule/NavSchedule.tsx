@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { BriefcaseSvg } from '../../../assets/svg/BriefcaseSvg'
+// import { BriefcaseSvg } from '../../../assets/svg/BriefcaseSvg'
 import CalendarSvg from '../../../assets/svg/CalendarSvg'
 
 import { Schedule } from './Schedule'
@@ -12,12 +12,12 @@ const navList = [
 		id: '/services/schedule/schedule',
 		icon: <CalendarSvg />,
 		name: 'My schedule'
-	},
-	{
-		id: '/services/schedule/services',
-		icon: <BriefcaseSvg />,
-		name: 'Service schedule'
 	}
+	// {
+	// 	id: '/services/schedule/services',
+	// 	icon: <BriefcaseSvg />,
+	// 	name: 'Service schedule'
+	// }
 ]
 export const NavSchedule = () => {
 	const { pathname } = useLocation()
@@ -51,7 +51,7 @@ export const NavSchedule = () => {
 			</div>
 			<div className="bg-[#F5F8FB] w-full">
 				{pathname === navList[0].id && <Schedule />}
-				{pathname === navList[1].id && <Services />}
+				{/* {pathname === navList[1].id && <Services />} */}
 			</div>
 		</>
 	)

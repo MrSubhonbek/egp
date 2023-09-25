@@ -48,12 +48,12 @@ export const Schedule = () => {
 	}
 	return (
 		<div
-			className="p-10 flex relative w-full h-full rounded-[1vw] text-white"
+			className="p-10 flex relative w-full h-full justify-between rounded-[1vw] text-white"
 			style={{
 				background: 'linear-gradient(89.94deg, #71AAFF 12.16%, #3D7AD5 104.42%)'
 			}}
 		>
-			<div className="flex flex-col h-full justify-between w-1/2">
+			<div className="flex flex-col h-full justify-between w-1/2 lg:min-w-[380px]">
 				<span className="bg-none text-4xl font-bold text-start">Schedule</span>
 				<div className="flex w-full flex-wrap gap-1">
 					<Button
@@ -101,7 +101,7 @@ export const Schedule = () => {
 				</div>
 			</div>
 			<hr className="h-full w-[2px] my-auto bg-white mx-3 border-none" />
-			<div className="flex flex-col justify-start min-w-[300px] max-w-[300px] max-h-full overflow-y-auto">
+			<div className="hidden sm:flex flex-col justify-start min-w-[300px] max-w-[300px] p-2 max-h-full overflow-y-auto">
 				{scheduleStorage &&
 					scheduleStorage[activeButton].map((el, index) => (
 						<div className="flex w-full gap-x-[40px] mb-[20px]" key={index}>
@@ -110,7 +110,7 @@ export const Schedule = () => {
 						</div>
 					))}
 			</div>
-			<div className="max-lg:hidden w-full relative flex items-center justify-center ">
+			<div className="hidden w-full relative min-[1200px]:flex items-center justify-center ">
 				<div className="bg-white rounded-[50%] min-w-[180px] max-w-[180px] max-h-[180px] min-h-[180px] absolute"></div>
 				<img
 					src={img}
@@ -121,8 +121,8 @@ export const Schedule = () => {
 				/>
 			</div>
 			<div
-				className="max-xl:hidden relative w-1/6 flex justify-center items-center"
-				onClick={() => navigate('/services/schedule')}
+				className="relative w-1/6 flex justify-center items-center"
+				onClick={() => navigate('/services/schedule/schedule')}
 			>
 				<svg
 					width="87"

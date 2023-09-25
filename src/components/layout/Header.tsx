@@ -61,8 +61,8 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 	}
 
 	useEffect(() => {
-		if (!form.name) getUser()
-	}, [form])
+		getUser()
+	}, [])
 
 	const onClose = () => {
 		setOpen(false)

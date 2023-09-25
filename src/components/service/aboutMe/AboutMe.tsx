@@ -1,4 +1,9 @@
 import {
+	CheckOutlined,
+	CloseOutlined,
+	LoadingOutlined
+} from '@ant-design/icons'
+import {
 	Button,
 	ConfigProvider,
 	DatePicker,
@@ -6,6 +11,7 @@ import {
 	Radio,
 	Select,
 	Space,
+	Spin,
 	Typography
 } from 'antd'
 import enPicker from 'antd/locale/en_US'
@@ -34,6 +40,8 @@ import {
 import { addCountries } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
+import Styles from './Styles.module.scss'
+
 export const AboutMe = () => {
 	dayjs.locale('en')
 	const { t, i18n } = useTranslation()
@@ -49,6 +57,9 @@ export const AboutMe = () => {
 	const maskRange = useRef<null | string[]>(null)
 	const [currentMask, changeCurrent] = useState<string>('')
 	const [selectMaskItem, changeMaskItem] = useState<number | null>(null)
+	const [requestStatus, changeStatus] = useState<
+		'loading' | 'error' | 'success' | 'none'
+	>('none')
 
 	var email = useRef<string>('')
 
@@ -73,10 +84,22 @@ export const AboutMe = () => {
 		) {
 			setError(true)
 		} else {
+			changeStatus(() => 'loading')
 			const status = await putAbUsForm(formData, dispatch)
-			if (status === 404) setError(true)
 			if (status === 403) navigate('/')
-			if (status === 200) setError(false)
+			else {
+				if (status === 404) {
+					setError(true)
+					changeStatus(() => 'error')
+				}
+				if (status === 200) {
+					setError(false)
+					changeStatus(() => 'success')
+				}
+				setTimeout(() => {
+					changeStatus(() => 'none')
+				}, 2000)
+			}
 		}
 	}
 	const { data: countries } = useGetCountriesQuery(i18n.language, {
@@ -309,10 +332,32 @@ export const AboutMe = () => {
 					className={clsx('mt-4', isStudent && 'hidden')}
 				>
 					<Button
-						className="border-solid border-bluekfu border-[1px] text-bluekfu rounded-md"
+						className={Styles.ApplyButtonCustom}
 						onClick={() => setChanges()}
 					>
-						{t('edit')}
+						{requestStatus === 'none' && <>{t('edit')}</>}
+						{requestStatus === 'loading' && (
+							<>
+								<Spin
+									indicator={
+										<LoadingOutlined className="text-[#004ec2] mr-2" spin />
+									}
+								/>
+								Loading...
+							</>
+						)}
+						{requestStatus === 'error' && (
+							<>
+								<CloseOutlined className="text-[#004ec2] mr-2" />
+								Error
+							</>
+						)}
+						{requestStatus === 'success' && (
+							<>
+								<CheckOutlined className="text-[#004ec2] mr-2" />
+								Success
+							</>
+						)}
 					</Button>
 				</Space>
 			</Space>

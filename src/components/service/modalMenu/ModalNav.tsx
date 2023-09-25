@@ -91,34 +91,46 @@ export const ModalNav = ({ close }: TypeModalProps) => {
 					</Radio.Group>
 				</div>
 			</Col>
-			<Col span={8} className="bg-white">
+			<Col
+				span={8}
+				className="bg-white border-solid border-[#B3B3B3] border-[1px]"
+			>
 				<div
 					onClick={() => handleNavigate('/services/aboutMe/aboutMe')}
-					className=" h-28 cursor-pointer flex items-center justify-center hover:bg-[#65A1FA] hover:text-white "
+					className="transition-colors h-28 cursor-pointer flex items-center justify-center hover:bg-[#65A1FA] hover:text-white "
 				>
 					{t('AboutMe')}
 				</div>
 			</Col>
-			<Col span={8} className={clsx('bg-white', !isStudent && 'hidden')}>
+			<Col
+				span={8}
+				className="bg-white border-solid border-[#B3B3B3] border-[1px]"
+			>
 				<div
 					onClick={() => handleNavigate('/services/schedule/schedule')}
-					className="border-solid border-y-0 border-x border-[#B3B3B3] h-28 cursor-pointer flex items-center justify-center hover:bg-[#65A1FA] hover:text-white "
+					className="transition-colors h-28 cursor-pointer flex items-center justify-center hover:bg-[#65A1FA] hover:text-white"
 				>
 					{t('Schedule')}
 				</div>
 			</Col>
-			<Col span={8} className={clsx('bg-white', !isStudent && 'hidden')}>
+			<Col
+				span={8}
+				className="bg-white border-solid border-[#B3B3B3] border-[1px]"
+			>
 				<div
 					onClick={() => handleNavigate('/services/session/session')}
-					className=" h-28 cursor-pointer flex items-center justify-center hover:bg-[#65A1FA] hover:text-white "
+					className="transition-colors h-28 cursor-pointer flex items-center justify-center hover:bg-[#65A1FA] hover:text-white"
 				>
 					{t('Session')}
 				</div>
 			</Col>
-			<Col span={8} className={clsx('bg-white', !isStudent && 'hidden')}>
+			<Col
+				span={8}
+				className="bg-white border-solid border-[#B3B3B3] border-[1px]"
+			>
 				<div
 					onClick={() => handleNavigate('/services/electronicBook/estimation')}
-					className="border-solid border-b-0 border-t border-l-0 border-x-0 border-[#B3B3B3] h-28 cursor-pointer flex items-center justify-center hover:bg-[#65A1FA] hover:text-white "
+					className="transition-colors h-28 cursor-pointer flex items-center justify-center hover:bg-[#65A1FA] hover:text-white"
 				>
 					{t('ElectronicBook')}
 				</div>

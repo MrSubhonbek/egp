@@ -80,7 +80,11 @@ export const loginUser = async (
 			})
 		)
 		localStorage.setItem('access', res.data.accessToken)
-		cookies.set('refresh', res.data.refreshToken)
+		if (!cookies.get('refresh'))
+			cookies.set('refresh', res.data.refreshToken, {
+				path: window.location.origin,
+				domain: document.domain
+			})
 		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
 		dispatch(ProfileSuccess(res.data.user))
 		return 200
@@ -144,6 +148,20 @@ export const approveEmail = async (
 ): Promise<200 | 403> => {
 	try {
 		const res = await approve(data)
+		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
+		cookies.set('refresh', res.data.refreshToken, {
+			path: window.location.origin,
+			domain: document.domain
+		})
+		cookies.set('sessionId', res.data.user.sessionId, {
+			path: window.location.origin,
+			domain: document.domain
+		})
+		cookies.set('sessionHash', res.data.user.sessionHash, {
+			path: window.location.origin,
+			domain: document.domain
+		})
+		localStorage.setItem('access', res.data.accessToken)
 		dispatch(
 			loginSuccess({
 				accessToken: res.data.accessToken,
@@ -151,9 +169,6 @@ export const approveEmail = async (
 			})
 		)
 		dispatch(ProfileSuccess(res.data.user))
-		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
-		cookies.set('refresh', res.data.refreshToken)
-		localStorage.setItem('access', res.data.accessToken)
 		return 200
 	} catch (e) {
 		return 403

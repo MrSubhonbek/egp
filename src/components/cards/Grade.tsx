@@ -20,17 +20,26 @@ export const Grade = () => {
 	) : (
 		studMarks.journal.map((element, index) => (
 			<div key={index} className="flex flex-col">
-				<div className="text-base flex gap-x-1">
-					<span className="font-bold">Subject:</span>
-					<span>{element.subject_name}</span>
+				<div
+					className="text-base"
+					style={{ shapeOutside: 'polygon(0 0, 100% 0, 100% 100%)' }}
+				>
+					<span className="font-bold h-min mr-2">Subject:</span>
+					{element.subject_name}
 				</div>
-				<div className="text-base flex gap-x-1">
-					<span className="font-bold">Exam time:</span>
-					<span>{element.pass_date}</span>
+				<div
+					className="text-base"
+					style={{ shapeOutside: 'polygon(0 0, 100% 0, 100% 100%)' }}
+				>
+					<span className="font-bold mr-2">Exam time:</span>
+					{element.pass_date}
 				</div>
-				<div className="text-base flex gap-x-1 leading-4">
-					<span className="font-bold">Average score:</span>
-					<span>{element.total_points}</span>
+				<div
+					className="text-base"
+					style={{ shapeOutside: 'polygon(0 0, 100% 0, 100% 100%)' }}
+				>
+					<span className="font-bold mr-2">Average score:</span>
+					{element.total_points}
 				</div>
 			</div>
 		))
@@ -47,36 +56,36 @@ export const Grade = () => {
 	}, [studMarks])
 
 	return (
-		<div className="p-[40px] h-full">
-			<div className="font-semibold text-xl text-start flex z-10">
+		<div className="px-[60px] py-[40px] h-full">
+			<div className="font-semibold relative text-xl text-start flex z-10">
 				Academic performance
 			</div>
 			<div>
 				<div
 					onClick={() => slider.current.prev()}
-					className="absolute cursor-pointer left-[32px] top-[147px] flex z-10"
+					className="absolute cursor-pointer left-[20px] top-[147px] flex z-10"
 				>
 					<PrevSvg />
 				</div>
 				<Carousel
-					className="mt-[20px] text-start min-w-[100px] min-h-[60px] flex z-10"
+					className="mt-[20px] text-start max-w-[23rem] lg:max-w-[15rem] min-h-[100px] flex z-10"
 					ref={slider}
 				>
 					{scheduleCourses}
 				</Carousel>
 				<div
 					onClick={() => slider.current.next()}
-					className="absolute cursor-pointer top-[147px] right-[32px] flex z-10"
+					className="absolute cursor-pointer top-[147px] right-[20px] flex z-10"
 				>
 					<NextSvg />
 				</div>
 			</div>
-			<div className="min-w-[125px] min-h-[125px] absolute right-[20px] top-[40px] max-h-[125px] bg-opacity-80 bg-[#3E89F9] rounded-full flex justify-center items-center">
-				<img className="mb-7" src={img} alt="" />
+			<div className="min-w-[115px] min-h-[115px] absolute right-[80px] top-[40px] max-h-[115px] bg-opacity-80 bg-[#3E89F9] rounded-full hidden justify-center items-center lg:flex">
+				<img className="mb-9" src={img} alt="" />
 			</div>
-			<div className="flex absolute justify-between w-full items-center bottom-[40px]">
+			<div className="text-start absolute left-[60px] bottom-[40px]">
 				<Button
-					className="rounded-full border-black  w-[200px] h-[50px] text-base font-semibold mt-[40px]"
+					className="rounded-full border-black w-[200px] h-[50px] text-base font-semibold"
 					onClick={() => console.log('redirect')}
 				>
 					View

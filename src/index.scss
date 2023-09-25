@@ -20,7 +20,12 @@ body {
 	}
 
 	div::-webkit-scrollbar {
-		width: 2px;
+		width: 1px;
+	}
+
+	div {
+		scrollbar-color: white;
+		scrollbar-width: 1px;
 	}
 
 	div::-webkit-scrollbar-thumb {

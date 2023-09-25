@@ -54,6 +54,8 @@ export interface IUserData {
 	citizenship: string
 	roles: IRoles[]
 	sessionId: string
+	sessionHash: string
+	allId: string
 }
 
 export type TypeRole =

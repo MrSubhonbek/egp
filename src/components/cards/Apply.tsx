@@ -1,4 +1,11 @@
-import { Button } from 'antd'
+import {
+	CheckOutlined,
+	CloseOutlined,
+	LoadingOutlined
+} from '@ant-design/icons'
+import { Button, Spin } from 'antd'
+import clsx from 'clsx'
+import { useState } from 'react'
 import { Cookies } from 'react-cookie'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -6,44 +13,76 @@ import { useNavigate } from 'react-router-dom'
 import img from '../../assets/images/avatar.png'
 import { getAdmission } from '../../store/creators/MainCreators'
 
+import Styles from './Styles.module.scss'
+
 export const Apply = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const cookie = new Cookies()
-	const disableStyle = {
-		color: '#004EC2',
-		border: '1px solid #004EC2',
-		backgroundColor: 'white'
-	}
+	const [requestStatus, changeStatus] = useState<
+		'loading' | 'error' | 'success' | 'none'
+	>('none')
 
 	const request = async () => {
+		changeStatus(() => 'loading')
 		const response = await getAdmission(dispatch)
-
-		if (typeof response !== 'number') {
-			cookie.set('s_id', response.session, { domain: 'kpfu.ru' })
-			cookie.set('s_abit_id', response.session, { domain: 'kpfu.ru' })
-			window.open(response.link, '_blank')
-		}
 		if (response === 403) navigate('/')
+		else {
+			if (typeof response !== 'number') {
+				changeStatus(() => 'success')
+				cookie.set('s_id', response.session, { domain: 'kpfu.ru' })
+				cookie.set('s_abit_id', response.session, { domain: 'kpfu.ru' })
+				setTimeout(() => {
+					window.open(response.link, '_blank')
+				}, 3000)
+			}
+			if (response === 404) changeStatus(() => 'error')
+
+			setTimeout(() => {
+				changeStatus(() => 'none')
+			}, 3000)
+		}
 	}
 	return (
 		<div
-			className="rounded-[1vw] w-full p-10 flex h-full overflow-y-auto"
+			className="rounded-[1vw] w-full px-[54px] py-[75px] flex h-full overflow-y-auto"
 			style={{
 				background: 'linear-gradient(89.94deg, #71AAFF 12.16%, #3D7AD5 104.42%)'
 			}}
 		>
-			<div className="max-w-[53vw] max-2xl:max-w-[40vw] max-xl:max-w-full ">
-				<div className="text-4xl  text-white w-fit font-extrabold  mt-32 flex flex-col">
-					Admission to university
-					<Button
-						style={disableStyle}
-						onClick={() => request()}
-						className="w-[203px] font-bold h-[62px] text-2xl mt-6 button"
-					>
-						Apply
-					</Button>
-				</div>
+			<div className="text-4xl text-start text-white w-full font-extrabold flex flex-col justify-between">
+				Admission to university
+				<Button
+					onClick={() => request()}
+					className={clsx(
+						Styles.ApplyButtonCustom,
+						requestStatus === 'error' && 'bg-red-500',
+						requestStatus === 'success' && 'bg-green-500',
+						requestStatus === 'none' && 'bg-none'
+					)}
+				>
+					{requestStatus === 'none' && <>Apply</>}
+					{requestStatus === 'loading' && (
+						<>
+							<Spin
+								indicator={<LoadingOutlined className="text-white mr-2" spin />}
+							/>
+							Loading...
+						</>
+					)}
+					{requestStatus === 'error' && (
+						<>
+							<CloseOutlined className="text-white mr-2" />
+							Error
+						</>
+					)}
+					{requestStatus === 'success' && (
+						<>
+							<CheckOutlined className="text-white mr-2" />
+							Redirection
+						</>
+					)}
+				</Button>
 			</div>
 			<div className="max-xl:hidden">
 				<img

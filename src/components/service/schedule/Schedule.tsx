@@ -10,6 +10,7 @@ import { getSchedule } from '../../../store/creators/MainCreators'
 import './StyleSchedule.scss'
 
 interface DataType {
+	key: number
 	name: string
 	time: string
 	teacher: string
@@ -87,10 +88,14 @@ export const Schedule = () => {
 
 	useEffect(() => {
 		if (!schedule) getPlan()
-		else setData(schedule.monday)
+		else {
+			const changedData: DataType[] = schedule.monday.map((el, index) => ({
+				...el,
+				key: index
+			}))
+			setData(changedData)
+		}
 	}, [schedule])
-
-	if (!schedule) return null
 
 	const onChange = (e: RadioChangeEvent) => {
 		//@ts-ignore
@@ -147,9 +152,10 @@ export const Schedule = () => {
 					columns={columns}
 					dataSource={data}
 					pagination={false}
+					loading={schedule ? false : true}
 					className="max-w-[1050px] w-full drop-shadow-lg shadow-[#d4e3f1] rounded-none"
 				/>
-				<div className="flex flex-col gap-6 text-sm">
+				{/* <div className="flex flex-col gap-6 text-sm">
 					<div className="flex items-center gap-2">
 						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#A7FAFF]" />
 						Streaming lecture
@@ -182,7 +188,7 @@ export const Schedule = () => {
 						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#B3B3B3]" />
 						The type of discipline is not specified
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)
