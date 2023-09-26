@@ -6,7 +6,6 @@ import {
 import { Button, Spin } from 'antd'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { Cookies } from 'react-cookie'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -18,7 +17,6 @@ import Styles from './Styles.module.scss'
 export const Apply = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const cookie = new Cookies()
 	const [requestStatus, changeStatus] = useState<
 		'loading' | 'error' | 'success' | 'none'
 	>('none')
@@ -30,8 +28,6 @@ export const Apply = () => {
 		else {
 			if (typeof response !== 'number') {
 				changeStatus(() => 'success')
-				cookie.set('s_id', response.session, { domain: 'kpfu.ru' })
-				cookie.set('s_abit_id', response.session, { domain: 'kpfu.ru' })
 				setTimeout(() => {
 					window.open(response.link, '_blank')
 				}, 3000)

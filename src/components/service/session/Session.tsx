@@ -1,13 +1,9 @@
 import { Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 import { Exam } from '../../../api/types'
-import { useAppSelector } from '../../../store'
-import { getStudExamsSchedule } from '../../../store/creators/MainCreators'
-import { addExamsSchedule } from '../../../store/reducers/FormReducers/ServicesReducer'
+import { useGetExamsScheduleQuery } from '../../../store/slice/studyPlanSlice'
 
 type DataType = Omit<Exam, 'employee_id'> & {
 	key: number
@@ -47,21 +43,11 @@ const columns: ColumnsType<DataType> = [
 ]
 
 export const Session = () => {
-	const examSchedule = useAppSelector(state => state.Services.examsSchedule)
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
-
+	const { data: examSchedule } = useGetExamsScheduleQuery()
 	const [data, changeData] = useState<DataType[]>([])
 
-	const getExams = async () => {
-		const response = await getStudExamsSchedule(dispatch)
-		if (response === 403) navigate('/')
-		if (typeof response !== 'number') dispatch(addExamsSchedule(response))
-	}
-
 	useEffect(() => {
-		if (!examSchedule) getExams()
-		else
+		if (examSchedule)
 			changeData(
 				examSchedule.map((el, index) => {
 					return {

@@ -15,8 +15,6 @@ import type { UploadProps } from 'antd'
 import enPicker from 'antd/locale/en_US'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import 'dayjs/locale/en'
-import 'dayjs/locale/ru'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
@@ -61,7 +59,7 @@ const props: UploadProps = {
 }
 
 export const Work = () => {
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	dayjs.locale('en')
 	const [IsError, setError] = useState<IWorkError>({
 		item: null,

@@ -12,7 +12,7 @@ import {
 	message
 } from 'antd'
 import type { UploadProps } from 'antd'
-import ruPicker from 'antd/locale/ru_RU'
+import enPicker from 'antd/locale/en_US'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
@@ -21,7 +21,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { IParentError, IParentState } from '../../../api/types'
-import { RootState, useAppSelector } from '../../../store'
+import { useAppSelector } from '../../../store'
 import {
 	deleteParentItemRequest,
 	getParentItemRequest,
@@ -44,7 +44,6 @@ import {
 	residenceAddress,
 	snils
 } from '../../../store/reducers/FormReducers/ParentReducer'
-import { addDocuments } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetDocumentsQuery } from '../../../store/slice/documentSlice'
 
 const props: UploadProps = {
@@ -66,21 +65,16 @@ const props: UploadProps = {
 }
 
 export const Parent = () => {
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	dayjs.locale(i18n.language)
+	dayjs.locale('en')
 	const [IsError, setError] = useState<IParentError | null>(null)
-	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
+
 	const role = useAppSelector(state => state.InfoUser?.role)
 	const [updateItems, setUpdate] = useState<boolean>(true)
 	const parentData = useAppSelector(state => state.Parent)
-	const documentStorage = useAppSelector(
-		(state: RootState) => state.Services.documents
-	)
-	const { data: documents } = useGetDocumentsQuery(i18n.language, {
-		skip: SkipCountriesQuery
-	})
+	const { data: documents } = useGetDocumentsQuery()
 
 	useEffect(() => {
 		if (updateItems) {
@@ -88,19 +82,6 @@ export const Parent = () => {
 			setUpdate(false)
 		}
 	}, [updateItems])
-
-	useEffect(() => {
-		if (!documentStorage) {
-			changeQuerySkip(false)
-		}
-	}, [documentStorage])
-
-	useEffect(() => {
-		if (documents) {
-			dispatch(addDocuments(documents))
-			changeQuerySkip(true)
-		}
-	}, [documents])
 
 	const convertToString = (field: any): string => {
 		if (typeof field === 'string') {
@@ -355,9 +336,8 @@ export const Parent = () => {
 										placeholder={t('documentType')}
 										size="large"
 										options={
-											documentStorage !== null
-												? //@ts-ignore
-												  documentStorage.map(el => ({
+											documents
+												? documents.map(el => ({
 														value: el.id,
 														label: el.type
 												  }))
@@ -419,7 +399,7 @@ export const Parent = () => {
 											<Typography.Text className=" text-black">
 												{t('whenIssued')}
 											</Typography.Text>
-											<ConfigProvider locale={ruPicker}>
+											<ConfigProvider locale={enPicker}>
 												<DatePicker
 													className={clsx(
 														'shadow w-full',

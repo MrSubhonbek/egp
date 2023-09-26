@@ -12,7 +12,7 @@ import {
 	message
 } from 'antd'
 import type { UploadProps } from 'antd'
-import ruPicker from 'antd/locale/ru_RU'
+import enPicker from 'antd/locale/en_US'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
@@ -36,7 +36,6 @@ import {
 	passportSeries,
 	snils
 } from '../../../store/reducers/FormReducers/DocumentReducer'
-import { addDocuments } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetDocumentsQuery } from '../../../store/slice/documentSlice'
 
 const props: UploadProps = {
@@ -58,20 +57,14 @@ const props: UploadProps = {
 }
 export const Document = () => {
 	const navigate = useNavigate()
-	const [t, i18n] = useTranslation()
-	dayjs.locale(i18n.language)
+	const { t } = useTranslation()
+	dayjs.locale('en')
 	const dispatch = useDispatch()
 
 	const [IsEmpty, changeIsEmpty] = useState<boolean>(false)
-	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const role = useAppSelector(state => state.InfoUser?.role)
-	const documentStorage = useAppSelector(
-		(state: RootState) => state.Services.documents
-	)
 	const documentData = useAppSelector((state: RootState) => state.Document)
-	const { data: documents } = useGetDocumentsQuery(i18n.language, {
-		skip: SkipCountriesQuery
-	})
+	const { data: documents } = useGetDocumentsQuery()
 
 	const getData = async () => {
 		const response = await getDocumentItemRequest(dispatch)
@@ -101,17 +94,6 @@ export const Document = () => {
 	useEffect(() => {
 		if (!documentData.inn) getData()
 	}, [])
-
-	useEffect(() => {
-		if (!documentStorage) changeQuerySkip(false)
-	}, [documentStorage])
-
-	useEffect(() => {
-		if (documents) {
-			dispatch(addDocuments(documents))
-			changeQuerySkip(true)
-		}
-	}, [documents])
 
 	const handleAddDocument = async () => {
 		const IsCorrectNumber = /^[0-9]{4}$/.test(documentData.passportNumber)
@@ -164,9 +146,9 @@ export const Document = () => {
 						size="large"
 						className="w-[624px] shadow rounded-lg"
 						options={
-							!documentStorage
+							!documents
 								? []
-								: documentStorage.map(el => ({ value: el.id, label: el.type }))
+								: documents.map(el => ({ value: el.id, label: el.type }))
 						}
 						value={documentData.documentTypeId}
 					/>
@@ -204,7 +186,7 @@ export const Document = () => {
 					</Space>
 					<Space direction="vertical" className="w-[300px]">
 						<Typography.Text>{t('whenIssued')}</Typography.Text>
-						<ConfigProvider locale={ruPicker}>
+						<ConfigProvider locale={enPicker}>
 							<DatePicker
 								disabled={isStudent}
 								className={clsx(

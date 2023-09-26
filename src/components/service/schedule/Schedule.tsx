@@ -1,11 +1,8 @@
 import { Radio, RadioChangeEvent, Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
-import { TypeSchedule } from '../../../api/types'
-import { getSchedule } from '../../../store/creators/MainCreators'
+import { useGetScheduleQuery } from '../../../store/slice/scheduleSlice'
 
 import './StyleSchedule.scss'
 
@@ -74,21 +71,11 @@ const columns: ColumnsType<DataType> = [
 	}
 ]
 export const Schedule = () => {
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
-	const [schedule, setSchedule] = useState<TypeSchedule | null>()
-
-	const getPlan = async () => {
-		const response = await getSchedule(dispatch)
-		if (response === 403) navigate('/')
-		if (typeof response !== 'number') setSchedule(response)
-	}
-
+	const { data: schedule } = useGetScheduleQuery()
 	const [data, setData] = useState<DataType[] | undefined>()
 
 	useEffect(() => {
-		if (!schedule) getPlan()
-		else {
+		if (schedule) {
 			const changedData: DataType[] = schedule.monday.map((el, index) => ({
 				...el,
 				key: index

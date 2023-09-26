@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { IEducationError, IEducationState } from '../../../api/types'
-import { RootState, useAppSelector } from '../../../store'
+import { useAppSelector } from '../../../store'
 import {
 	addEducationItemRequest,
 	deleteEducationItemRequest,
@@ -36,10 +36,6 @@ import {
 	nameOfInstitute,
 	specialization
 } from '../../../store/reducers/FormReducers/EducationReducer'
-import {
-	addCountries,
-	addEducations
-} from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 import { useGetEducationLevelQuery } from '../../../store/slice/educationLevelSlice'
 
@@ -64,26 +60,14 @@ const props: UploadProps = {
 export const Education = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const { t, i18n } = useTranslation()
-	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
+	const { t } = useTranslation()
+	dayjs.locale('en')
+
 	const educationData = useAppSelector(state => state.Education)
 	const role = useAppSelector(state => state.InfoUser?.role)
 
-	const { data: educationLevel } = useGetEducationLevelQuery(
-		{ language: i18n.language, role: !role ? 'ABIT' : role },
-		{
-			skip: SkipCountriesQuery
-		}
-	)
-	const { data: countries } = useGetCountriesQuery(i18n.language, {
-		skip: SkipCountriesQuery
-	})
-	const countriesStorage = useAppSelector(
-		(state: RootState) => state.Services.countries
-	)
-	const educationStorage = useAppSelector(
-		(state: RootState) => state.Services.educations
-	)
+	const { data: educations } = useGetEducationLevelQuery(!role ? 'ABIT' : role)
+	const { data: countries } = useGetCountriesQuery()
 
 	const getData = async () => {
 		const response = await getEducationItemRequest(dispatch)
@@ -203,16 +187,6 @@ export const Education = () => {
 	}
 
 	useEffect(() => {
-		if (educationLevel && countries) {
-			dispatch(addEducations(educationLevel))
-			dispatch(addCountries(countries))
-			changeQuerySkip(true)
-		} else {
-			changeQuerySkip(false)
-		}
-	}, [educationLevel, countries])
-
-	useEffect(() => {
 		if (updateItems) {
 			getData()
 			setUpdate(false)
@@ -271,9 +245,9 @@ export const Education = () => {
 												.educationLevelId
 										}
 										options={
-											!educationStorage
+											!educations
 												? []
-												: educationStorage.map(el => ({
+												: educations.map(el => ({
 														value: el.id,
 														label: el.name
 												  }))
@@ -303,9 +277,9 @@ export const Education = () => {
 												)
 											}
 											options={
-												countriesStorage === null
+												!countries
 													? []
-													: countriesStorage.map(el => ({
+													: countries.map(el => ({
 															value: el.id,
 															label: el.shortName
 													  }))

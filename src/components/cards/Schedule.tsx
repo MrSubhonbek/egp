@@ -1,12 +1,9 @@
 import { Button } from 'antd'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import img from '../../assets/images/image15.png'
-import { useAppSelector } from '../../store'
-import { getSchedule } from '../../store/creators/MainCreators'
-import { addSchedule } from '../../store/reducers/FormReducers/ServicesReducer'
+import { useGetScheduleQuery } from '../../store/slice/scheduleSlice'
 
 type week =
 	| 'monday'
@@ -17,24 +14,13 @@ type week =
 	| 'saturday'
 
 export const Schedule = () => {
-	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [activeButton, changeActive] = useState<week>('monday')
-	const scheduleStorage = useAppSelector(state => state.Services.schedule)
-
-	const getPlan = async () => {
-		const response = await getSchedule(dispatch)
-		if (response === 403) navigate('/')
-		if (typeof response !== 'number') dispatch(addSchedule(response))
-	}
+	const { data: schedule } = useGetScheduleQuery()
 
 	const setActiveButton = (buttonName: week) => {
 		if (activeButton !== buttonName) changeActive(buttonName)
 	}
-
-	useEffect(() => {
-		if (!scheduleStorage) getPlan()
-	}, [scheduleStorage])
 
 	const disableStyle = {
 		color: 'white',
@@ -102,8 +88,8 @@ export const Schedule = () => {
 			</div>
 			<hr className="h-full w-[2px] my-auto bg-white mx-3 border-none" />
 			<div className="hidden sm:flex flex-col justify-start min-w-[300px] max-w-[300px] p-2 max-h-full overflow-y-auto">
-				{scheduleStorage &&
-					scheduleStorage[activeButton].map((el, index) => (
+				{schedule &&
+					schedule[activeButton].map((el, index) => (
 						<div className="flex w-full gap-x-[40px] mb-[20px]" key={index}>
 							<span className="text-start min-w-[100px]">{el.time}</span>
 							<span className="font-bold text-start">{el.name}</span>

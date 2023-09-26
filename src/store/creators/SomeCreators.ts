@@ -1,5 +1,4 @@
 import { Dispatch } from '@reduxjs/toolkit'
-import { Cookies } from 'react-cookie'
 
 import {
 	loginFailure,
@@ -12,14 +11,12 @@ import { setDefaultEducation } from '../reducers/FormReducers/EducationReducer'
 import { setDefaultForm } from '../reducers/FormReducers/FormReducer'
 import { putRole } from '../reducers/FormReducers/InfoUserReducer'
 import { setDefaultParent } from '../reducers/FormReducers/ParentReducer'
-import { setDefaultServices } from '../reducers/FormReducers/ServicesReducer'
 import { setDefaultWork } from '../reducers/FormReducers/WorkReducer'
 import { setDefaultProfile } from '../reducers/ProfileReducer'
 
 export const LogOut = async (dispatch: Dispatch): Promise<void> => {
 	dispatch(putRole(null))
 	var cookies = document.cookie.split(';')
-
 	for (var i = 0; i < cookies.length; i++) {
 		var cookie = cookies[i]
 		var eqPos = cookie.indexOf('=')
@@ -34,7 +31,6 @@ export const LogOut = async (dispatch: Dispatch): Promise<void> => {
 	dispatch(setDefaultForm())
 	dispatch(setDefaultParent())
 	dispatch(setDefaultProfile())
-	dispatch(setDefaultServices())
 	dispatch(setDefaultWork())
 }
 

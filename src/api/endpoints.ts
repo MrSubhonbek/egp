@@ -17,11 +17,10 @@ const endpoints = {
 			},
 			FORM: '/user-api/users/me',
 			ADDRESS: '/user-api/users/me/address',
-			SCHEDULE: '/schedule-api/schedule',
-			EXAM_SCHEDULE: '/study-plan-api/studyplan/examsSchedule',
-			STUD_PLAN: '/study-plan-api/studyplan',
-			PERFORMANCE: '/academic-performance-api/performance',
-			TEACHERS_RATING: '/academic-performance-api/teachers-rating'
+			SCHEDULE: '/schedule',
+			EXAM_SCHEDULE: '/examsSchedule',
+			PERFORMANCE: '/performance',
+			TEACHERS_RATING: '/teachers-rating'
 		},
 		COUNTRIES: '/country',
 		EDUCATION_LEVEL_ANOTHER: '/education/levels',

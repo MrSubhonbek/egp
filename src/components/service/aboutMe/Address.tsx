@@ -20,13 +20,11 @@ import {
 	index,
 	street
 } from '../../../store/reducers/FormReducers/AddressReducer'
-import { addCountries } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
 export const Address = () => {
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const [value, setValue] = useState(0)
-	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
 	const [IsError, setError] = useState<boolean>(false)
 	const role = useAppSelector(state => state.InfoUser?.role)
 	const registrationAddressData = useAppSelector(
@@ -35,15 +33,10 @@ export const Address = () => {
 	const residenceAddressData = useAppSelector(
 		(state: RootState) => state.Address.residenceAddress
 	)
-	const countryStorage = useAppSelector(
-		(state: RootState) => state.Services.countries
-	)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
-	const { data: countries } = useGetCountriesQuery(i18n.language, {
-		skip: SkipCountriesQuery
-	})
+	const { data: countries } = useGetCountriesQuery()
 
 	const getData = async () => {
 		const response = await getAbUsAddress(dispatch)
@@ -59,17 +52,6 @@ export const Address = () => {
 	useEffect(() => {
 		if (!registrationAddressData.house) getData()
 	}, [registrationAddressData])
-
-	useEffect(() => {
-		if (!countryStorage) changeQuerySkip(false)
-	}, [countryStorage])
-
-	useEffect(() => {
-		if (countries) {
-			dispatch(addCountries(countries))
-			changeQuerySkip(true)
-		}
-	}, [countries])
 
 	const onChange = (e: RadioChangeEvent) => {
 		if (e.target.value !== 0)
@@ -190,9 +172,9 @@ export const Address = () => {
 							dispatch(country({ target: 'registrationAddress', country: e }))
 						}
 						options={
-							!countryStorage
+							!countries
 								? []
-								: countryStorage.map(el => ({
+								: countries.map(el => ({
 										value: el.id,
 										label: el.shortName
 								  }))
@@ -410,9 +392,9 @@ export const Address = () => {
 									)
 								}
 								options={
-									countryStorage == null
+									!countries
 										? []
-										: countryStorage.map(el => ({
+										: countries.map(el => ({
 												value: el.id,
 												label: el.shortName
 										  }))

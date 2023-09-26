@@ -1,24 +1,18 @@
 import { Button, Carousel } from 'antd'
-import { useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useRef } from 'react'
 
 import img from '../../assets/images/grade.png'
-import { useAppSelector } from '../../store'
-import { getStudPerformance } from '../../store/creators/MainCreators'
-import { addPerformance } from '../../store/reducers/FormReducers/ServicesReducer'
+import { useGetPerformanceQuery } from '../../store/slice/acadPerfSlice'
 
 import { NextSvg, PrevSvg } from './const'
 
 export const Grade = () => {
-	const dispatch = useDispatch()
-	const studMarks = useAppSelector(state => state.Services.performance)
-	const navigate = useNavigate()
 	const slider = useRef() as React.MutableRefObject<any>
-	const scheduleCourses = !studMarks ? (
+	const { data: performance } = useGetPerformanceQuery()
+	const scheduleCourses = !performance ? (
 		<></>
 	) : (
-		studMarks.journal.map((element, index) => (
+		performance.journal.map((element, index) => (
 			<div key={index} className="flex flex-col">
 				<div
 					className="text-base"
@@ -44,16 +38,6 @@ export const Grade = () => {
 			</div>
 		))
 	)
-
-	const getPerformance = async () => {
-		const response = await getStudPerformance(dispatch)
-		if (response === 403) navigate('/')
-		if (typeof response !== 'number') dispatch(addPerformance(response))
-	}
-
-	useEffect(() => {
-		if (!studMarks) getPerformance()
-	}, [studMarks])
 
 	return (
 		<div className="px-[60px] py-[40px] h-full">

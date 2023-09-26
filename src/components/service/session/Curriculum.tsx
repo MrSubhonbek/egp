@@ -1,12 +1,8 @@
 import { Radio, Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../../store'
-import { getStudyPlans } from '../../../store/creators/MainCreators'
-import { addStudyPlan } from '../../../store/reducers/FormReducers/ServicesReducer'
+import { useGetStudyPlanQuery } from '../../../store/slice/studyPlanSlice'
 
 import './Styles.scss'
 
@@ -420,19 +416,12 @@ export const Curriculum = () => {
 			]
 		}
 	]
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
-	const studyPlan = useAppSelector(state => state.Services.studyPlan)
-	const getEducationPlan = async () => {
-		const response = await getStudyPlans(dispatch)
-		if (response === 403) navigate('/')
-		if (typeof response !== 'number') dispatch(addStudyPlan(response))
-	}
+	const { data: studyPlan } = useGetStudyPlanQuery()
+
 	const [tableData, changeData] = useState<TypeColumn[]>([])
 
 	useEffect(() => {
-		if (!studyPlan) getEducationPlan()
-		else
+		if (studyPlan)
 			changeWords(
 				studyPlan.subjects
 					.map(el => el.type_name)

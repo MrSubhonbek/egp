@@ -8,13 +8,13 @@ export const documentsAPi = createApi({
 	reducerPath: 'documentsAPi',
 	baseQuery: fetchBaseQuery({ baseUrl: 'https://newlk.kpfu.ru/user-api/' }),
 	endpoints: build => ({
-		getDocuments: build.query<IDocumentsRequest[], string>({
-			query: language => ({
+		getDocuments: build.query<IDocumentsRequest[], void>({
+			query: () => ({
 				url: endpoints.USER.DOCUMENTS,
 				method: 'GET',
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
-					'Accept-Language': language
+					'Accept-Language': 'en'
 				}
 			})
 		})

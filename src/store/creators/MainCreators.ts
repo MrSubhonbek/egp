@@ -13,14 +13,10 @@ import {
 	getAdmissionLink,
 	getDocument,
 	getEducation,
-	getExamsSchedule,
 	getForm,
 	getJob,
 	getParent,
-	getPerformance,
 	getRole,
-	getStudSchedule,
-	getStudyPlan,
 	login,
 	postDocument,
 	postParent,
@@ -36,18 +32,14 @@ import {
 } from '../../api/index'
 import {
 	AbUSParentResponse,
-	Exam,
 	IAddress,
 	IAddressRequest,
-	ICalendar,
 	IDocument,
 	IDocumentAbUs,
 	IEducationState,
 	IError,
 	IParent,
-	IPerformance,
 	IRole,
-	TypeSchedule,
 	educationItem,
 	formItem,
 	workItem
@@ -80,11 +72,19 @@ export const loginUser = async (
 			})
 		)
 		localStorage.setItem('access', res.data.accessToken)
-		if (!cookies.get('refresh'))
-			cookies.set('refresh', res.data.refreshToken, {
-				path: window.location.origin,
-				domain: document.domain
-			})
+		cookies.remove('refresh')
+		cookies.set('refresh', res.data.refreshToken, {
+			path: '/',
+			domain: document.domain
+		})
+		cookies.set('sessionId', res.data.user.sessionId, {
+			path: '/',
+			domain: document.domain
+		})
+		cookies.set('sessionHash', res.data.user.sessionHash, {
+			path: '/',
+			domain: document.domain
+		})
 		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
 		dispatch(ProfileSuccess(res.data.user))
 		return 200
@@ -150,15 +150,15 @@ export const approveEmail = async (
 		const res = await approve(data)
 		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
 		cookies.set('refresh', res.data.refreshToken, {
-			path: window.location.origin,
+			path: '/',
 			domain: document.domain
 		})
 		cookies.set('sessionId', res.data.user.sessionId, {
-			path: window.location.origin,
+			path: '/',
 			domain: document.domain
 		})
 		cookies.set('sessionHash', res.data.user.sessionHash, {
-			path: window.location.origin,
+			path: '/',
 			domain: document.domain
 		})
 		localStorage.setItem('access', res.data.accessToken)
@@ -451,7 +451,6 @@ export const getAdmission = async (
 ): Promise<
 	| {
 			link: string
-			session: string
 	  }
 	| 404
 	| 403
@@ -459,74 +458,11 @@ export const getAdmission = async (
 	try {
 		if ((await refreshToken(dispatch)) === 403) return 403
 		const response = await getAdmissionLink()
-		return response.data
-	} catch (e) {
-		return 404
-	}
-}
-
-export const getSchedule = async (
-	dispatch: Dispatch
-): Promise<TypeSchedule | 404 | 403> => {
-	try {
-		if ((await refreshToken(dispatch)) === 403) return 403
-		const response = await getStudSchedule()
-		return response.data
-	} catch (e) {
-		return 404
-	}
-}
-
-export const getStudExamsSchedule = async (
-	dispatch: Dispatch
-): Promise<Exam[] | 404 | 403> => {
-	try {
-		if ((await refreshToken(dispatch)) === 403) return 403
-		const response = await getExamsSchedule()
-		return response.data
-		// return [
-		// 	{
-		// 		building_name: 'Корпус 2, ул. Астрономическая, д.5',
-		// 		room_num: '109',
-		// 		name: 'Общая биология: тренинг по саморазвитию и планированию карьеры',
-		// 		employee_name: 'Малютина Л.В.',
-		// 		date_note: '24.09.2023',
-		// 		time_note: '9:00',
-		// 		employee_id: 123
-		// 	},
-		// 	{
-		// 		building_name: 'Корпус 2, ул. Астрономическая, д.5',
-		// 		room_num: '109',
-		// 		name: 'Общая биология: тренинг по саморазвитию и планированию карьеры',
-		// 		employee_name: 'Малютина Л.В.',
-		// 		date_note: '24.09.2023',
-		// 		time_note: '9:00',
-		// 		employee_id: 126
-		// 	}
-		// ]
-	} catch (e) {
-		return 404
-	}
-}
-
-export const getStudyPlans = async (
-	dispatch: Dispatch
-): Promise<ICalendar | 404 | 403> => {
-	try {
-		if ((await refreshToken(dispatch)) === 403) return 403
-		const response = await getStudyPlan()
-		return response.data
-	} catch (e) {
-		return 404
-	}
-}
-
-export const getStudPerformance = async (
-	dispatch: Dispatch
-): Promise<IPerformance | 404 | 403> => {
-	try {
-		if ((await refreshToken(dispatch)) === 403) return 403
-		const response = await getPerformance()
+		cookies.set('s_id', response.data.session, { domain: 'kpfu.ru', path: '/' })
+		cookies.set('s_abit_id', response.data.session, {
+			domain: 'kpfu.ru',
+			path: '/'
+		})
 		return response.data
 	} catch (e) {
 		return 404

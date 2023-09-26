@@ -25,7 +25,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import phones from '../../../api/phones.json'
-import { RootState, useAppSelector } from '../../../store'
+import { useAppSelector } from '../../../store'
 import { getAbUsForm, putAbUsForm } from '../../../store/creators/MainCreators'
 import {
 	allData,
@@ -37,29 +37,26 @@ import {
 	phone,
 	surName
 } from '../../../store/reducers/FormReducers/FormReducer'
-import { addCountries } from '../../../store/reducers/FormReducers/ServicesReducer'
 import { useGetCountriesQuery } from '../../../store/slice/countrySlice'
 
 import Styles from './Styles.module.scss'
 
 export const AboutMe = () => {
 	dayjs.locale('en')
-	const { t, i18n } = useTranslation()
-	const [SkipCountriesQuery, changeQuerySkip] = useState<boolean>(true)
+	const { t } = useTranslation()
 	const [IsError, setError] = useState<boolean>(false)
 	const formData = useAppSelector(state => state.Form)
 	const role = useAppSelector(state => state.InfoUser?.role)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	const countryStorage = useAppSelector(
-		(state: RootState) => state.Services.countries
-	)
+
 	const maskRange = useRef<null | string[]>(null)
 	const [currentMask, changeCurrent] = useState<string>('')
 	const [selectMaskItem, changeMaskItem] = useState<number | null>(null)
 	const [requestStatus, changeStatus] = useState<
 		'loading' | 'error' | 'success' | 'none'
 	>('none')
+	const { data: countries, isLoading, isError } = useGetCountriesQuery()
 
 	var email = useRef<string>('')
 
@@ -102,9 +99,6 @@ export const AboutMe = () => {
 			}
 		}
 	}
-	const { data: countries } = useGetCountriesQuery(i18n.language, {
-		skip: SkipCountriesQuery
-	})
 
 	useEffect(() => {
 		if (localStorage.getItem('userInfo') || email.current === '') {
@@ -117,12 +111,11 @@ export const AboutMe = () => {
 	}, [])
 
 	useEffect(() => {
-		if (!countryStorage) changeQuerySkip(false)
 		getMask(formData.countryId)
-	}, [countryStorage])
+	}, [])
 
 	const getMask = (countryId: number) => {
-		if (countryStorage) {
+		if (!isLoading && !isError) {
 			var m: string | string[] = phones.filter(el => el.id === countryId)[0]
 				.mask
 			if (isArray(m)) {
@@ -135,13 +128,7 @@ export const AboutMe = () => {
 			}
 		}
 	}
-	useEffect(() => {
-		if (countries) {
-			dispatch(addCountries(countries))
-			changeQuerySkip(true)
-		}
-	}, [countries])
-	if (!role) return <></>
+
 	const isStudent = role === 'STUD'
 	return (
 		<div className="m-14 radio">
@@ -263,9 +250,9 @@ export const AboutMe = () => {
 							dispatch(country(e))
 						}}
 						options={
-							countryStorage == null
+							!countries
 								? []
-								: countryStorage.map(el => ({
+								: countries.map(el => ({
 										value: el.id,
 										label: el.shortName
 								  }))

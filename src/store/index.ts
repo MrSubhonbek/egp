@@ -9,13 +9,14 @@ import EducationReducer from './reducers/FormReducers/EducationReducer'
 import FormReducer from './reducers/FormReducers/FormReducer'
 import InfoUserReducer from './reducers/FormReducers/InfoUserReducer'
 import ParentReducer from './reducers/FormReducers/ParentReducer'
-import ServicesReducer from './reducers/FormReducers/ServicesReducer'
 import WorkReducer from './reducers/FormReducers/WorkReducer'
 import ProfileReducer from './reducers/ProfileReducer'
+import { acadPerfApi } from './slice/acadPerfSlice'
 import { countriesAPi } from './slice/countrySlice'
 import { documentsAPi } from './slice/documentSlice'
 import { educationLevelAPi } from './slice/educationLevelSlice'
 import { scheduleApi } from './slice/scheduleSlice'
+import { studyPlanApi } from './slice/studyPlanSlice'
 
 export const store = configureStore({
 	reducer: {
@@ -28,11 +29,12 @@ export const store = configureStore({
 		Work: WorkReducer,
 		Parent: ParentReducer,
 		Address: AddressReducer,
-		Services: ServicesReducer,
 		[scheduleApi.reducerPath]: scheduleApi.reducer,
 		[countriesAPi.reducerPath]: countriesAPi.reducer,
 		[educationLevelAPi.reducerPath]: educationLevelAPi.reducer,
-		[documentsAPi.reducerPath]: documentsAPi.reducer
+		[documentsAPi.reducerPath]: documentsAPi.reducer,
+		[acadPerfApi.reducerPath]: acadPerfApi.reducer,
+		[studyPlanApi.reducerPath]: studyPlanApi.reducer
 	},
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware()
@@ -41,6 +43,8 @@ export const store = configureStore({
 			.concat(countriesAPi.middleware)
 			.concat(educationLevelAPi.middleware)
 			.concat(documentsAPi.middleware)
+			.concat(studyPlanApi.middleware)
+			.concat(acadPerfApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

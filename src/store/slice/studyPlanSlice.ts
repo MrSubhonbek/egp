@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import endpoints from '../../api/endpoints'
-import { TypeSchedule } from '../../api/types'
+import { Exam, ICalendar } from '../../api/types'
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: 'https://newlk.kpfu.ru/schedule-api',
+	baseUrl: 'https://newlk.kpfu.ru/study-plan-api/studyplan',
 	prepareHeaders: headers => {
 		const accessToken = localStorage.getItem('access')
 		if (accessToken) {
@@ -15,14 +15,17 @@ const baseQuery = fetchBaseQuery({
 		return headers
 	}
 })
-export const scheduleApi = createApi({
-	reducerPath: 'scheduleApi',
+export const studyPlanApi = createApi({
+	reducerPath: 'studyPlanApi',
 	baseQuery,
 	endpoints: builder => ({
-		getSchedule: builder.query<TypeSchedule, void>({
-			query: () => endpoints.USER.INFO.SCHEDULE
+		getExamsSchedule: builder.query<Exam[], void>({
+			query: () => endpoints.USER.INFO.EXAM_SCHEDULE
+		}),
+		getStudyPlan: builder.query<ICalendar, void>({
+			query: () => ''
 		})
 	})
 })
 
-export const { useGetScheduleQuery } = scheduleApi
+export const { useGetExamsScheduleQuery, useGetStudyPlanQuery } = studyPlanApi

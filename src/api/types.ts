@@ -364,3 +364,44 @@ export type TypeSchedule = {
 	friday: Day[]
 	saturday: Day[]
 }
+
+export type ITeacher = {
+	id: string
+	lastname: string
+	firstname: string
+	middleName: string
+}
+
+export type ITeacherData = {
+	id: number
+	lastName: string
+	firstName: string
+	middleName: string
+	post: string
+	subDivision: string
+	photoLink: string
+}
+
+export type ITeacherRating = {
+	'Доброжелательность и тактичность'?: number
+	'Общая эрудиция'?: number
+	'Внешний вид и манера поведения'?: number
+	Пунктуальность?: number
+}
+
+export type ITotal = {
+	'Всего оценок': number
+}
+
+export type ITeacherItem = {
+	teacherData: ITeacherData
+	rating: ITeacherRating
+	userRating: ITeacherRating
+	total: ITotal
+}
+
+export type IRating = {
+	teacherId: number
+	questId: number
+	answerNumber: number
+}
