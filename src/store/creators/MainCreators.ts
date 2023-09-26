@@ -72,19 +72,9 @@ export const loginUser = async (
 			})
 		)
 		localStorage.setItem('access', res.data.accessToken)
-		cookies.remove('refresh')
-		cookies.set('refresh', res.data.refreshToken, {
-			path: '/',
-			domain: document.domain
-		})
-		cookies.set('sessionId', res.data.user.sessionId, {
-			path: '/',
-			domain: document.domain
-		})
-		cookies.set('sessionHash', res.data.user.sessionHash, {
-			path: '/',
-			domain: document.domain
-		})
+		document.cookie = `refresh=${res.data.refreshToken}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
+		document.cookie = `sessionId=${res.data.user.sessionId}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
+		document.cookie = `sessionHash=${res.data.user.sessionHash}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
 		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
 		dispatch(ProfileSuccess(res.data.user))
 		return 200
@@ -148,19 +138,10 @@ export const approveEmail = async (
 ): Promise<200 | 403> => {
 	try {
 		const res = await approve(data)
+		document.cookie = `refresh=${res.data.refreshToken}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
+		document.cookie = `sessionId=${res.data.user.sessionId}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
+		document.cookie = `sessionHash=${res.data.user.sessionHash}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
 		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
-		cookies.set('refresh', res.data.refreshToken, {
-			path: '/',
-			domain: document.domain
-		})
-		cookies.set('sessionId', res.data.user.sessionId, {
-			path: '/',
-			domain: document.domain
-		})
-		cookies.set('sessionHash', res.data.user.sessionHash, {
-			path: '/',
-			domain: document.domain
-		})
 		localStorage.setItem('access', res.data.accessToken)
 		dispatch(
 			loginSuccess({
@@ -458,11 +439,8 @@ export const getAdmission = async (
 	try {
 		if ((await refreshToken(dispatch)) === 403) return 403
 		const response = await getAdmissionLink()
-		cookies.set('s_id', response.data.session, { domain: 'kpfu.ru', path: '/' })
-		cookies.set('s_abit_id', response.data.session, {
-			domain: 'kpfu.ru',
-			path: '/'
-		})
+		document.cookie = `s_id=${response.data.session}; max-age=31536000 domain=kpfu.ru path=/ samesite=strict`
+		document.cookie = `s_abit_id=${response.data.session}; max-age=31536000 domain=kpfu.ru path=/ samesite=strict`
 		return response.data
 	} catch (e) {
 		return 404

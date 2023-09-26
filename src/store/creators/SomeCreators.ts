@@ -17,11 +17,14 @@ import { setDefaultProfile } from '../reducers/ProfileReducer'
 export const LogOut = async (dispatch: Dispatch): Promise<void> => {
 	dispatch(putRole(null))
 	var cookies = document.cookie.split(';')
-	for (var i = 0; i < cookies.length; i++) {
-		var cookie = cookies[i]
+	for (var cookie of cookies) {
+		cookie = cookie.replaceAll(' ', '')
+		console.log(cookie)
 		var eqPos = cookie.indexOf('=')
 		var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie
-		document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'
+		console.log(name)
+		document.cookie =
+			name + `=; path=/; expires=expires=Thu, 01 Jan 1970 00:00:01 GMT;`
 	}
 	localStorage.clear()
 	dispatch(setDefaultAuthReg())
