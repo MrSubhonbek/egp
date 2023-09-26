@@ -5,18 +5,19 @@ import { ElectronicBookSvg } from '../../../assets/svg/ElectronicBookSvg'
 import { TeachersWorkSvg } from '../../../assets/svg/TeachersWorkSvg'
 
 import { Estimation } from './Estimation'
+import { TeacherRating } from './TeacherRating'
 
 const navList = [
 	{
 		id: '/services/electronicBook/estimation',
 		icon: <ElectronicBookSvg />,
-		name: 'Электронная зачетная книжка'
-	},
-	{
-		id: '/services/electronicBook/teachersWork',
-		icon: <TeachersWorkSvg />,
-		name: 'Оценка работы преподавателей'
+		name: 'Electronic record book'
 	}
+	// {
+	// 	id: '/services/electronicBook/teachersWork',
+	// 	icon: <TeachersWorkSvg />,
+	// 	name: "Evaluation of teachers' work"
+	// }
 ]
 export const NavElectronicBook = () => {
 	const { pathname } = useLocation()
@@ -50,6 +51,7 @@ export const NavElectronicBook = () => {
 			</div>
 			<div className="bg-[#F5F8FB] w-full">
 				{pathname === navList[0].id && <Estimation />}
+				{/* {pathname === navList[1].id && <TeacherRating />} */}
 			</div>
 		</>
 	)

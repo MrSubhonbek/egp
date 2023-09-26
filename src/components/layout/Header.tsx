@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { IUserData, TypeRole } from '../../api/types'
-import { MenuSvg } from '../../assets/svg'
+// import { MenuSvg } from '../../assets/svg'
 import {
 	LogoIasSvg,
 	LogoutSvg,
@@ -20,6 +20,8 @@ import { getAbUsForm } from '../../store/creators/MainCreators'
 import { LogOut } from '../../store/creators/SomeCreators'
 import { allData } from '../../store/reducers/FormReducers/FormReducer'
 import { ModalNav } from '../service/modalMenu/ModalNav'
+
+import Styles from './Header.module.scss'
 
 type TypeHeaderProps = {
 	type?: 'service' | 'main'
@@ -34,6 +36,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 	const role = useAppSelector((state: RootState) => state.InfoUser.role)
 	const form = useAppSelector((state: RootState) => state.Form)
 	const [userEmail, changeUserEmail] = useState<IUserData | string>('')
+	const [IsBurgerActive, changeIsBurgerActive] = useState<boolean>(true)
 
 	const roleConverter = (role: TypeRole | null) => {
 		if (role === 'ABIT') return 'Enrollee'
@@ -124,16 +127,53 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 				<div className="flex gap-8 items-center">
 					{role === 'STUD' && (
 						<Button
-							onClick={showDrawer}
+							onClick={() => {
+								changeIsBurgerActive(!IsBurgerActive)
+								showDrawer()
+							}}
 							className={clsx(
-								'h-[40px] rounded-full  font-semibold bg-transparent border-2 flex items-center justify-center w-[130px] ',
+								'h-[40px] rounded-full font-semibold bg-transparent border-2 flex items-center justify-center w-[130px] ',
 								type === 'main'
 									? 'text-[#1F5CB8] border-[#1F5CB8] '
 									: 'text-white border-white hover:!border-white hover:!text-white'
 							)}
 							type="default"
-							icon={<MenuSvg white={type === 'service'} />}
 						>
+							<div
+								className={clsx(
+									Styles.burger,
+									!IsBurgerActive && Styles.burger_active
+								)}
+							>
+								<span
+									className={clsx(
+										Styles.burger__line,
+										Styles.burger__line_first,
+										type === 'main' ? 'bg-[#1F5CB8]' : 'bg-white'
+									)}
+								></span>
+								<span
+									className={clsx(
+										Styles.burger__line,
+										Styles.burger__line_second,
+										type === 'main' ? 'bg-[#1F5CB8]' : 'bg-white'
+									)}
+								></span>
+								<span
+									className={clsx(
+										Styles.burger__line,
+										Styles.burger__line_third,
+										type === 'main' ? 'bg-[#1F5CB8]' : 'bg-white'
+									)}
+								></span>
+								<span
+									className={clsx(
+										Styles.burger__line,
+										Styles.burger__line_fourth,
+										type === 'main' ? 'bg-[#1F5CB8]' : 'bg-white'
+									)}
+								></span>
+							</div>
 							<span className="pl-2">{t('services')}</span>
 						</Button>
 					)}

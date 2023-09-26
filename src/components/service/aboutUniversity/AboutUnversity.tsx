@@ -1,4 +1,6 @@
+import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Button, Typography } from 'antd'
+import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactPlayer from 'react-player'
@@ -6,15 +8,11 @@ import { useNavigate } from 'react-router-dom'
 
 import universityPicture from '../../../assets/images/universityView.png'
 import { StartPlaySVG, StopPlaySVG } from '../../../assets/svg'
-import {
-	ArrowLongLeftSVG,
-	LargeLogoSVG,
-	QuotationMarksSVG
-} from '../../../assets/svg'
+import { LargeLogoSVG, QuotationMarksSVG } from '../../../assets/svg'
 import mp4 from '../../../assets/video/Kfu.mp4'
 import { Footer } from '../../layout/Footer'
 
-import './AboutUniversity.scss'
+import Styles from './AboutUniversity.module.scss'
 
 const AboutUniversity = () => {
 	const { t } = useTranslation()
@@ -32,11 +30,14 @@ const AboutUniversity = () => {
 		<div className="flex flex-col w-full min-h-screen">
 			<div className="flex flex-col mx-6 my-20">
 				<Button
-					className="rounded-2xl border-solid border-black border-[1px] w-min h-auto mb-10"
+					className={clsx(
+						'rounded-2xl border-solid border-black border-[1px] w-min h-auto mb-10',
+						Styles.button
+					)}
 					onClick={() => navigate('/user')}
 				>
 					<div className="flex items-center">
-						<ArrowLongLeftSVG />
+						<ArrowLeftOutlined className={Styles.arrowStyles} />
 						<span className="text-lg ml-2" style={{}}>
 							{t('back')}
 						</span>

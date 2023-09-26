@@ -1,10 +1,76 @@
 import { Radio, Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+import Column from 'antd/es/table/Column'
+import ColumnGroup from 'antd/es/table/ColumnGroup'
 import { useEffect, useState } from 'react'
 
 import { useGetStudyPlanQuery } from '../../../store/slice/studyPlanSlice'
 
 import './Styles.scss'
+
+interface DataType {
+	key: string
+	mainColumn: string
+	beginFirstTerm: string
+	endFirstTerm: string
+	termFirstWeek: string
+	beginSecondTerm: string
+	endSecondTerm: string
+	termSecondWeek: string
+}
+
+const dataExam: DataType[] = [
+	{
+		key: '1',
+		mainColumn: 'Theoretical training',
+		beginFirstTerm: 'September 1st',
+		endFirstTerm: 'September 1st',
+		termFirstWeek: '24',
+		beginSecondTerm: 'September 1st',
+		endSecondTerm: 'September 1st',
+		termSecondWeek: '24'
+	},
+	{
+		key: '2',
+		mainColumn: 'Non-working holidays',
+		beginFirstTerm: 'September 1st',
+		endFirstTerm: 'September 1st',
+		termFirstWeek: '24',
+		beginSecondTerm: 'September 1st',
+		endSecondTerm: 'September 1st',
+		termSecondWeek: '24'
+	},
+	{
+		key: '3',
+		mainColumn: 'Examination session',
+		beginFirstTerm: 'September 1st',
+		endFirstTerm: 'September 1st',
+		termFirstWeek: '24',
+		beginSecondTerm: 'September 1st',
+		endSecondTerm: 'September 1st',
+		termSecondWeek: '24'
+	},
+	{
+		key: '4',
+		mainColumn: 'Holidays',
+		beginFirstTerm: 'September 1st',
+		endFirstTerm: 'September 1st',
+		termFirstWeek: '24',
+		beginSecondTerm: 'September 1st',
+		endSecondTerm: 'September 1st',
+		termSecondWeek: '24'
+	},
+	{
+		key: '5',
+		mainColumn: 'Educational practice (concenter.)',
+		beginFirstTerm: 'September 1st',
+		endFirstTerm: 'September 1st',
+		termFirstWeek: '24',
+		beginSecondTerm: 'September 1st',
+		endSecondTerm: 'September 1st',
+		termSecondWeek: '24'
+	}
+]
 
 type TypeColumn = {
 	key: string
@@ -532,13 +598,13 @@ export const Curriculum = () => {
 					className="rounded-full h-full flex items-center text-base bg-transparent"
 					value="3"
 				>
-					3nd year
+					3rd year
 				</Radio.Button>
 				<Radio.Button
 					className="rounded-full h-full flex items-center text-base bg-transparent"
 					value="4"
 				>
-					4nd year
+					4th year
 				</Radio.Button>
 			</Radio.Group>
 
@@ -551,6 +617,36 @@ export const Curriculum = () => {
 				pagination={false}
 				loading={tableData.length === 0 ? true : false}
 			/>
+			<Table
+				dataSource={dataExam}
+				pagination={false}
+				className="my-[50px] max-w-[1000px] rounded-none border-[2px] shadow-[#d4e3f1] drop-shadow-lg;"
+				bordered
+			>
+				<Column title="" dataIndex="mainColumn" key="mainColumn"></Column>
+				<ColumnGroup title="1 semester">
+					<Column
+						title="Begin"
+						dataIndex="beginFirstTerm"
+						key="beginFirstTerm"
+					/>
+					<Column title="End " dataIndex="endFirstTerm" key="endFirstTerm" />
+					<Column title="Week" dataIndex="termFirstWeek" key="termFirstWeek" />
+				</ColumnGroup>
+				<ColumnGroup title="2 semester">
+					<Column
+						title="Begin"
+						dataIndex="beginSecondTerm"
+						key="beginSecondTerm"
+					/>
+					<Column title="End" dataIndex="endSecondTerm" key="endSecondTerm" />
+					<Column
+						title="Week"
+						dataIndex="termSecondWeek"
+						key="termSecondWeek"
+					/>
+				</ColumnGroup>
+			</Table>
 		</div>
 	)
 }

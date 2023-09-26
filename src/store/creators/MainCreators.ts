@@ -72,9 +72,21 @@ export const loginUser = async (
 			})
 		)
 		localStorage.setItem('access', res.data.accessToken)
-		document.cookie = `refresh=${res.data.refreshToken}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
-		document.cookie = `sessionId=${res.data.user.sessionId}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
-		document.cookie = `sessionHash=${res.data.user.sessionHash}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
+		document.cookie = `refresh=${
+			res.data.refreshToken
+		}; max-age=31536000; domain=${
+			document.domain !== 'localhost' ? 'kpfu.ru' : 'localhost'
+		}; path=/; samesite=strict`
+		document.cookie = `s_id=${
+			res.data.user.sessionId
+		}; max-age=31536000; domain=${
+			document.domain !== 'localhost' ? 'kpfu.ru' : 'localhost'
+		}; path=/; samesite=strict`
+		document.cookie = `h_id=${
+			res.data.user.sessionHash
+		}; max-age=31536000; domain=${
+			document.domain !== 'localhost' ? 'kpfu.ru' : 'localhost'
+		}; path=/; samesite=strict`
 		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
 		dispatch(ProfileSuccess(res.data.user))
 		return 200
@@ -138,9 +150,21 @@ export const approveEmail = async (
 ): Promise<200 | 403> => {
 	try {
 		const res = await approve(data)
-		document.cookie = `refresh=${res.data.refreshToken}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
-		document.cookie = `sessionId=${res.data.user.sessionId}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
-		document.cookie = `sessionHash=${res.data.user.sessionHash}; max-age=31536000; domain=${document.domain}; path=/; samesite=strict`
+		document.cookie = `refresh=${
+			res.data.refreshToken
+		}; max-age=31536000; domain=${
+			document.domain !== 'localhost' ? 'kpfu.ru' : 'localhost'
+		}; path=/; samesite=strict`
+		document.cookie = `s_id=${
+			res.data.user.sessionId
+		}; max-age=31536000; domain=${
+			document.domain !== 'localhost' ? 'kpfu.ru' : 'localhost'
+		}; path=/; samesite=strict`
+		document.cookie = `h_id=${
+			res.data.user.sessionHash
+		}; max-age=31536000; domain=${
+			document.domain !== 'localhost' ? 'kpfu.ru' : 'localhost'
+		}; path=/; samesite=strict`
 		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
 		localStorage.setItem('access', res.data.accessToken)
 		dispatch(

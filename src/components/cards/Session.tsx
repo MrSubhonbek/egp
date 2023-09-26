@@ -8,7 +8,7 @@ export const Session = () => {
 	return (
 		<div className="px-[60px] py-[40px] h-full">
 			<div className="font-semibold text-xl text-start flex z-10 relative">
-				Session
+				Academic Calendar
 			</div>
 			<div className="text-base text-start mt-[30px] w-full lg:max-w-[60%] relative flex z-10">
 				All session information, materials and scores are displayed here

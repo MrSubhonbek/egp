@@ -1,5 +1,6 @@
 import { Button, Carousel } from 'antd'
 import { useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import img from '../../assets/images/grade.png'
 import { useGetPerformanceQuery } from '../../store/slice/acadPerfSlice'
@@ -7,6 +8,7 @@ import { useGetPerformanceQuery } from '../../store/slice/acadPerfSlice'
 import { NextSvg, PrevSvg } from './const'
 
 export const Grade = () => {
+	const navigate = useNavigate()
 	const slider = useRef() as React.MutableRefObject<any>
 	const { data: performance } = useGetPerformanceQuery()
 	const scheduleCourses = !performance ? (
@@ -70,7 +72,7 @@ export const Grade = () => {
 			<div className="text-start absolute left-[60px] bottom-[40px]">
 				<Button
 					className="rounded-full border-black w-[200px] h-[50px] text-base font-semibold"
-					onClick={() => console.log('redirect')}
+					onClick={() => navigate('/services/electronicBook/estimation')}
 				>
 					View
 				</Button>
