@@ -10,7 +10,7 @@ export const BackMainPage = () => {
 		<div className="flex w-full items-center justify-between px-4">
 			<div className=" flex w-fit items-center gap-[10px] my-[50px] ml-[50px] cursor-pointer ">
 				<ArrowLeftSvg />
-				<Link style={{ color: 'black' }} href="">
+				<Link style={{ color: 'black' }} href="https://eng.kpfu.ru/">
 					{t('backPage')}
 				</Link>
 			</div>
