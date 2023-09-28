@@ -465,6 +465,8 @@ export const getAdmission = async (
 		const response = await getAdmissionLink()
 		document.cookie = `s_id=${response.data.session}; max-age=31536000 domain=kpfu.ru path=/ samesite=strict`
 		document.cookie = `s_abit_id=${response.data.session}; max-age=31536000 domain=kpfu.ru path=/ samesite=strict`
+		cookies.set('s_id', response.data.session, {domain: 'kpfu.ru'})
+		cookies.set('s_abit_id', response.data.session, {domain: 'kpfu.ru'})
 		return response.data
 	} catch (e) {
 		return 404
