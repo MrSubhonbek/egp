@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const API_URL = `https://newlk.kpfu.ru/`
+export const API_URL = `https://egp.kpfu.ru/`
 export const axiosInstance = axios.create({
 	baseURL: API_URL,
 	headers: {

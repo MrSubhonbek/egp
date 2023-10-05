@@ -62,7 +62,18 @@ export const AboutMe = () => {
 
 	const getData = async () => {
 		const response = await getAbUsForm(dispatch)
-		if (typeof response !== 'number') dispatch(allData(response))
+		console.log(response)
+		console.log(JSON.parse(localStorage.getItem('userInfo')))
+		/*
+		birthDay: "2023-09-12"
+		countryId: 6
+		gender: "M"
+		name: "string"
+		patronymic: "string"
+		phone: "+6 435 688-67-56"
+		surName: "al arav"
+		 */
+		//if (typeof response !== 'number') dispatch(allData(response))
 	}
 
 	const setChanges = async () => {
@@ -134,19 +145,7 @@ export const AboutMe = () => {
 		<div className="m-14 radio">
 			<Space direction="vertical" size={20}>
 				<Typography.Title level={3}>{t('AboutMe')}</Typography.Title>
-				<Space direction="vertical" size={'small'}>
-					<Typography.Text className=" mt-10 opacity-80 text-black text-sm font-normal">
-						{t('gender')}
-					</Typography.Text>
-					<Radio.Group
-						disabled={isStudent}
-						onChange={e => dispatch(gender(e.target.value))}
-						value={formData.gender}
-					>
-						<Radio value={'M'}>{t('man')}</Radio>
-						<Radio value={'W'}>{t('woman')}</Radio>
-					</Radio.Group>
-				</Space>
+
 				<Space direction="vertical" size={'small'}>
 					<Typography.Text>{t('surname')}</Typography.Text>
 					<Input
