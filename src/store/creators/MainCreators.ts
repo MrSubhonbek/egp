@@ -464,6 +464,8 @@ export const getAdmission = async (
 		if ((await refreshToken(dispatch)) === 403) return 403
 		const response = await getAdmissionLink()
 		debugger
+		cookies.remove('s_id', { domain: 'kpfu.ru', path: '/' })
+		cookies.remove('s_abit_id', { domain: 'kpfu.ru', path: '/' })
 		cookies.set('s_id', response.data.session, { domain: 'kpfu.ru', path: '/' })
 		cookies.set('s_abit_id', response.data.session, { domain: 'kpfu.ru', path: '/' })
 		return response.data
