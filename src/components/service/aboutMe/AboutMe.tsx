@@ -62,8 +62,6 @@ export const AboutMe = () => {
 
 	const getData = async () => {
 		const response = await getAbUsForm(dispatch)
-		console.log(response)
-		console.log(JSON.parse(localStorage.getItem('userInfo')))
 		/*
 		birthDay: "2023-09-12"
 		countryId: 6
