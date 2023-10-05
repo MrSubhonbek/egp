@@ -128,7 +128,7 @@ export const AboutMe = () => {
 		}
 	}
 
-	const isStudent = role === 'STUD' || formData.updatable
+	const isStudent = role === 'STUD' || !formData.updatable
 	return (
 		<div className="m-14 radio">
 			<Space direction="vertical" size={20}>
