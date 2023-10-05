@@ -62,16 +62,6 @@ export const AboutMe = () => {
 
 	const getData = async () => {
 		const response = await getAbUsForm(dispatch)
-		/*
-		birthDay: "2023-09-12"
-		countryId: 6
-		gender: "M"
-		name: "string"
-		patronymic: "string"
-		phone: "+6 435 688-67-56"
-		surName: "al arav"
-		 */
-		//if (typeof response !== 'number') dispatch(allData(response))
 	}
 
 	const setChanges = async () => {
@@ -138,7 +128,7 @@ export const AboutMe = () => {
 		}
 	}
 
-	const isStudent = role === 'STUD'
+	const isStudent = role === 'STUD' || formData.updatable
 	return (
 		<div className="m-14 radio">
 			<Space direction="vertical" size={20}>

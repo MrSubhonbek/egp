@@ -10,6 +10,7 @@ const initialState: formItem = {
 	birthDay: '',
 	gender: 'M',
 	phone: '',
+	updatable: false,
 	countryId: 184
 }
 export const FormReducer = createSlice({
@@ -44,7 +45,8 @@ export const FormReducer = createSlice({
 				countryId: !action.payload.countryId ? 184 : action.payload.countryId,
 				phone: !action.payload.phone ? '' : action.payload.phone,
 				patronymic: !action.payload.patronymic ? '' : action.payload.patronymic,
-				birthDay: !action.payload.birthDay ? '' : action.payload.birthDay
+				birthDay: !action.payload.birthDay ? '' : action.payload.birthDay,
+				updatable: !action.payload.updatable ? false : action.payload.updatable
 			}
 		},
 		setDefaultForm: (state, action: PayloadAction<void>) =>

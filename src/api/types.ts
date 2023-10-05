@@ -113,6 +113,7 @@ export type formItem = {
 	birthDay: string
 	gender: IGender
 	phone: string
+	updatable: boolean
 	countryId: number
 }
 
