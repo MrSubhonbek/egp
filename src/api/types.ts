@@ -358,6 +358,7 @@ export interface Day {
 }
 
 export type TypeSchedule = {
+	sunday: Day[]
 	monday: Day[]
 	tuesday: Day[]
 	wednesday: Day[]

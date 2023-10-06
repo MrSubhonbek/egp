@@ -1,25 +1,23 @@
 import { Button } from 'antd'
-import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import img from '../../assets/images/aboutUniversity.png'
 
 export const AboutUniversity = () => {
 	const navigate = useNavigate()
-	const { t } = useTranslation()
 	return (
-		<div className="px-[30px] py-[40px] h-full flex gap-2">
+		<div className="px-[30px] py-[40px] h-full flex gap-2 justify-between">
 			<div className="flex flex-col justify-between">
 				<div>
 					<div className="font-semibold text-xl text-start relative flex z-10">
-						{t('AboutUniversity')}
+						About the University
 					</div>
 					<div className="text-base relative text-start mt-[30px] max-h-[100px] w-full  flex z-10">
 						One of the oldest universities in Russia, founded in 1804. The
 						university is famous for its strong schools of mathematics...
 					</div>
 				</div>
-				<div className="text-start  ">
+				<div className="text-start">
 					<Button
 						className="rounded-full border-black w-[200px] h-[50px] text-base font-semibold"
 						onClick={() => {
@@ -30,8 +28,9 @@ export const AboutUniversity = () => {
 					</Button>
 				</div>
 			</div>
-			<div className="sm:flex hidden min-w-[115px] min-h-[115px] max-w-[115px]  max-h-[115px] bg-[#3E89F9] bg-opacity-80 rounded-full justify-center items-center ">
-				<img className="" src={img} alt="" />
+			<div className="">
+				<div className="absolute -z-10 mt-5 sm:flex hidden min-w-[115px] min-h-[115px] max-w-[115px]  max-h-[115px] bg-[#3E89F9] bg-opacity-80 rounded-full justify-center items-center "></div>
+				<img className="sm:flex hidden mt-5" src={img} alt="" />
 			</div>
 		</div>
 	)

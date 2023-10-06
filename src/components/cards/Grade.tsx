@@ -1,82 +1,38 @@
-import { Button, Carousel } from 'antd'
-import { useRef } from 'react'
+import { Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 import img from '../../assets/images/grade.png'
-import { useGetPerformanceQuery } from '../../store/slice/acadPerfSlice'
-
-import { NextSvg, PrevSvg } from './const'
 
 export const Grade = () => {
 	const navigate = useNavigate()
-	const slider = useRef() as React.MutableRefObject<any>
-	const { data: performance } = useGetPerformanceQuery()
-	const scheduleCourses = !performance ? (
-		<></>
-	) : (
-		performance.journal.map((element, index) => (
-			<div key={index} className="flex flex-col">
-				<div
-					className="text-base"
-					style={{ shapeOutside: 'polygon(0 0, 100% 0, 100% 100%)' }}
-				>
-					<span className="font-bold h-min mr-2">Subject:</span>
-					{element.subject_name}
-				</div>
-				<div
-					className="text-base"
-					style={{ shapeOutside: 'polygon(0 0, 100% 0, 100% 100%)' }}
-				>
-					<span className="font-bold mr-2">Exam time:</span>
-					{element.pass_date}
-				</div>
-				<div
-					className="text-base"
-					style={{ shapeOutside: 'polygon(0 0, 100% 0, 100% 100%)' }}
-				>
-					<span className="font-bold mr-2">Average score:</span>
-					{element.total_points}
-				</div>
-			</div>
-		))
-	)
-
 	return (
-		<div className="px-[60px] py-[40px] h-full">
-			<div className="font-semibold relative text-xl text-start flex z-10">
-				Academic performance
-			</div>
-			<div>
-				<div
-					onClick={() => slider.current.prev()}
-					className="absolute cursor-pointer left-[20px] top-[147px] flex z-10"
-				>
-					<PrevSvg />
+		<>
+			<div className="px-[30px] py-[40px] h-full flex gap-2 justify-between">
+				<div className="flex flex-col justify-between">
+					<div>
+						<div className="font-semibold text-xl text-start relative flex z-10">
+							Academic performance
+						</div>
+						<div className="text-base relative text-start mt-[30px] max-h-[100px] w-full  flex z-10">
+							Need text...
+						</div>
+					</div>
+					<div className="text-start  ">
+						<Button
+							className="rounded-full border-black w-[200px] h-[50px] text-base font-semibold"
+							onClick={() => {
+								navigate('/services/electronicBook/estimation')
+							}}
+						>
+							View
+						</Button>
+					</div>
 				</div>
-				<Carousel
-					className="mt-[20px] text-start max-w-[23rem] lg:max-w-[15rem] min-h-[100px] flex z-10"
-					ref={slider}
-				>
-					{scheduleCourses}
-				</Carousel>
-				<div
-					onClick={() => slider.current.next()}
-					className="absolute cursor-pointer top-[147px] right-[20px] flex z-10"
-				>
-					<NextSvg />
+				<div className="">
+					<div className="absolute -z-10 mt-5 sm:flex hidden min-w-[115px] min-h-[115px] max-w-[115px]  max-h-[115px] bg-[#3E89F9] bg-opacity-80 rounded-full justify-center items-center "></div>
+					<img className="sm:flex hidden -mt-5" src={img} alt="" />
 				</div>
 			</div>
-			<div className="min-w-[115px] min-h-[115px] absolute right-[80px] top-[40px] max-h-[115px] bg-opacity-80 bg-[#3E89F9] rounded-full hidden justify-center items-center lg:flex">
-				<img className="mb-9" src={img} alt="" />
-			</div>
-			<div className="text-start absolute left-[60px] bottom-[40px]">
-				<Button
-					className="rounded-full border-black w-[200px] h-[50px] text-base font-semibold"
-					onClick={() => navigate('/services/electronicBook/estimation')}
-				>
-					View
-				</Button>
-			</div>
-		</div>
+		</>
 	)
 }

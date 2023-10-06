@@ -51,13 +51,11 @@ const DropDrag: FunctionComponent<IDropDragProps> = ({
 		setLayouts({ ...layouts })
 	}
 
-	const generateDOM = layouts.lg.map(item => {
-		return (
-			<div key={item.i} className="bg-white/70 rounded-[20px] customShadow">
-				<div className="w-full h-full">{cards && cards[item.i].element}</div>
-			</div>
-		)
-	})
+	const generateDOM = layouts.lg.map((item, i) => (
+		<div key={item.i} className="bg-white/70 rounded-[20px] customShadow">
+			<div className="w-full h-full">{cards && cards[i].element}</div>
+		</div>
+	))
 
 	return (
 		<div className=" mt-[40px] w-[min(1600px, 100%)] mb-[100px]">

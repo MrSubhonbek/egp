@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer } from 'antd'
+import { Divider } from 'antd'
 import type { MenuProps } from 'antd'
 import { Dropdown, Space } from 'antd'
 import clsx from 'clsx'
@@ -19,9 +19,6 @@ import { RootState, useAppSelector } from '../../store'
 import { getAbUsForm } from '../../store/creators/MainCreators'
 import { LogOut } from '../../store/creators/SomeCreators'
 import { allData } from '../../store/reducers/FormReducers/FormReducer'
-import { ModalNav } from '../service/modalMenu/ModalNav'
-
-import Styles from './Header.module.scss'
 
 type TypeHeaderProps = {
 	type?: 'service' | 'main'
@@ -53,10 +50,6 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		}
 	}, [])
 
-	const showDrawer = () => {
-		setOpen(!open)
-	}
-
 	const getUser = async () => {
 		const response = await getAbUsForm(dispatch)
 		if (response === 403) navigate('/')
@@ -67,9 +60,6 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		getUser()
 	}, [])
 
-	const onClose = () => {
-		setOpen(false)
-	}
 	const items: MenuProps['items'] = [
 		{
 			label: (
@@ -125,58 +115,6 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 		>
 			<div className="w-screen flex h-full justify-between px-8">
 				<div className="flex gap-8 items-center">
-					{role === 'STUD' && (
-						<Button
-							onClick={() => {
-								changeIsBurgerActive(!IsBurgerActive)
-								showDrawer()
-							}}
-							className={clsx(
-								'h-[40px] rounded-full font-semibold bg-transparent border-2 flex items-center justify-center w-[130px] ',
-								type === 'main'
-									? 'text-[#1F5CB8] border-[#1F5CB8] '
-									: 'text-white border-white hover:!border-white hover:!text-white'
-							)}
-							type="default"
-						>
-							<div
-								className={clsx(
-									Styles.burger,
-									!IsBurgerActive && Styles.burger_active
-								)}
-							>
-								<span
-									className={clsx(
-										Styles.burger__line,
-										Styles.burger__line_first,
-										type === 'main' ? 'bg-[#1F5CB8]' : 'bg-white'
-									)}
-								></span>
-								<span
-									className={clsx(
-										Styles.burger__line,
-										Styles.burger__line_second,
-										type === 'main' ? 'bg-[#1F5CB8]' : 'bg-white'
-									)}
-								></span>
-								<span
-									className={clsx(
-										Styles.burger__line,
-										Styles.burger__line_third,
-										type === 'main' ? 'bg-[#1F5CB8]' : 'bg-white'
-									)}
-								></span>
-								<span
-									className={clsx(
-										Styles.burger__line,
-										Styles.burger__line_fourth,
-										type === 'main' ? 'bg-[#1F5CB8]' : 'bg-white'
-									)}
-								></span>
-							</div>
-							<span className="pl-2">{t('services')}</span>
-						</Button>
-					)}
 					<div className="flex items-center gap-5">
 						<LogoIasSvg white={type === 'service'} />
 						<Divider type="vertical" className="border-l-white h-10 m-0" />
@@ -187,15 +125,16 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 					<div
 						className={clsx(
 							'h-full flex items-center cursor-pointer bg-transparent',
-							type === 'main'
-								? 'hover:bg-[#E3E8ED]'
-								: 'target:bg-[#3073D7] active:bg-[#3073D7] visited:bg-[#3073D7] focus-visible:bg-[#3073D7] focus-within:bg-[#3073D7] focus:bg-[#3073D7] hover:bg-[#3073D7]'
+							type === 'main' && open && 'bg-[#E3E8ED]',
+							type !== 'main' && open && 'bg-[#3073D7]',
+							type === 'main' ? 'hover:bg-[#E3E8ED]' : 'target:bg-[#3073D7]'
 						)}
 					>
 						<Dropdown
 							menu={{ items }}
 							placement="bottom"
 							trigger={['click']}
+							onOpenChange={() => setOpen(prev => !prev)}
 							className="cursor-pointer h-full  box-border"
 						>
 							<Space className="px-10">
@@ -212,18 +151,6 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 								</div>
 							</Space>
 						</Dropdown>
-						<Drawer
-							rootStyle={{ position: 'fixed', top: 75 }}
-							placement="top"
-							size="large"
-							closable={false}
-							className="!bg-[#F5F8FB]"
-							onClose={onClose}
-							open={open}
-							key="top"
-						>
-							<ModalNav close={onClose} />
-						</Drawer>
 					</div>
 				</div>
 			</div>
