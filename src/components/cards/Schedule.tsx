@@ -31,7 +31,6 @@ export const Schedule = () => {
 	let date = new Date(Date.now())
 	const [activeButton, changeActive] = useState<week>(getWeekDay(date))
 	const { data: schedule } = useGetScheduleQuery()
-	console.log(getWeekDay(date))
 
 	const setActiveButton = (buttonName: week) => {
 		if (activeButton !== buttonName) changeActive(buttonName)
