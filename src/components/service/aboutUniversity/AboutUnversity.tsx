@@ -112,7 +112,18 @@ const AboutUniversity = () => {
 					>
 						Kazan <br /> Federal University
 					</Typography.Title>
-					<div className="bg-black opacity-30 left-0 right-0 bottom-0 top-0 absolute"></div>
+					<div className="bg-black opacity-30 left-0 right-0 bottom-0 top-0 absolute">
+						<ReactPlayer
+							url={mp4}
+							width={'100%'}
+							height={'100%'}
+							playing={play}
+							controls={true}
+							onEnded={() => changePlay(false)}
+							onPause={() => play && changePlay(false)}
+							onPlay={() => !play && changePlay(true)}
+						/>
+					</div>
 				</div>
 			</div>
 			<Footer />
