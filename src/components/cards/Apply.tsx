@@ -36,7 +36,7 @@ export const Apply = () => {
 
 			setTimeout(() => {
 				changeStatus(() => 'none')
-			}, 3000)
+			}, 0)
 		}
 	}
 	return (

@@ -124,7 +124,7 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 				<div className="flex gap-5 items-center h-full">
 					<div
 						className={clsx(
-							'h-full flex items-center cursor-pointer bg-transparent',
+							'h-full flex items-center cursor-pointer ',
 							type === 'main' && open && 'bg-[#E3E8ED]',
 							type !== 'main' && open && 'bg-[#3073D7]',
 							type === 'main' ? 'hover:bg-[#E3E8ED]' : 'target:bg-[#3073D7]'
