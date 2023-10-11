@@ -14,7 +14,7 @@ export const Grade = () => {
 							Academic performance
 						</div>
 						<div className="text-base relative text-start mt-[30px] max-h-[100px] w-full  flex z-10">
-							Need text...
+							Grades and scores throughout the school time
 						</div>
 					</div>
 					<div className="text-start  ">
