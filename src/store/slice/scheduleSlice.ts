@@ -4,7 +4,7 @@ import endpoints from '../../api/endpoints'
 import { TypeSchedule } from '../../api/types'
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: 'https://newlk.kpfu.ru/schedule-api',
+	baseUrl: 'https://egp.kpfu.ru/schedule-api',
 	prepareHeaders: headers => {
 		const accessToken = localStorage.getItem('access')
 		if (accessToken) {

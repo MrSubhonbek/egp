@@ -4,7 +4,7 @@ import endpoints from '../../api/endpoints'
 import { IPerformance, ITeacher, ITeacherItem } from '../../api/types'
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: 'https://newlk.kpfu.ru/academic-performance-api',
+	baseUrl: 'https://egp.kpfu.ru/academic-performance-api',
 	prepareHeaders: headers => {
 		const accessToken = localStorage.getItem('access')
 		if (accessToken) {

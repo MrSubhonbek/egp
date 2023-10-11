@@ -16,6 +16,27 @@ interface DataType {
 	room: string
 	type: string
 }
+type week =
+	| 'sunday'
+	| 'monday'
+	| 'tuesday'
+	| 'wednesday'
+	| 'thursday'
+	| 'friday'
+	| 'saturday'
+function getWeekDay(date: Date): week {
+	let days: week[] = [
+		'sunday',
+		'monday',
+		'tuesday',
+		'wednesday',
+		'thursday',
+		'friday',
+		'saturday'
+	]
+
+	return days[date.getDay()]
+}
 const columns: ColumnsType<DataType> = [
 	{
 		title: '',
@@ -88,12 +109,14 @@ export const Schedule = () => {
 		//@ts-ignore
 		setData(schedule[e.target.value])
 	}
+	const date = getWeekDay(new Date(Date.now()))
+
 	return (
 		<div className="mt-14 mx-14 radio">
 			<div className="mb-14 text-[28px]">My schedule</div>
 			<Radio.Group
 				onChange={onChange}
-				defaultValue="monday"
+				defaultValue={date}
 				buttonStyle="solid"
 				className="flex gap-[10px] h-9"
 			>

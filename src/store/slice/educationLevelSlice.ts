@@ -7,7 +7,7 @@ import { IEducationLevelRequest, TypeRole } from './../../api/types'
 
 export const educationLevelAPi = createApi({
 	reducerPath: 'educationLevelAPi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'https://newlk.kpfu.ru/user-api' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'https://egp.kpfu.ru/user-api' }),
 	endpoints: build => ({
 		getEducationLevel: build.query<IEducationLevelRequest[], TypeRole>({
 			query: role => ({

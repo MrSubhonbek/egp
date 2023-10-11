@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Button, Typography } from 'antd'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactPlayer from 'react-player'
 import { useNavigate } from 'react-router-dom'
@@ -18,13 +18,6 @@ const AboutUniversity = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const [play, changePlay] = useState(false)
-
-	// const [video, getVideo] = useState<string>('')
-	// useEffect(() => {
-	// 	if (localStorage.getItem('greetingVideo')) {
-	// 		getVideo(JSON.parse(localStorage.getItem('greetingVideo') || ''))
-	// 	}
-	// }, [])
 
 	return (
 		<div className="flex flex-col w-full min-h-screen">

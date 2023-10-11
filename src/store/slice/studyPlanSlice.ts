@@ -4,7 +4,7 @@ import endpoints from '../../api/endpoints'
 import { Exam, ICalendar } from '../../api/types'
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: 'https://newlk.kpfu.ru/study-plan-api/studyplan',
+	baseUrl: 'https://egp.kpfu.ru/study-plan-api/studyplan',
 	prepareHeaders: headers => {
 		const accessToken = localStorage.getItem('access')
 		if (accessToken) {
