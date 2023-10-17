@@ -117,41 +117,6 @@ export const NavAboutMe = () => {
 				{role === 'STUD' && pathname === navList[3].id && <Education />}
 				{role === 'STUD' && pathname === navList[4].id && <Work />}
 				{role === 'STUD' && pathname === navList[5].id && <Parent />}
-				<div className="p-14 w-full justify-center">
-					<div className="h-3/4 bg-white fixed w-full max-w-md rounded-[20px] shadow flex flex-col items-center justify-center">
-						<div>
-							<Avatar
-								size={120}
-								className="bg-[#CBDAF1]"
-								icon={<UserOutlined />}
-							/>
-							<Button
-								type="primary"
-								size="large"
-								shape="circle"
-								className="left-[255px] bottom-[60%] absolute border-4 flex items-center justify-center text-2xl border-solid border-white"
-								icon={<CloudUploadOutlined />}
-							/>
-						</div>
-						<Typography.Text className="text-center text-black text-base font-bold leading-tight mt-5">
-							{user?.firstname} {user?.lastname} {user?.middlename}
-						</Typography.Text>
-						<Typography.Text className="px-5 mt-5 py-[5px] bg-sky-100 rounded-full opacity-60 text-center text-black text-base font-normal leading-tight">
-							{roleConverter(role)}
-						</Typography.Text>
-						{/* <div className="w-[250px] mt-5">
-							<Typography.Text>{t('FilledOn')} 69.9%</Typography.Text>
-							<Progress
-								showInfo={false}
-								percent={69.9}
-								strokeColor={{ from: '#108ee9', to: '#87d068' }}
-							/>
-						</div>
-						<Button className="rounded-full mt-5" type="primary" ghost>
-							{t('ViewProfile')}
-						</Button> */}
-					</div>
-				</div>
 			</div>
 		</>
 	)
