@@ -40,7 +40,8 @@ export const Login = () => {
 
 				return item.type === 'EMPL'
 			})
-			if (res.status === 200 && isEmol.length) navigate('/user')
+
+			if (res.status === 200) navigate('/user')
 		}
 	}
 

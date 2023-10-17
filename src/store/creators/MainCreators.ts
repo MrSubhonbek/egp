@@ -89,11 +89,11 @@ export const loginUser = async (
 		const isEmol = res.data.user.roles.filter((item: any) => {
 			return item.type === 'EMPL'
 		})
-		if (!isEmol) {
-			localStorage.setItem('access', res.data.accessToken)
-			localStorage.setItem('userInfo', JSON.stringify(res.data.user))
-			dispatch(ProfileSuccess(res.data.user))
+		if (isEmol.length === 0) {
 		}
+		localStorage.setItem('access', res.data.accessToken)
+		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
+		dispatch(ProfileSuccess(res.data.user))
 		return res
 	} catch (e) {
 		if (request.isAxiosError(e) && e.response) {
