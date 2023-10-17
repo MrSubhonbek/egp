@@ -61,7 +61,7 @@ const cookies = new Cookies()
 export const loginUser = async (
 	data: IAuthRequest,
 	dispatch: Dispatch
-): Promise<200 | 403> => {
+): Promise<any> => {
 	try {
 		const res = await login(data)
 
@@ -71,7 +71,6 @@ export const loginUser = async (
 				refreshToken: res.data.refreshToken
 			})
 		)
-		localStorage.setItem('access', res.data.accessToken)
 		document.cookie = `refresh=${
 			res.data.refreshToken
 		}; max-age=31536000; domain=${
@@ -87,9 +86,15 @@ export const loginUser = async (
 		}; max-age=31536000; domain=${
 			document.domain !== 'localhost' ? 'kpfu.ru' : 'localhost'
 		}; path=/; samesite=strict`
-		localStorage.setItem('userInfo', JSON.stringify(res.data.user))
-		dispatch(ProfileSuccess(res.data.user))
-		return 200
+		const isEmol = res.data.user.roles.filter((item: any) => {
+			return item.type === 'EMPL'
+		})
+		if (!isEmol) {
+			localStorage.setItem('access', res.data.accessToken)
+			localStorage.setItem('userInfo', JSON.stringify(res.data.user))
+			dispatch(ProfileSuccess(res.data.user))
+		}
+		return res
 	} catch (e) {
 		if (request.isAxiosError(e) && e.response) {
 			dispatch(loginFailure(e.response?.data as IError))
@@ -467,7 +472,10 @@ export const getAdmission = async (
 		cookies.remove('s_id', { domain: 'kpfu.ru', path: '/' })
 		cookies.remove('s_abit_id', { domain: 'kpfu.ru', path: '/' })
 		cookies.set('s_id', response.data.session, { domain: 'kpfu.ru', path: '/' })
-		cookies.set('s_abit_id', response.data.session, { domain: 'kpfu.ru', path: '/' })
+		cookies.set('s_abit_id', response.data.session, {
+			domain: 'kpfu.ru',
+			path: '/'
+		})
 		return response.data
 	} catch (e) {
 		return 404

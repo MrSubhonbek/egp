@@ -35,7 +35,12 @@ export const Login = () => {
 				{ username: values.email, password: values.password },
 				dispatch
 			)
-			if (res === 200) navigate('/user')
+			const isEmol = res.data.user.roles.filter((item: any) => {
+				console.log(item)
+
+				return item.type === 'EMPL'
+			})
+			if (res.status === 200 && isEmol.length) navigate('/user')
 		}
 	}
 
