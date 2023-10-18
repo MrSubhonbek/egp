@@ -20,7 +20,7 @@ export const studyPlanApi = createApi({
 	baseQuery,
 	endpoints: builder => ({
 		getExamsSchedule: builder.query<Exam[], void>({
-			query: () => ``
+			query: () => `/examsSchedule`
 		}),
 		getStudyPlan: builder.query<ICalendar, void>({
 			query: () => ''

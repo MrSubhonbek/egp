@@ -46,31 +46,6 @@ export const NavAboutMe = () => {
 				id: '/services/aboutMe/aboutMe',
 				icon: <AboutMeSvg />,
 				name: t('aboutMe')
-			},
-			{
-				id: '/services/aboutMe/document',
-				icon: <MyDocsSvg />,
-				name: t('documents')
-			},
-			{
-				id: '/services/aboutMe/address',
-				icon: <AddressSvg />,
-				name: t('adress')
-			},
-			{
-				id: '/services/aboutMe/education',
-				icon: <EducationSvg />,
-				name: t('education')
-			},
-			{
-				id: '/services/aboutMe/work',
-				icon: <WorkSvg />,
-				name: t('work')
-			},
-			{
-				id: '/services/aboutMe/parent',
-				icon: <ParentSvg />,
-				name: t('Parents')
 			}
 		]
 	} else {
@@ -112,11 +87,6 @@ export const NavAboutMe = () => {
 			</div>
 			<div className="bg-[#F5F8FB] flex w-full">
 				{pathname === navList[0].id && <AboutMe />}
-				{role === 'STUD' && pathname === navList[1].id && <Document />}
-				{role === 'STUD' && pathname === navList[2].id && <Address />}
-				{role === 'STUD' && pathname === navList[3].id && <Education />}
-				{role === 'STUD' && pathname === navList[4].id && <Work />}
-				{role === 'STUD' && pathname === navList[5].id && <Parent />}
 			</div>
 		</>
 	)

@@ -43,12 +43,14 @@ const columns: ColumnsType<DataType> = [
 ]
 
 export const Session = () => {
-	const { data: examSchedule } = useGetExamsScheduleQuery()
+	const { data: examSchedule, isLoading } = useGetExamsScheduleQuery()
 	const [data, changeData] = useState<DataType[]>([])
+	console.log(examSchedule, '==========================')
 
 	useEffect(() => {
-		if (examSchedule)
+		if (isLoading && examSchedule)
 			changeData(
+				//@ts-ignore
 				examSchedule.map((el, index) => {
 					return {
 						...el,
@@ -67,8 +69,8 @@ export const Session = () => {
 				columns={columns}
 				dataSource={data}
 				pagination={false}
-				className="drop-shadow-lg mt-[50px] shadow-[#d4e3f1] rounded-none max-w-[1300px]"
-				loading={!examSchedule ? true : false}
+				className=" mt-[50px] rounded-none max-w-[1300px]"
+				loading={isLoading}
 			/>
 		</div>
 	)
