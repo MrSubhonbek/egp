@@ -586,7 +586,7 @@ export const Curriculum = () => {
 					className="rounded-full bg-transparent h-full flex items-center  text-base"
 					value="1"
 				>
-					1st course
+					1st year
 				</Radio.Button>
 				<Radio.Button
 					className="rounded-full h-full flex items-center text-base bg-transparent"
