@@ -92,12 +92,13 @@ const columns: ColumnsType<DataType> = [
 	}
 ]
 export const Schedule = () => {
-	const { data: schedule } = useGetScheduleQuery()
+	const { data: schedule, isLoading } = useGetScheduleQuery()
 	const [data, setData] = useState<DataType[] | undefined>()
 
 	useEffect(() => {
-		if (schedule) {
-			const changedData: DataType[] = schedule.monday.map((el, index) => ({
+		//@ts-ignore
+		if (schedule && schedule.length !== 0) {
+			const changedData: DataType[] = schedule[date].map((el, index) => ({
 				...el,
 				key: index
 			}))
@@ -162,43 +163,9 @@ export const Schedule = () => {
 					columns={columns}
 					dataSource={data}
 					pagination={false}
-					loading={schedule ? false : true}
-					className="max-w-[1050px] w-full drop-shadow-lg shadow-[#d4e3f1] rounded-none"
+					loading={isLoading}
+					className="max-w-[1050px] w-full  rounded-none"
 				/>
-				{/* <div className="flex flex-col gap-6 text-sm">
-					<div className="flex items-center gap-2">
-						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#A7FAFF]" />
-						Streaming lecture
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#3A92E3]" />
-						Lecture
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#FFE24C]" />
-						Seminar
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#59C348]" />
-						Laboratory lesson
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#E93A3A]" />
-						Facultative
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#844EC9]" />
-						Practice
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#FF9838]" />
-						Testing
-					</div>
-					<div className="flex items-center gap-2">
-						<div className="min-w-[11px] max-w-[11px] min-h-[11px] rounded-full bg-[#B3B3B3]" />
-						The type of discipline is not specified
-					</div>
-				</div> */}
 			</div>
 		</div>
 	)
