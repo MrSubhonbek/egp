@@ -27,10 +27,10 @@ export const Apply = () => {
 		if (response === 403) navigate('/')
 		else {
 			if (typeof response !== 'number') {
-				changeStatus(() => 'success')
 				setTimeout(() => {
+					changeStatus(() => 'success')
 					window.open(response.link, '_blank')
-				}, 3000)
+				}, 0)
 			}
 			if (response === 404) changeStatus(() => 'error')
 
