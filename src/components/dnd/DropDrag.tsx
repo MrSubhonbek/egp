@@ -70,7 +70,7 @@ const DropDrag: FunctionComponent<IDropDragProps> = ({
 				useCSSTransforms={mounted}
 				onLayoutChange={onLayoutChange}
 				onBreakpointChange={onBreakpointChange}
-				isDraggable={false}
+				isDraggable={edit}
 				isResizable={false}
 			>
 				{generateDOM}

@@ -20,7 +20,8 @@ export const AboutUniversity = () => {
 				<div className="text-start">
 					<Button
 						className="rounded-full border-black w-[200px] h-[50px] text-base font-semibold"
-						onClick={() => {
+						onClick={e => {
+							e.stopPropagation()
 							navigate('/services/aboutUniversity')
 						}}
 					>
