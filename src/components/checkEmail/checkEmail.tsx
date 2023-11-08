@@ -1,6 +1,7 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useSentEmailMutation } from '../../store/slice/resentMail'
 import { CardForm } from '../approve/cardForm'
 
 interface ICheckEmailProps {
@@ -9,13 +10,17 @@ interface ICheckEmailProps {
 
 export const CheckEmail: FC<ICheckEmailProps> = ({ email }) => {
 	const navigate = useNavigate()
-
+	const [sentEmail] = useSentEmailMutation()
+	const [isDisable, setIsDisable] = useState(true)
 	useEffect(() => {
 		if (email === '') navigate('/')
 	}, [])
+	setTimeout(() => {
+		setIsDisable(false)
+	}, 60000)
 
 	const buttonEffect = () => {
-		console.log("it's buttons effect")
+		sentEmail({ email: email })
 	}
 
 	const closeEffect = () => {
@@ -23,7 +28,7 @@ export const CheckEmail: FC<ICheckEmailProps> = ({ email }) => {
 	}
 	return (
 		<CardForm
-			IsButtonDisabled={true}
+			IsButtonDisabled={isDisable}
 			buttonEffect={buttonEffect}
 			closeEffect={closeEffect}
 			withDots={true}

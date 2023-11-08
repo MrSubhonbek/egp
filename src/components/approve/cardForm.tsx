@@ -67,6 +67,9 @@ export const CardForm: FC<cardProps> = ({
 						</Button>
 					)}
 				</div>
+				<div className="flex items-center justify-center text-gray-500">
+					you can send it again in a minute
+				</div>
 			</div>
 		</div>
 	)
