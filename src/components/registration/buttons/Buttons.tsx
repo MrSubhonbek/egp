@@ -30,7 +30,13 @@ export const Buttons: FC<IButtonsProps> = ({ setCheck, check }) => {
 					onChange={onChangeCheckbox}
 					checked={check}
 				>
-					<p className={styles.termsUse}>{t('userAgreement')}</p>
+					<p className={styles.termsUse}>
+						I accept the user agreement and give permission to the KFU portal to
+						process my personal data in accordance with{' '}
+						<a target="_blank" href="http://www.kremlin.ru/acts/bank/24154">
+							Federal Law No. 152-FZ of 27.07.2006 "On Personal Data"
+						</a>
+					</p>
 				</Checkbox>
 				<div className={styles.login}>
 					<span>

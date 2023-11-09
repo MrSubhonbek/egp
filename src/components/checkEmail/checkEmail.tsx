@@ -21,6 +21,7 @@ export const CheckEmail: FC<ICheckEmailProps> = ({ email }) => {
 
 	const buttonEffect = () => {
 		sentEmail({ email: email })
+		setIsDisable(true)
 	}
 
 	const closeEffect = () => {
