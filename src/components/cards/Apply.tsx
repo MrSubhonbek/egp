@@ -44,7 +44,7 @@ export const Apply = () => {
 				background: 'linear-gradient(89.94deg, #71AAFF 12.16%, #3D7AD5 104.42%)'
 			}}
 		>
-			<div className="text-4xl text-start text-white w-full font-extrabold flex flex-col justify-between">
+			<div className="text-4xl max-sm:text-3xl text-start text-white w-full font-extrabold flex flex-col justify-between">
 				Admission to university
 				<Button
 					onClick={() => request()}

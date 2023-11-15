@@ -137,10 +137,13 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 							onOpenChange={() => setOpen(prev => !prev)}
 							className="cursor-pointer h-full  box-border"
 						>
-							<Space className="px-10">
+							<Space className="px-10 max-[480px]:px-5 max-[455px]:!gap-0 gap-2">
 								<PersonSvg white={type === 'service'} />
 								<div
-									className={clsx('h-full', type === 'service' && 'text-white')}
+									className={clsx(
+										'h-full max-[480px]:hidden',
+										type === 'service' && 'text-white'
+									)}
 								>
 									<div className="font-bold text-sm truncate max-w-[120px]">
 										{`${form.surName} ${form.name.charAt(0)}. ${

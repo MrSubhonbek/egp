@@ -8,7 +8,7 @@ export const Footer = () => {
 	const { t } = useTranslation()
 	return (
 		<footer className="w-full min-h-[400px] bg-[#212121] text-white text-base">
-			<div className="flex justify-around my-[100px] ">
+			<div className="flex justify-between my-[100px] px-8 max-sm:flex-col">
 				<div className="flex flex-col justify-center">
 					<LogoSvg />
 					<div className=" flex flex-col mt-10 mb-5">
