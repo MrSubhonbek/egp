@@ -89,7 +89,7 @@ const AboutUniversity = () => {
 					(IT), psychology and cultural studies, humanities, pedagogical and
 					interdisciplinary fields.
 				</span>
-				<div className="relative m-auto min-[1100px]:w-[885px] min-[1100px]:h-[500px] max-md:hidden">
+				<div className="relative m-auto min-[1100px]:w-[885px] w-[885px] min-[1100px]:h-[500px] h-[500px] max-[1100px]:hidden">
 					<div
 						className="absolute right-32 bottom-16 z-10 bg-bluekfu w-[100px] min-[1100px]:w-[80px] min-[1100px]:h-[80px] h-[100px] cursor-pointer flex justify-center items-center rounded-full"
 						onClick={() => {
