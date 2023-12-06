@@ -15,6 +15,7 @@ import { acadPerfApi } from './slice/acadPerfSlice'
 import { countriesAPi } from './slice/countrySlice'
 import { documentsAPi } from './slice/documentSlice'
 import { educationLevelAPi } from './slice/educationLevelSlice'
+import { passwordApi } from './slice/passwordSlice'
 import { scheduleApi } from './slice/scheduleSlice'
 import { studyPlanApi } from './slice/studyPlanSlice'
 
@@ -30,6 +31,7 @@ export const store = configureStore({
 		Parent: ParentReducer,
 		Address: AddressReducer,
 		[scheduleApi.reducerPath]: scheduleApi.reducer,
+		[passwordApi.reducerPath]: passwordApi.reducer,
 		[countriesAPi.reducerPath]: countriesAPi.reducer,
 		[educationLevelAPi.reducerPath]: educationLevelAPi.reducer,
 		[documentsAPi.reducerPath]: documentsAPi.reducer,
@@ -45,6 +47,7 @@ export const store = configureStore({
 			.concat(documentsAPi.middleware)
 			.concat(studyPlanApi.middleware)
 			.concat(acadPerfApi.middleware)
+			.concat(passwordApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -613,40 +613,10 @@ export const Curriculum = () => {
 				dataSource={tableData}
 				scroll={{ x: true }}
 				columns={columns}
-				className="tableCustom mt-10"
+				className="tableCustom my-10"
 				pagination={false}
 				loading={isLoading}
 			/>
-			<Table
-				dataSource={dataExam}
-				pagination={false}
-				className="my-[50px] max-w-[1000px] rounded-none border-[2px] shadow-[#d4e3f1] drop-shadow-lg;"
-				bordered
-			>
-				<Column title="" dataIndex="mainColumn" key="mainColumn"></Column>
-				<ColumnGroup title="1 semester">
-					<Column
-						title="Begin"
-						dataIndex="beginFirstTerm"
-						key="beginFirstTerm"
-					/>
-					<Column title="End " dataIndex="endFirstTerm" key="endFirstTerm" />
-					<Column title="Week" dataIndex="termFirstWeek" key="termFirstWeek" />
-				</ColumnGroup>
-				<ColumnGroup title="2 semester">
-					<Column
-						title="Begin"
-						dataIndex="beginSecondTerm"
-						key="beginSecondTerm"
-					/>
-					<Column title="End" dataIndex="endSecondTerm" key="endSecondTerm" />
-					<Column
-						title="Week"
-						dataIndex="termSecondWeek"
-						key="termSecondWeek"
-					/>
-				</ColumnGroup>
-			</Table>
 		</div>
 	)
 }

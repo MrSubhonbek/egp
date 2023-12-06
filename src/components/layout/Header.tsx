@@ -13,7 +13,8 @@ import {
 	LogoIasSvg,
 	LogoutSvg,
 	PersonCardSvg,
-	PersonSvg
+	PersonSvg,
+	SettingSvg
 } from '../../assets/svg'
 import { RootState, useAppSelector } from '../../store'
 import { getAbUsForm } from '../../store/creators/MainCreators'
@@ -85,6 +86,20 @@ export const Header = ({ type = 'main', service }: TypeHeaderProps) => {
 				</div>
 			),
 			key: '1'
+		},
+		{
+			label: (
+				<div
+					className="flex items-center gap-[15px] px-[4px] py-[5px]"
+					onClick={() => {
+						navigate('/services/setting/contactInformation')
+					}}
+				>
+					<SettingSvg />
+					{t('Setting')}
+				</div>
+			),
+			key: '3'
 		},
 		{
 			label: (
