@@ -1,4 +1,4 @@
-import { Radio, RadioChangeEvent, Table } from 'antd'
+import { Button, Radio, RadioChangeEvent, Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useEffect, useState } from 'react'
 
@@ -15,6 +15,7 @@ interface DataType {
 	building: string
 	room: string
 	type: string
+	links: string
 }
 type week =
 	| 'sunday'
@@ -89,6 +90,19 @@ const columns: ColumnsType<DataType> = [
 		key: 'period',
 		dataIndex: 'duration',
 		render: item => <p className="text-base">{item}</p>
+	},
+	{
+		title: 'Link',
+		key: 'links',
+		dataIndex: 'links',
+		render: item =>
+			item.length ? (
+				<Button type="link" href={item[0]}>
+					Link
+				</Button>
+			) : (
+				<p className="text-base">-</p>
+			)
 	}
 ]
 export const Schedule = () => {
@@ -96,9 +110,8 @@ export const Schedule = () => {
 	const [data, setData] = useState<DataType[] | undefined>()
 
 	useEffect(() => {
-		//@ts-ignore
-		if (schedule && schedule.length !== 0) {
-			const changedData: DataType[] = schedule[date].map((el, index) => ({
+		if (schedule) {
+			const changedData = schedule[date].map((el, index) => ({
 				...el,
 				key: index
 			}))

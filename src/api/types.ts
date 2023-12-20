@@ -355,6 +355,7 @@ export interface Day {
 	building: string
 	room: string
 	type: string
+	links: string
 }
 
 export type TypeSchedule = {
